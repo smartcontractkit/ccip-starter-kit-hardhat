@@ -1,0 +1,14 @@
+{
+  "name": "ccip-starter-kit-hardhat",
+  "scripts": {
+    "generateTypes": "typechain --target ethers-v5 --out-dir typechain-types './abi/*.json'"
+  },
+  "devDependencies": {
+    "@chainlink/contracts": "^0.6.1",
+    "@chainlink/contracts-ccip": "^0.7.3",
+    "@chainlink/env-enc": "^1.0.5",
+    "@nomicfoundation/hardhat-toolbox": "^2.0.1",
+    "ethers": "^5.7.2",
+    "hardhat": "^2.14.1"
+  }
+}
