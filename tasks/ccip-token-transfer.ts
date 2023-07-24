@@ -88,7 +88,7 @@ task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another usi
 
             const supportedFeeTokens = getRouterConfig(sourceBlockchain).feeTokens;
 
-            if (!supportedFeeTokens.includes(feeTokenAddress)) {
+            if (!supportedFeeTokens.includes(utils.getAddress(feeTokenAddress))) {
                 console.error(`❌ Token address ${feeTokenAddress} not in the list of supportedTokens ${supportedFeeTokens}`);
                 return 1;
             }

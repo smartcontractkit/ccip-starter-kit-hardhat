@@ -1,7 +1,7 @@
 import { task } from "hardhat/config";
 import { TaskArguments } from "hardhat/types";
 import { getPrivateKey, getProviderRpcUrl, getRouterConfig } from "./utils";
-import { Wallet, providers } from "ethers";
+import { Wallet, providers, utils } from "ethers";
 import { IRouterClient, IRouterClient__factory, ProgrammableTokenTransfers, ProgrammableTokenTransfers__factory } from "../typechain-types";
 import { Spinner } from "../utils/spinner";
 
@@ -32,7 +32,7 @@ task(`send-token-and-data`, `Sends token and data using ProgrammableTokenTransfe
         const router: IRouterClient = IRouterClient__factory.connect(routerAddress, signer);
         const supportedTokens = await router.getSupportedTokens(destinationChainSelector);
 
-        if (!supportedTokens.includes(tokenAddress)) {
+        if (!supportedTokens.includes(utils.getAddress(tokenAddress))) {
             throw Error(`Token address ${tokenAddress} not in the list of supportedTokens ${supportedTokens}`);
         }
 
