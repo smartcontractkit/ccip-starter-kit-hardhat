@@ -36,7 +36,7 @@ task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another usi
         console.log(`ℹ️  Checking whether the ${tokenAddress} token is supported by Chainlink CCIP on the ${sourceBlockchain} blockchain`);
         spinner.start();
 
-        if (!supportedTokens.includes(tokenAddress)) {
+        if (!supportedTokens.includes(utils.getAddress(tokenAddress))) {
             spinner.stop();
             console.error(`❌ Token address ${tokenAddress} not in the list of supportedTokens ${supportedTokens}`);
             return 1;
