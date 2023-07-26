@@ -3,7 +3,7 @@
 import { task } from "hardhat/config";
 import { TaskArguments } from "hardhat/types";
 import { getPrivateKey, getProviderRpcUrl, getRouterConfig, getPayFeesIn } from "./utils";
-import { Wallet, providers } from "ethers";
+import { Wallet, providers, utils } from "ethers";
 import { IRouterClient, IRouterClient__factory, IERC20, IERC20__factory } from "../typechain-types";
 import { MAX_TOKENS_LENGTH, TokenAmounts } from "./constants";
 import { BasicTokenSender } from "../typechain-types/artifacts/contracts/BasicTokenSender";
@@ -49,7 +49,7 @@ task(`ccip-token-transfer-batch`, `Transfers tokens from one blockchain to anoth
             console.log(`ℹ️  Checking whether the ${token} token is supported by Chainlink CCIP on the ${sourceBlockchain} blockchain`);
             spinner.start();
 
-            if (!supportedTokens.includes(token)) {
+            if (!supportedTokens.includes(utils.getAddress(token))) {
                 spinner.stop();
                 console.error(`❌ Token address ${token} not in the list of supportedTokens ${supportedTokens}`);
                 return 1;
