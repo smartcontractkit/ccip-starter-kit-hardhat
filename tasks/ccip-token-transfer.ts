@@ -27,27 +27,30 @@ task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another usi
 
         const spinner: Spinner = new Spinner();
 
-        const routerAddress = taskArguments.router ? taskArguments.router : getRouterConfig(sourceBlockchain).address;
+        const checksummedTokenAddress = utils.getAddress(tokenAddress.toLowerCase());
+        const checksummedReceiver = utils.getAddress(receiver.toLowerCase());
+        const checksummedFeeTokenAddress = feeTokenAddress ? utils.getAddress(feeTokenAddress.toLowerCase()) : null;
+        const routerAddress = taskArguments.router ? utils.getAddress(taskArguments.router.toLowerCase()) : getRouterConfig(sourceBlockchain).address;
         const targetChainSelector = getRouterConfig(destinationBlockchain).chainSelector;
 
         const router: IRouterClient = IRouterClient__factory.connect(routerAddress, signer);
         const supportedTokens = await router.getSupportedTokens(targetChainSelector);
 
-        console.log(`ℹ️  Checking whether the ${tokenAddress} token is supported by Chainlink CCIP on the ${sourceBlockchain} blockchain`);
+        console.log(`ℹ️  Checking whether the ${checksummedTokenAddress} token is supported by Chainlink CCIP on the ${sourceBlockchain} blockchain`);
         spinner.start();
 
-        if (!supportedTokens.includes(utils.getAddress(tokenAddress))) {
+        if (!supportedTokens.includes(checksummedTokenAddress)) {
             spinner.stop();
-            console.error(`❌ Token address ${tokenAddress} not in the list of supportedTokens ${supportedTokens}`);
+            console.error(`❌ Token address ${checksummedTokenAddress} not in the list of supportedTokens ${supportedTokens}`);
             return 1;
         }
 
         spinner.stop();
-        console.log(`✅ Token ${tokenAddress} is supported by Chainlink CCIP on the ${sourceBlockchain} blockchain`);
+        console.log(`✅ Token ${checksummedTokenAddress} is supported by Chainlink CCIP on the ${sourceBlockchain} blockchain`);
 
-        const tokenToSend: IERC20 = IERC20__factory.connect(tokenAddress, signer);
+        const tokenToSend: IERC20 = IERC20__factory.connect(checksummedTokenAddress, signer);
 
-        console.log(`ℹ️  Attempting to approve Router smart contract (${routerAddress}) to spend ${amount} of ${tokenAddress} tokens on behalf of ${signer.address}`);
+        console.log(`ℹ️  Attempting to approve Router smart contract (${routerAddress}) to spend ${amount} of ${checksummedTokenAddress} tokens on behalf of ${signer.address}`);
         spinner.start();
 
         const approvalTx = await tokenToSend.approve(routerAddress, amount);
@@ -58,7 +61,7 @@ task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another usi
 
         const tokenAmounts = [
             {
-                token: tokenAddress,
+                token: checksummedTokenAddress,
                 amount: amount,
             },
         ];
@@ -70,10 +73,10 @@ task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another usi
         const encodedExtraArgs = `${functionSelector}${extraArgs.slice(2)}`;
 
         const message = {
-            receiver: utils.defaultAbiCoder.encode(["address"], [receiver]),
+            receiver: utils.defaultAbiCoder.encode(["address"], [checksummedReceiver]),
             data: utils.defaultAbiCoder.encode(["string"], [""]), // no data
             tokenAmounts: tokenAmounts,
-            feeToken: feeTokenAddress ? feeTokenAddress : constants.AddressZero,
+            feeToken: checksummedFeeTokenAddress ? checksummedFeeTokenAddress : constants.AddressZero,
             extraArgs: encodedExtraArgs,
         };
 
@@ -82,20 +85,20 @@ task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another usi
 
         const fees = await router.getFee(targetChainSelector, message);
 
-        if (feeTokenAddress) {
+        if (checksummedFeeTokenAddress) {
             spinner.stop();
             console.log(`ℹ️  Estimated fees (juels): ${fees}`);
 
             const supportedFeeTokens = getRouterConfig(sourceBlockchain).feeTokens;
 
-            if (!supportedFeeTokens.includes(utils.getAddress(feeTokenAddress))) {
-                console.error(`❌ Token address ${feeTokenAddress} not in the list of supportedTokens ${supportedFeeTokens}`);
+            if (!supportedFeeTokens.includes(checksummedFeeTokenAddress)) {
+                console.error(`❌ Token address ${checksummedFeeTokenAddress} not in the list of supportedTokens ${supportedFeeTokens}`);
                 return 1;
             }
 
-            const feeToken: IERC20 = IERC20__factory.connect(feeTokenAddress, signer);
+            const feeToken: IERC20 = IERC20__factory.connect(checksummedFeeTokenAddress, signer);
 
-            console.log(`ℹ️  Attempting to approve Router smart contract (${routerAddress}) to spend ${fees} of ${tokenAddress} tokens for Chainlink CCIP fees on behalf of ${signer.address}`);
+            console.log(`ℹ️  Attempting to approve Router smart contract (${routerAddress}) to spend ${fees} of ${checksummedTokenAddress} tokens for Chainlink CCIP fees on behalf of ${signer.address}`);
             spinner.start();
 
             const approvalTx = await feeToken.approve(routerAddress, fees);
@@ -104,7 +107,7 @@ task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another usi
             spinner.stop();
             console.log(`✅ Approved successfully, transaction hash: ${approvalTx.hash}`);
 
-            console.log(`ℹ️  Attempting to send ${amount} of ${tokenAddress} tokens from the ${sourceBlockchain} blockchain to ${receiver} address on the ${destinationBlockchain} blockchain`);
+            console.log(`ℹ️  Attempting to send ${amount} of ${checksummedTokenAddress} tokens from the ${sourceBlockchain} blockchain to ${checksummedReceiver} address on the ${destinationBlockchain} blockchain`);
             spinner.start();
 
             const sendTx = await router.ccipSend(targetChainSelector, message);
@@ -119,7 +122,7 @@ task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another usi
             spinner.stop();
             console.log(`ℹ️  Estimated fees (wei): ${fees}`);
 
-            console.log(`ℹ️  Attempting to send ${amount} of ${tokenAddress} tokens from the ${sourceBlockchain} blockchain to ${receiver} address on the ${destinationBlockchain} blockchain`);
+            console.log(`ℹ️  Attempting to send ${amount} of ${checksummedTokenAddress} tokens from the ${sourceBlockchain} blockchain to ${checksummedReceiver} address on the ${destinationBlockchain} blockchain`);
             spinner.start();
 
             const sendTx = await router.ccipSend(targetChainSelector, message, { value: fees });
