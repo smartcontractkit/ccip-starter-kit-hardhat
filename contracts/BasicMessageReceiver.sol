@@ -28,6 +28,7 @@ contract BasicMessageReceiver is CCIPReceiver, Withdraw {
     function _ccipReceive(
         Client.Any2EVMMessage memory message
     ) internal override {
+
         latestMessageId = message.messageId;
         latestSourceChainSelector = message.sourceChainSelector;
         latestSender = abi.decode(message.sender, (address));
@@ -40,6 +41,8 @@ contract BasicMessageReceiver is CCIPReceiver, Withdraw {
             latestMessage
         );
     }
+
+    
 
     function getLatestMessageDetails()
         public
