@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as access from "./access";
+export * as interfaces from "./interfaces";

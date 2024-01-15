@@ -2,7 +2,6 @@ import { task } from "hardhat/config";
 import { HardhatRuntimeEnvironment, TaskArguments } from "hardhat/types";
 import { getPrivateKey, getProviderRpcUrl, getRouterConfig } from "./utils";
 import { Wallet, providers } from "ethers";
-import { BasicMessageReceiver__factory, BasicMessageReceiver } from "../typechain-types";
 import { Spinner } from "../utils/spinner";
 import { LINK_ADDRESSES } from "./constants";
 
