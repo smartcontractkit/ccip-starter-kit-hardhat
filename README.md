@@ -76,7 +76,7 @@ We are going to use the [`@chainlink/env-enc`](https://www.npmjs.com/package/@ch
 npx env-enc set-pw
 ```
 
-2. Now set the following environment variables: `PRIVATE_KEY`, Source Blockchain RPC URL, Destination Blockchain RPC URL. You can see available options in the `.env.example` file:
+2. Now set the following environment variables: `PRIVATE_KEY`, Source Blockchain RPC URL, Destination Blockchain RPC URL. You can see available options in the `.env.example` file or check out the [latest supported networks in the docs](https://docs.chain.link/ccip/supported-networks):
 
 ```shell
 ETHEREUM_SEPOLIA_RPC_URL=""
@@ -102,7 +102,7 @@ npx env-enc view
 
 ### Faucet
 
-You will need test tokens for some of the examples in this Starter Kit. Public faucets sometimes limit how many tokens a user can create and token pools might not have enough liquidity. To resolve these issues, CCIP supports two test tokens that you can mint permissionlessly so you don't run out of tokens while testing different scenarios.
+You will need test tokens for some of the examples in this Starter Kit. Public faucets sometimes limit how many tokens a user can create and token pools might not have enough liquidity. To resolve these issues, CCIP supports two ERC20 tokens (`CCIP-BnM` and `CCIP-LnM`) that you can mint permissionlessly on each supported testnet so you don't run out of tokens while testing different scenarios.   You can get the addresses for the test tokens, for each supported network, [here](https://docs.chain.link/ccip/supported-networks). You can understand the architecture principles behind these two test tokens [here](https://docs.chain.link/ccip/architecture#token-pools).
 
 To get 10\*\*18 units of each of these tokens, use the `faucet` task. Keep in mind that the `CCIP-BnM` test token you can mint on all testnets, while `CCIP-LnM` you can mint only on Ethereum Sepolia. On other testnets, the `CCIP-LnM` token representation is a wrapped/synthetic asset called `clCCIP-LnM`.
 
@@ -119,7 +119,7 @@ For example, to mint tokens on ethereumSepolia run:
 npx hardhat faucet --network ethereumSepolia --receiver <RECEIVER_ADDRESS>
 ```
 
-### Example 1 - Transfer Tokens from EOA to EOA
+### Example 1 - Transfer CCIP Test Tokens from EOA to EOA
 
 To transfer tokens from one EOA on one blockchain to another EOA on another blockchain you can use the `ccip-token-transfer` command:
 
@@ -129,7 +129,7 @@ npx hardhat ccip-token-transfer
 --destination-blockchain <destinationBlockchain>
 --receiver <receiverAddressOnDestinationBlockchain>
 --token-address <tokenToSendAddressOnSourceBlockchain>
---amount <amountToSend>
+--amount <amountToSend>     # in units (eg wei)
 --fee-token-address  <feeTokenAddress> # Optional
 --router <sourceChainRouterAddress> # Optional
 --gasLimit <gasLimit> # Optional
@@ -143,7 +143,7 @@ Where the list of supported chains consists of (case sensitive):
 - avalancheFuji
 - polygonMumbai
 
-For example, if you want to send 100 units of Sepolia test LINK token from Ethereum Sepolia to Avalanche Fuji, and you want to pay for CCIP fees in native coin (Sepolia ether in this case), run:
+For example, if you want to send 100 juels (the sub-unit for LINK, like wei) from Ethereum Sepolia (LINK Address is `0x779877A7B0D9E8603169DdbD7836e478b4624789`)  to Avalanche Fuji, and you want to pay for CCIP fees in native coin (Sepolia ether in this case), run:
 
 ```shell
 npx hardhat ccip-token-transfer --source-blockchain ethereumSepolia --destination-blockchain avalancheFuji --receiver <RECEIVER_ADDRESS> --token-address 0x779877A7B0D9E8603169DdbD7836e478b4624789 --amount 100 --gas-limit 0
@@ -160,6 +160,8 @@ The proposed CCIP best practice is to always verify the `Router.sol` address. If
 ```shell
 npx hardhat ccip-token-transfer --source-blockchain ethereumSepolia --destination-blockchain avalancheFuji --receiver <RECEIVER_ADDRESS> --token-address 0x779877A7B0D9E8603169DdbD7836e478b4624789 --amount 100 --gas-limit 0 --fee-token-address 0x779877A7B0D9E8603169DdbD7836e478b4624789 --router <ROUTER_ADDRESS>
 ```
+
+> ⚠️ **Note:** The gas limit is set to 0 because the transaction is directed to an Externally Owned Account (EOA). Gas limits on destination chains are needed only when sending data or tokens to a smart contract.
 
 ### Example 2 - Transfer Tokens from EOA to Smart Contract
 
