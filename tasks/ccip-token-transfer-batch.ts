@@ -5,7 +5,7 @@ import { TaskArguments } from "hardhat/types";
 import { getPrivateKey, getProviderRpcUrl, getRouterConfig, getPayFeesIn } from "./utils";
 import { Wallet, providers } from "ethers";
 import { IRouterClient, IRouterClient__factory, IERC20, IERC20__factory } from "../typechain-types";
-import { MAX_TOKENS_LENGTH, TokenAmounts } from "./constants";
+import { TokenAmounts } from "./constants";
 import { BasicTokenSender } from "../typechain-types/artifacts/contracts/BasicTokenSender";
 import { BasicTokenSender__factory } from "../typechain-types/factories/artifacts/contracts/BasicTokenSender__factory";
 import { Spinner } from "../utils/spinner";
@@ -37,11 +37,6 @@ task(`ccip-token-transfer-batch`, `Transfers tokens from one blockchain to anoth
         const supportedTokens = await router.getSupportedTokens(targetChainSelector);
 
         const spinner: Spinner = new Spinner();
-
-        if (tokensToSendDetails.length > MAX_TOKENS_LENGTH) {
-            console.error(`❌ Maximum ${MAX_TOKENS_LENGTH} different tokens can be sent per CCIP Message`);
-            return 1;
-        }
 
         for (let i = 0; i < tokensToSendDetails.length; i++) {
             const { token, amount } = tokensToSendDetails[i];

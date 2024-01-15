@@ -25,7 +25,6 @@ contract SourceMinter is Withdraw {
     constructor(address router, address link) {
         i_router = router;
         i_link = link;
-        LinkTokenInterface(i_link).approve(i_router, type(uint256).max);
     }
 
     receive() external payable {}
@@ -51,7 +50,7 @@ contract SourceMinter is Withdraw {
         bytes32 messageId;
 
         if (payFeesIn == PayFeesIn.LINK) {
-            // LinkTokenInterface(i_link).approve(i_router, fee);
+            LinkTokenInterface(i_link).approve(i_router, fee);
             messageId = IRouterClient(i_router).ccipSend(
                 destinationChainSelector,
                 message
