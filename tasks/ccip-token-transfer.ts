@@ -95,7 +95,7 @@ task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another usi
 
             const feeToken: IERC20 = IERC20__factory.connect(feeTokenAddress, signer);
 
-            console.log(`ℹ️  Attempting to approve Router smart contract (${routerAddress}) to spend ${fees} of ${tokenAddress} tokens for Chainlink CCIP fees on behalf of ${signer.address}`);
+            console.log(`ℹ️  Attempting to approve Router smart contract (${routerAddress}) to spend ${fees} of ${feeTokenAddress} tokens for Chainlink CCIP fees on behalf of ${signer.address}`);
             spinner.start();
 
             const approvalTx = await feeToken.approve(routerAddress, fees);
