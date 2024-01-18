@@ -2,8 +2,7 @@
 
 import { task } from "hardhat/config";
 import { TaskArguments } from "hardhat/types";
-import { getPayFeesIn, getPrivateKey, getProviderRpcUrl, getRouterConfig } from "./utils";
-import { Wallet, providers } from "ethers";
+import { getPayFeesIn, getRouterConfig, getSigner } from "./utils";
 import { BasicMessageSender, BasicMessageSender__factory } from "../typechain-types";
 import { Spinner } from "../utils/spinner";
 
@@ -17,12 +16,7 @@ task(`send-message`, `Sends basic text messages`)
     .setAction(async (taskArguments: TaskArguments) => {
         const { sourceBlockchain, sender, destinationBlockchain, receiver, message, payFeesIn } = taskArguments;
 
-        const privateKey = getPrivateKey();
-        const sourceRpcProviderUrl = getProviderRpcUrl(sourceBlockchain);
-
-        const sourceProvider = new providers.JsonRpcProvider(sourceRpcProviderUrl);
-        const wallet = new Wallet(privateKey);
-        const signer = wallet.connect(sourceProvider);
+        const signer = getSigner(sourceBlockchain);
 
         const spinner: Spinner = new Spinner();
 
