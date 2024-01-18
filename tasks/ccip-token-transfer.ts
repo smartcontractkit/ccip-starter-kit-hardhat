@@ -1,7 +1,7 @@
 import { task } from "hardhat/config";
-import { HardhatRuntimeEnvironment, TaskArguments } from "hardhat/types";
-import { getPrivateKey, getProviderRpcUrl, getRouterConfig } from "./utils";
-import { Wallet, providers, utils, constants } from "ethers";
+import { TaskArguments } from "hardhat/types";
+import { getRouterConfig, getSignerAndProvider } from "./utils";
+import { utils, constants } from "ethers";
 import { IRouterClient, IRouterClient__factory, IERC20, IERC20__factory } from "../typechain-types";
 import { Spinner } from "../utils/spinner";
 import { getCcipMessageId } from "./helpers";
@@ -18,12 +18,7 @@ task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another usi
     .setAction(async (taskArguments: TaskArguments) => {
         const { sourceBlockchain, destinationBlockchain, receiver, tokenAddress, amount, feeTokenAddress, gasLimit } = taskArguments;
 
-        const privateKey = getPrivateKey();
-        const sourceRpcProviderUrl = getProviderRpcUrl(sourceBlockchain);
-
-        const provider = new providers.JsonRpcProvider(sourceRpcProviderUrl);
-        const wallet = new Wallet(privateKey);
-        const signer = wallet.connect(provider);
+        const { signer, provider } = getSignerAndProvider(sourceBlockchain);
 
         const spinner: Spinner = new Spinner();
 

@@ -1,7 +1,6 @@
 import { task } from "hardhat/config";
 import { HardhatRuntimeEnvironment, TaskArguments } from "hardhat/types";
-import { getPayFeesIn, getPrivateKey, getProviderRpcUrl, getRouterConfig } from "./utils";
-import { Wallet, providers } from "ethers";
+import { getPayFeesIn, getRouterConfig, getSigner, getSignerAndProvider, getProvider } from "./utils";
 import { DestinationMinter, DestinationMinter__factory, MyNFT, MyNFT__factory, SourceMinter, SourceMinter__factory } from "../typechain-types";
 import { Spinner } from "../utils/spinner";
 import { LINK_ADDRESSES } from "./constants";
@@ -10,18 +9,14 @@ import { getCcipMessageId } from "./helpers";
 task(`deploy-destination-cross-chain-nft-minter`, `Deploys MyNFT.sol and DestinationMinter.sol smart contracts`)
     .addOptionalParam(`router`, `The address of the Router contract on the destination blockchain`)
     .setAction(async (taskArguments: TaskArguments, hre: HardhatRuntimeEnvironment) => {
-        const routerAddress = taskArguments.router ? taskArguments.router : getRouterConfig(hre.network.name).address;
+        const blockchainNetwork = hre.network.name;
+        const routerAddress = taskArguments.router ? taskArguments.router : getRouterConfig(blockchainNetwork).address;
 
-        const privateKey = getPrivateKey();
-        const rpcProviderUrl = getProviderRpcUrl(hre.network.name);
-
-        const provider = new providers.JsonRpcProvider(rpcProviderUrl);
-        const wallet = new Wallet(privateKey);
-        const deployer = wallet.connect(provider);
+        const signer = getSigner(blockchainNetwork);
 
         const spinner: Spinner = new Spinner();
 
-        console.log(`ℹ️  Attempting to deploy MyNFT smart contract on the ${hre.network.name} blockchain using ${deployer.address} address`);
+        console.log(`ℹ️  Attempting to deploy MyNFT smart contract on the ${blockchainNetwork} blockchain using ${signer.address} address`);
         spinner.start();
 
         const myNftFactory: MyNFT__factory = await hre.ethers.getContractFactory('MyNFT') as MyNFT__factory;
@@ -29,9 +24,9 @@ task(`deploy-destination-cross-chain-nft-minter`, `Deploys MyNFT.sol and Destina
         await myNft.deployed();
 
         spinner.stop();
-        console.log(`✅ MyNFT contract deployed at address ${myNft.address} on the ${hre.network.name} blockchain`)
+        console.log(`✅ MyNFT contract deployed at address ${myNft.address} on the ${blockchainNetwork} blockchain`)
 
-        console.log(`ℹ️  Attempting to deploy DestinationMinter smart contract on the ${hre.network.name} blockchain using ${deployer.address} address, with the Router address ${routerAddress} provided as constructor argument`);
+        console.log(`ℹ️  Attempting to deploy DestinationMinter smart contract on the ${blockchainNetwork} blockchain using ${signer.address} address, with the Router address ${routerAddress} provided as constructor argument`);
         spinner.start();
 
         const destinationMinterFactory: DestinationMinter__factory = await hre.ethers.getContractFactory('DestinationMinter') as DestinationMinter__factory;
@@ -39,7 +34,7 @@ task(`deploy-destination-cross-chain-nft-minter`, `Deploys MyNFT.sol and Destina
         await destinationMinter.deployed();
 
         spinner.stop();
-        console.log(`✅ DestinationMinter contract deployed at address ${destinationMinter.address} on the ${hre.network.name} blockchain`);
+        console.log(`✅ DestinationMinter contract deployed at address ${destinationMinter.address} on the ${blockchainNetwork} blockchain`);
 
         console.log(`ℹ️  Attempting to grant the minter role to the DestinationMinter smart contract`);
         spinner.start();
@@ -54,19 +49,15 @@ task(`deploy-destination-cross-chain-nft-minter`, `Deploys MyNFT.sol and Destina
 task(`deploy-source-cross-chain-nft-minter`, `Deploys SourceMinter.sol smart contract`)
     .addOptionalParam(`router`, `The address of the Router contract on the source blockchain`)
     .setAction(async (taskArguments: TaskArguments, hre: HardhatRuntimeEnvironment) => {
-        const routerAddress = taskArguments.router ? taskArguments.router : getRouterConfig(hre.network.name).address;
-        const linkAddress = taskArguments.link ? taskArguments.link : LINK_ADDRESSES[hre.network.name]
+        const blockchainNetwork = hre.network.name;
+        const routerAddress = taskArguments.router ? taskArguments.router : getRouterConfig(blockchainNetwork).address;
+        const linkAddress = taskArguments.link ? taskArguments.link : LINK_ADDRESSES[blockchainNetwork]
 
-        const privateKey = getPrivateKey();
-        const rpcProviderUrl = getProviderRpcUrl(hre.network.name);
-
-        const provider = new providers.JsonRpcProvider(rpcProviderUrl);
-        const wallet = new Wallet(privateKey);
-        const deployer = wallet.connect(provider);
+        const signer = getSigner(blockchainNetwork);
 
         const spinner: Spinner = new Spinner();
 
-        console.log(`ℹ️  Attempting to deploy SourceMinter smart contract on the ${hre.network.name} blockchain using ${deployer.address} address, with the Router address ${routerAddress} and LINK address ${linkAddress} provided as constructor arguments`);
+        console.log(`ℹ️  Attempting to deploy SourceMinter smart contract on the ${blockchainNetwork} blockchain using ${signer.address} address, with the Router address ${routerAddress} and LINK address ${linkAddress} provided as constructor arguments`);
         spinner.start();
 
         const sourceMinterFactory: SourceMinter__factory = await hre.ethers.getContractFactory('SourceMinter') as SourceMinter__factory;
@@ -74,7 +65,7 @@ task(`deploy-source-cross-chain-nft-minter`, `Deploys SourceMinter.sol smart con
         await sourceMinter.deployed();
 
         spinner.stop();
-        console.log(`✅ SourceMinter contract deployed at address ${sourceMinter.address} on the ${hre.network.name} blockchain`);
+        console.log(`✅ SourceMinter contract deployed at address ${sourceMinter.address} on the ${blockchainNetwork} blockchain`);
     })
 
 task(`cross-chain-mint`, `Mints the new NFT by sending the Cross-Chain Message`)
@@ -86,12 +77,7 @@ task(`cross-chain-mint`, `Mints the new NFT by sending the Cross-Chain Message`)
     .setAction(async (taskArguments: TaskArguments) => {
         const { sourceBlockchain, sourceMinter, destinationBlockchain, destinationMinter, payFeesIn } = taskArguments;
 
-        const privateKey = getPrivateKey();
-        const sourceRpcProviderUrl = getProviderRpcUrl(sourceBlockchain);
-
-        const sourceProvider = new providers.JsonRpcProvider(sourceRpcProviderUrl);
-        const wallet = new Wallet(privateKey);
-        const signer = wallet.connect(sourceProvider);
+        const { signer, provider } = getSignerAndProvider(sourceBlockchain);
 
         const spinner: Spinner = new Spinner();
 
@@ -114,7 +100,7 @@ task(`cross-chain-mint`, `Mints the new NFT by sending the Cross-Chain Message`)
         spinner.stop();
         console.log(`✅ Mint request sent, transaction hash: ${tx.hash}`);
 
-        await getCcipMessageId(tx, receipt, sourceProvider);
+        await getCcipMessageId(tx, receipt, provider);
 
         console.log(`✅ Task cross-chain-mint finished with the execution`);
     })
@@ -124,8 +110,8 @@ task('cross-chain-mint-balance-of', 'Gets the balance of MyNFTs for provided add
     .addParam(`blockchain`, `The blockchain where the MyNFT smart contract was deployed`)
     .addParam(`owner`, `The address to check the balance of MyNFTs`)
     .setAction(async (taskArguments: TaskArguments) => {
-        const rpcProviderUrl = getProviderRpcUrl(taskArguments.blockchain);
-        const provider = new providers.JsonRpcProvider(rpcProviderUrl);
+
+        const provider = getProvider(taskArguments.blockchain);
 
         const spinner: Spinner = new Spinner();
 

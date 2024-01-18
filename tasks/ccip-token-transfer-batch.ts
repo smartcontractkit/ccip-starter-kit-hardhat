@@ -2,8 +2,7 @@
 
 import { task } from "hardhat/config";
 import { TaskArguments } from "hardhat/types";
-import { getPrivateKey, getProviderRpcUrl, getRouterConfig, getPayFeesIn } from "./utils";
-import { Wallet, providers } from "ethers";
+import { getRouterConfig, getPayFeesIn, getSignerAndProvider } from "./utils";
 import { IRouterClient, IRouterClient__factory, IERC20, IERC20__factory } from "../typechain-types";
 import { TokenAmounts } from "./constants";
 import { BasicTokenSender } from "../typechain-types/artifacts/contracts/BasicTokenSender";
@@ -23,12 +22,7 @@ task(`ccip-token-transfer-batch`, `Transfers tokens from one blockchain to anoth
         const { sourceBlockchain, basicTokenSenderAddress, destinationBlockchain, receiver, tokenAmounts, payFeesIn } = taskArguments;
         const tokensToSendDetails: TokenAmounts[] = JSON.parse(tokenAmounts);
 
-        const privateKey = getPrivateKey();
-        const sourceRpcProviderUrl = getProviderRpcUrl(sourceBlockchain);
-
-        const provider = new providers.JsonRpcProvider(sourceRpcProviderUrl);
-        const wallet = new Wallet(privateKey);
-        const signer = wallet.connect(provider);
+        const { signer, provider } = getSignerAndProvider(sourceBlockchain);
 
         const routerAddress = taskArguments.router ? taskArguments.router : getRouterConfig(sourceBlockchain).address;
         const targetChainSelector = getRouterConfig(destinationBlockchain).chainSelector;

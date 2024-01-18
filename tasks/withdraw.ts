@@ -1,7 +1,6 @@
 import { task } from "hardhat/config";
 import { TaskArguments } from "hardhat/types";
-import { getPrivateKey, getProviderRpcUrl } from "./utils";
-import { Wallet, providers } from "ethers";
+import { getSigner } from "./utils";
 import { Withdraw } from "../typechain-types/artifacts/contracts/utils";
 import { Withdraw__factory } from "../typechain-types/factories/artifacts/contracts/utils";
 import { Spinner } from "../utils/spinner";
@@ -14,12 +13,7 @@ task(`withdraw`, `Withdraws tokens and coins from Withdraw.sol. Must be called b
     .setAction(async (taskArguments: TaskArguments) => {
         const { blockchain, from, beneficiary, tokenAddress } = taskArguments;
 
-        const privateKey = getPrivateKey();
-        const rpcProviderUrl = getProviderRpcUrl(blockchain);
-
-        const provider = new providers.JsonRpcProvider(rpcProviderUrl);
-        const wallet = new Wallet(privateKey);
-        const signer = wallet.connect(provider);
+        const signer = getSigner(blockchain);
 
         const withdraw: Withdraw = Withdraw__factory.connect(from, signer);
 

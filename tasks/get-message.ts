@@ -1,7 +1,6 @@
 import { task } from "hardhat/config";
 import { HardhatRuntimeEnvironment, TaskArguments } from "hardhat/types";
-import { getProviderRpcUrl } from "./utils";
-import { providers } from "ethers";
+import { getProvider } from "./utils";
 import { BasicMessageReceiver__factory, BasicMessageReceiver } from "../typechain-types";
 import { Spinner } from "../utils/spinner";
 
@@ -11,8 +10,7 @@ task(`get-message`, `Gets BasicMessageSender latest received message details`)
     .setAction(async (taskArguments: TaskArguments, hre: HardhatRuntimeEnvironment) => {
         const { receiverAddress, blockchain } = taskArguments;
 
-        const rpcProviderUrl = getProviderRpcUrl(blockchain);
-        const provider = new providers.JsonRpcProvider(rpcProviderUrl);
+        const provider = getProvider(blockchain);
 
         const basicMessageReceiver: BasicMessageReceiver = BasicMessageReceiver__factory.connect(receiverAddress, provider);
 
