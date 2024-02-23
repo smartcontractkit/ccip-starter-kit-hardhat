@@ -17,12 +17,15 @@ const BASE_GOERLI_RPC_URL = process.env.BASE_GOERLI_RPC_URL;
 const config: HardhatUserConfig = {
   solidity: '0.8.19',
   networks: {
+    rinkeby: {
+      url: `https://rinkeby.infura.io/v3/222645bd82564c34bcd01e3c67517199`,
+    },
     hardhat: {
       chainId: 31337
     },
     ethereumSepolia: {
-      url: ETHEREUM_SEPOLIA_RPC_URL !== undefined ? ETHEREUM_SEPOLIA_RPC_URL : '',
-      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      url: "https://sepolia.infura.io/v3/222645bd82564c34bcd01e3c67517199",
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
       chainId: 11155111
     },
     polygonMumbai: {

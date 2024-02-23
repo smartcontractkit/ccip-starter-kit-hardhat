@@ -105,6 +105,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.BasicTokenSender__factory>;
     getContractFactory(
+      name: "Receiver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Receiver__factory>;
+    getContractFactory(
+      name: "Sender",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Sender__factory>;
+    getContractFactory(
       name: "DestinationMinter",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.DestinationMinter__factory>;
@@ -252,6 +260,16 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.BasicTokenSender>;
+    getContractAt(
+      name: "Receiver",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Receiver>;
+    getContractAt(
+      name: "Sender",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Sender>;
     getContractAt(
       name: "DestinationMinter",
       address: string,

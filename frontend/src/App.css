@@ -12,7 +12,28 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+button {
+  background-color: #A362D9;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px; /* This line creates the curved edges */
+  text-decoration: none;
+}
+.center-text {
+  text-align: center;
+}
 
+body {
+  margin: 0;
+  background-color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

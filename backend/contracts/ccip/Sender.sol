@@ -3,11 +3,12 @@ pragma solidity ^0.8.0;
 
 
 
-import "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol";
-import "@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IRouterClient.sol";
-import "@chainlink/contracts-ccip/src/v0.8/shared/access/OwnerIsCreator.sol";
-import "@chainlink/contracts-ccip/src/v0.8/ccip/libraries/Client.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import {LinkTokenInterface} from "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol";
+import {IRouterClient} from "@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IRouterClient.sol";
+import {OwnerIsCreator} from "@chainlink/contracts-ccip/src/v0.8/shared/access/OwnerIsCreator.sol";
+import {Client} from "@chainlink/contracts-ccip/src/v0.8/ccip/libraries/Client.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+
 
 contract Sender is Ownable {
 

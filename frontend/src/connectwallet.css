@@ -1,0 +1,9 @@
+
+button {
+    background-color: #A362D9;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px; /* This line creates the curved edges */
+    text-decoration: none;
+  } 

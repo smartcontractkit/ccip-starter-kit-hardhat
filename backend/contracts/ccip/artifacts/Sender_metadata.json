@@ -1,0 +1,319 @@
+{
+	"compiler": {
+		"version": "0.8.22+commit.4fc1097e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_link",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_router",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint64",
+						"name": "destinationChainSelector",
+						"type": "uint64"
+					}
+				],
+				"name": "DestinationChainNotAllowlisted",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "InvalidReceiverAddress",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "balance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "fee",
+						"type": "uint256"
+					}
+				],
+				"name": "NotEnoughMoney",
+				"type": "error"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "proposalId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint64",
+						"name": "destinationChainSelector",
+						"type": "uint64"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "amount",
+						"type": "bool"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "feeToken",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "fee",
+						"type": "uint256"
+					}
+				],
+				"name": "ProposalSent",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint64",
+						"name": "",
+						"type": "uint64"
+					}
+				],
+				"name": "allowlistedChains",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint64",
+						"name": "destinationChainSelector",
+						"type": "uint64"
+					},
+					{
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "vote",
+						"type": "bool"
+					}
+				],
+				"name": "send_message",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "messageId",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"owner()": {
+					"details": "Returns the address of the current owner."
+				},
+				"renounceOwnership()": {
+					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+				},
+				"transferOwnership(address)": {
+					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/ccip/Sender.sol": "Sender"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IRouterClient.sol": {
+			"keccak256": "0x7f2fdd93e516b7476c6fab099f6806adf5ceaf399b0cc415f6b9ede890f2379b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://14e2547e54a0e225d1aa654d49ad47a169f966b985456612af449eec610189ea",
+				"dweb:/ipfs/QmcWVnkJ6TKcUR4koDQQGiYMEt7vJ6WG9XcrwbPiPDHoP9"
+			]
+		},
+		"@chainlink/contracts-ccip/src/v0.8/ccip/libraries/Client.sol": {
+			"keccak256": "0x8af3ac1085c87342373772fb1a0107c7b90258e6bfed318ab2a601a14477e679",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://14395fefc8310c9a355262359c8f51036f83c004982fb600164c2a007629f81e",
+				"dweb:/ipfs/QmeCLr8a5bDVyLQm8v947ULgV4CZmUeQPjVyWixzieBD5o"
+			]
+		},
+		"@chainlink/contracts-ccip/src/v0.8/shared/access/ConfirmedOwner.sol": {
+			"keccak256": "0x99d0b0786fe368970009c703f2249bfbc56340ddf1a28b60d2915bb58c34cd72",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://af0371c1af45db651823b9a3d5af761b08243c78f105166342eee28de356c8dd",
+				"dweb:/ipfs/QmPnC9qNDKwJFd5unwLb9pxjrutoe8MWjm5EXHTxq2kJ4x"
+			]
+		},
+		"@chainlink/contracts-ccip/src/v0.8/shared/access/ConfirmedOwnerWithProposal.sol": {
+			"keccak256": "0x215529a99534a40e6257ef2282a91ea4a95b66debc3997866406907622efb405",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ecc56a2cddb1ba6225ca0cffb07fdf6e24bcc4234cc87710c42a59c0a21ae395",
+				"dweb:/ipfs/QmSpW4vkPHeRNZ14beMEk2LEtqY5JQTueNJC4sCT8JaSoc"
+			]
+		},
+		"@chainlink/contracts-ccip/src/v0.8/shared/access/OwnerIsCreator.sol": {
+			"keccak256": "0x895af02d6a3df2930bbb6ec1f2d68118b492ca6e710ba0c34fcb6b574a0906aa",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c4c69fab5eea1c0448f856a51d7e5736454fe5cc083d36c60bf3ee23bb3d0e8e",
+				"dweb:/ipfs/QmP4fYQ9k7xeZms6cwnqnQuuAkRkeE2TWewyvCD8Mrc2DZ"
+			]
+		},
+		"@chainlink/contracts-ccip/src/v0.8/shared/interfaces/IOwnable.sol": {
+			"keccak256": "0x885de72b7b4e4f1bf8ba817a3f2bcc37fd9022d342c4ce76782151c30122d767",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://17c636625a5d29a140612db496d2cca9fb4b48c673adb0fd7b3957d287e75921",
+				"dweb:/ipfs/QmNoBX8TY424bdQWyQC7y3kpKfgxyWxhLw7KEhhEEoBN9q"
+			]
+		},
+		"@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol": {
+			"keccak256": "0xc7d7cd730d36825485ef4107d93c3ff18b9f3a5a00ea3d5988ba9a0bd70b10c5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8cb1064885ecbcd9c3adba779e190cb4a538e5d4d15aeccb67d3376bdffc94bd",
+				"dweb:/ipfs/QmcQHK6ewve7tFi4XXK65JthQg4kQzApQikWcURJjGt4iQ"
+			]
+		},
+		"@openzeppelin/contracts/access/Ownable.sol": {
+			"keccak256": "0x6bb804a310218875e89d12c053e94a13a4607cdf7cc2052f3e52bd32a0dc50a1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b2ebbbe6d0011175bd9e7268b83de3f9c2f9d8d4cbfbaef12aff977d7d727163",
+				"dweb:/ipfs/Qmd5c7Vxtis9wzkDNhxwc6A2QT5H9xn9kfjhx7qx44vpro"
+			]
+		},
+		"@openzeppelin/contracts/utils/Context.sol": {
+			"keccak256": "0x90565a39ae45c80f0468dc96c7b20d0afc3055f344c8203a0c9258239f350b9f",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://26e8b38a7ac8e7b4463af00cf7fff1bf48ae9875765bf4f7751e100124d0bc8c",
+				"dweb:/ipfs/QmWcsmkVr24xmmjfnBQZoemFniXjj3vwT78Cz6uqZW1Hux"
+			]
+		},
+		"contracts/ccip/Sender.sol": {
+			"keccak256": "0xbb3b21d5ac230ea4a8762aff6e4ee5d621e0239504bc3e6a2a44e15c79e14a77",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://0e164e08f31732b4129d25259c35ac402d70301e52a9c65c236b3034adf0d4bf",
+				"dweb:/ipfs/QmasvTh2MZfWMu4nyy1asqeUPzF7DeenVzNu2DhsJGBgvi"
+			]
+		}
+	},
+	"version": 1
+}

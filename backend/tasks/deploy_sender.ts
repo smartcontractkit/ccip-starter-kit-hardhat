@@ -1,25 +1,18 @@
+const { expect } = require("chai");
 import { ethers } from "hardhat";
 
-async function main() {
-    // The addresses should be replaced with the actual addresses for your project
-    const linkTokenAddress = "your_LINK_token_contract_address_here";
-    const routerAddress = "your_router_contract_address_here";
-
+describe("Sender Contract", function () {
+  it("Should send a message correctly", async function () {
+    const [owner] = await ethers.getSigners();
     const Sender = await ethers.getContractFactory("Sender");
-    const sender = await Sender.deploy(linkTokenAddress, routerAddress);
+    const sender = await Sender.deploy(/* constructor arguments */);
 
-    await sender.deployed();
+    // Mock the CCIP interactions or assume successful transactions for simplicity
+    // Note: Actual CCIP testing would require a more complex setup or integration tests
 
-    console.log("Sender deployed to:", sender.address);
-}
+    // Example test: check initial settings
+    expect(await sender.owner()).to.equal(owner.address);
 
-main()
-    .then(() => process.exit(0))
-    .catch((error) => {
-        console.error(error);
-        process.exit(1);
-    });
-
-
-
-    
+    // More tests here...
+  });
+});

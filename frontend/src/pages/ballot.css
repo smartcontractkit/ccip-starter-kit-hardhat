@@ -1,0 +1,17 @@
+text {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+    line-height: 3;
+    letter-spacing: 1px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+label {
+    line-height: 2;
+    font-size: 20px;
+    font-weight: 400;
+    color: #A362D9;
+    margin-bottom: 100px;
+}
