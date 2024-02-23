@@ -23,7 +23,7 @@ export { OwnerIsCreator__factory } from "./factories/artifacts/@chainlink/contra
 export type { IOwnable } from "./artifacts/@chainlink/contracts-ccip/src/v0.8/shared/interfaces/IOwnable";
 export { IOwnable__factory } from "./factories/artifacts/@chainlink/contracts-ccip/src/v0.8/shared/interfaces/IOwnable__factory";
 export type { IERC20Permit } from "./artifacts/@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.0/contracts/token/ERC20/extensions/draft-IERC20Permit.sol/IERC20Permit";
-export { IERC20Permit__factory } from "./factories/artifacts/@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.0/contracts/token/ERC20/extensions/draft-IERC20Permit.sol/IERC20Permit__factory";
+export { IERC20Permit__factory } from "./factories/artifacts/@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.0/contracts/token/ERC20/extensions/draft-IERC20Permit.sol/ok";
 export type { IERC20 } from "./artifacts/@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.0/contracts/token/ERC20/IERC20";
 export { IERC20__factory } from "./factories/artifacts/@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.0/contracts/token/ERC20/IERC20__factory";
 export type { IERC165 } from "./artifacts/@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.0/contracts/utils/introspection/IERC165";
