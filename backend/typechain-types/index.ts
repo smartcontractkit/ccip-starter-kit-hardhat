@@ -23,7 +23,7 @@ export { OwnerIsCreator__factory } from "./factories/artifacts/@chainlink/contra
 export type { IOwnable } from "./artifacts/@chainlink/contracts-ccip/src/v0.8/shared/interfaces/IOwnable";
 export { IOwnable__factory } from "./factories/artifacts/@chainlink/contracts-ccip/src/v0.8/shared/interfaces/IOwnable__factory";
 export type { IERC20Permit } from "./artifacts/@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.0/contracts/token/ERC20/extensions/draft-IERC20Permit.sol/IERC20Permit";
-export { IERC20Permit__factory } from "./factories/artifacts/@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.0/contracts/token/ERC20/extensions/draft-IERC20Permit.sol/ok";
+export { IERC20Permit__factory } from "./factories/artifacts/@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.0/contracts/token/ERC20/extensions/draft-IERC20Permit.sol/IERC20Permit__factory";
 export type { IERC20 } from "./artifacts/@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.0/contracts/token/ERC20/IERC20";
 export { IERC20__factory } from "./factories/artifacts/@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.0/contracts/token/ERC20/IERC20__factory";
 export type { IERC165 } from "./artifacts/@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.0/contracts/utils/introspection/IERC165";
@@ -50,6 +50,10 @@ export type { BasicMessageSender } from "./artifacts/contracts/BasicMessageSende
 export { BasicMessageSender__factory } from "./factories/artifacts/contracts/BasicMessageSender__factory";
 export type { BasicTokenSender } from "./artifacts/contracts/BasicTokenSender";
 export { BasicTokenSender__factory } from "./factories/artifacts/contracts/BasicTokenSender__factory";
+export type { Receiver } from "./artifacts/contracts/ccip/Receiver";
+export { Receiver__factory } from "./factories/artifacts/contracts/ccip/Receiver__factory";
+export type { Sender } from "./artifacts/contracts/ccip/Sender";
+export { Sender__factory } from "./factories/artifacts/contracts/ccip/Sender__factory";
 export type { DestinationMinter } from "./artifacts/contracts/cross-chain-nft-minter/DestinationMinter";
 export { DestinationMinter__factory } from "./factories/artifacts/contracts/cross-chain-nft-minter/DestinationMinter__factory";
 export type { MyNFT } from "./artifacts/contracts/cross-chain-nft-minter/MyNFT";

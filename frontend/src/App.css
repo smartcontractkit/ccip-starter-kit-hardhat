@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #00ff00; /* Green color scheme */
 }
 
 .App-logo {
@@ -26,6 +31,14 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.my-form-container {
+  text-align: center;
+  padding: 20px;
+  background-color: #ffffff; /* White background for the form container */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(2, 44, 12, 0.1); /* Optional: Add a subtle shadow */
 }
 
 @keyframes App-logo-spin {

@@ -4,11 +4,13 @@
     "generateTypes": "typechain --target ethers-v5 --out-dir typechain-types './abi/*.json'"
   },
   "devDependencies": {
-    "@chainlink/contracts": "^0.6.1",
+    "@chainlink/contracts": "^0.5.1",
     "@chainlink/contracts-ccip": "^1.2.1",
     "@chainlink/env-enc": "^1.0.5",
     "@nomicfoundation/hardhat-toolbox": "^2.0.1",
+    "@types/react": "^18.2.58",
     "ethers": "^5.7.2",
-    "hardhat": "^2.14.1"
+    "hardhat": "^2.14.1",
+    "typescript": "^5.3.3"
   }
 }
