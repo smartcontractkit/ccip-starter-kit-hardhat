@@ -7,7 +7,7 @@ import type { Provider } from "@ethersproject/providers";
 import type {
   IERC20Permit,
   IERC20PermitInterface,
-} from "../../../../../../../../../../../../../../artifacts/@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.0/contracts/token/ERC20/extensions/draft-IERC20Permit.sol/IERC20Permit";
+} from "../../../../../../../../../../../../../../artifacts/@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/extensions/draft-IERC20Permit.sol/IERC20Permit";
 
 const _abi = [
   {
