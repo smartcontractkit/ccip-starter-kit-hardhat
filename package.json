@@ -5,7 +5,7 @@
   },
   "devDependencies": {
     "@chainlink/contracts": "^0.6.1",
-    "@chainlink/contracts-ccip": "^1.2.1",
+    "@chainlink/contracts-ccip": "^1.4.0",
     "@chainlink/env-enc": "^1.0.5",
     "@nomicfoundation/hardhat-toolbox": "^2.0.1",
     "ethers": "^5.7.2",

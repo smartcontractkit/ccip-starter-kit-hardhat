@@ -7,7 +7,7 @@ import type { Provider } from "@ethersproject/providers";
 import type {
   IERC165,
   IERC165Interface,
-} from "../../../../../../../../../../../../artifacts/@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.0/contracts/utils/introspection/IERC165";
+} from "../../../../../../../../../../../../artifacts/@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/utils/introspection/IERC165";
 
 const _abi = [
   {
