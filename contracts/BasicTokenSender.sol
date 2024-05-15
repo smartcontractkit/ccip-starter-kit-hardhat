@@ -65,7 +65,7 @@ contract BasicTokenSender is Withdraw {
 
         Client.EVM2AnyMessage memory message = Client.EVM2AnyMessage({
             receiver: abi.encode(receiver),
-            data: "",
+            data: abi.encode(""),
             tokenAmounts: tokensToSendDetails,
             extraArgs: "",
             feeToken: payFeesIn == PayFeesIn.LINK ? i_link : address(0)
