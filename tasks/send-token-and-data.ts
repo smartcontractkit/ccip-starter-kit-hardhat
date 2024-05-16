@@ -1,7 +1,6 @@
 import { task } from "hardhat/config";
 import { TaskArguments } from "hardhat/types";
-import { getPrivateKey, getProviderRpcUrl, getRouterConfig } from "./utils";
-import { Wallet, providers } from "ethers";
+import { getRouterConfig, getSigner } from "./utils";
 import { IRouterClient, IRouterClient__factory, ProgrammableTokenTransfers, ProgrammableTokenTransfers__factory } from "../typechain-types";
 import { Spinner } from "../utils/spinner";
 
@@ -17,12 +16,7 @@ task(`send-token-and-data`, `Sends token and data using ProgrammableTokenTransfe
     .setAction(async (taskArguments: TaskArguments) => {
         const { sourceBlockchain, sender, destinationBlockchain, receiver, message, tokenAddress, amount } = taskArguments;
 
-        const privateKey = getPrivateKey();
-        const sourceRpcProviderUrl = getProviderRpcUrl(sourceBlockchain);
-
-        const sourceProvider = new providers.JsonRpcProvider(sourceRpcProviderUrl);
-        const wallet = new Wallet(privateKey);
-        const signer = wallet.connect(sourceProvider);
+        const signer = getSigner(sourceBlockchain);
 
         const senderContract: ProgrammableTokenTransfers = ProgrammableTokenTransfers__factory.connect(sender, signer);
 
@@ -62,8 +56,7 @@ task(`get-received-message-details`, `Gets details of any CCIP message received 
     .setAction(async (taskArguments: TaskArguments) => {
         const { contractAddress, blockchain } = taskArguments;
 
-        const rpcProviderUrl = getProviderRpcUrl(blockchain);
-        const provider = new providers.JsonRpcProvider(rpcProviderUrl);
+        const { provider } = getSignerAndProvider(blockchain);
 
         const receiverContract: ProgrammableTokenTransfers = ProgrammableTokenTransfers__factory.connect(contractAddress, provider);
 

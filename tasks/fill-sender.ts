@@ -1,7 +1,6 @@
 import { task } from "hardhat/config";
 import { TaskArguments } from "hardhat/types";
-import { getPrivateKey, getProviderRpcUrl, getPayFeesIn } from "./utils";
-import { Wallet, providers } from "ethers";
+import { getPayFeesIn, getSigner } from "./utils";
 import { IERC20, IERC20__factory } from "../typechain-types";
 import { LINK_ADDRESSES, PayFeesIn } from "./constants";
 import { Spinner } from "../utils/spinner";
@@ -15,12 +14,7 @@ task(`fill-sender`, `Transfers the provided amount of LINK token or native coin 
     .setAction(async (taskArguments: TaskArguments) => {
         const { senderAddress, blockchain, amount, payFeesIn } = taskArguments;
 
-        const privateKey = getPrivateKey();
-        const rpcProviderUrl = getProviderRpcUrl(blockchain);
-
-        const provider = new providers.JsonRpcProvider(rpcProviderUrl);
-        const wallet = new Wallet(privateKey);
-        const signer = wallet.connect(provider);
+        const signer = getSigner(blockchain);
 
         const fees = getPayFeesIn(payFeesIn);
 
