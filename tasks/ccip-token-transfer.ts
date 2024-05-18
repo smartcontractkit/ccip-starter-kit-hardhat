@@ -1,13 +1,12 @@
 import { task } from "hardhat/config";
 import { HardhatRuntimeEnvironment, TaskArguments } from "hardhat/types";
-import { getPrivateKey, getProviderRpcUrl, getRouterConfig } from "./utils";
-import { Wallet, providers, utils, constants } from "ethers";
+import { getRouterConfig } from "./utils";
+import { utils, constants } from "ethers";
 import { IRouterClient, IRouterClient__factory, IERC20, IERC20__factory } from "../typechain-types";
 import { Spinner } from "../utils/spinner";
 import { getCcipMessageId } from "./helpers";
 
 task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another using Chainlink CCIP`)
-    .addParam(`sourceBlockchain`, `The name of the source blockchain (for example ethereumSepolia)`)
     .addParam(`destinationBlockchain`, `The name of the destination blockchain (for example polygonMumbai)`)
     .addParam(`receiver`, `The address of the receiver account on the destination blockchain`)
     .addParam(`tokenAddress`, `The address of a token to be sent on the source blockchain`)
@@ -15,25 +14,20 @@ task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another usi
     .addOptionalParam(`feeTokenAddress`, `The address of token for paying fees. If not provided, the source blockchain's native coin will be used`)
     .addOptionalParam(`router`, `The address of the Router contract on the source blockchain`)
     .addOptionalParam(`gasLimit`, `The maximum amount of gas CCIP can consume to execute ccipReceive() on the contract located on the destination blockchain. Unspent gas will not be refunded. Should be 0 for transfer to EOA.`)
-    .setAction(async (taskArguments: TaskArguments) => {
-        const { sourceBlockchain, destinationBlockchain, receiver, tokenAddress, amount, feeTokenAddress, gasLimit } = taskArguments;
+    .setAction(async (taskArguments: TaskArguments, hre: HardhatRuntimeEnvironment) => {
+        const { destinationBlockchain, receiver, tokenAddress, amount, feeTokenAddress, gasLimit } = taskArguments;
 
-        const privateKey = getPrivateKey();
-        const sourceRpcProviderUrl = getProviderRpcUrl(sourceBlockchain);
-
-        const provider = new providers.JsonRpcProvider(sourceRpcProviderUrl);
-        const wallet = new Wallet(privateKey);
-        const signer = wallet.connect(provider);
+        const [signer] = await hre.ethers.getSigners();
 
         const spinner: Spinner = new Spinner();
 
-        const routerAddress = taskArguments.router ? taskArguments.router : getRouterConfig(sourceBlockchain).address;
+        const routerAddress = taskArguments.router ? taskArguments.router : getRouterConfig(hre.network.name).address;
         const targetChainSelector = getRouterConfig(destinationBlockchain).chainSelector;
 
         const router: IRouterClient = IRouterClient__factory.connect(routerAddress, signer);
         const supportedTokens = await router.getSupportedTokens(targetChainSelector);
 
-        console.log(`ℹ️  Checking whether the ${tokenAddress} token is supported by Chainlink CCIP on the ${sourceBlockchain} blockchain`);
+        console.log(`ℹ️  Checking whether the ${tokenAddress} token is supported by Chainlink CCIP on the ${hre.network.name} blockchain`);
         spinner.start();
 
         if (!supportedTokens.includes(tokenAddress)) {
@@ -43,7 +37,7 @@ task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another usi
         }
 
         spinner.stop();
-        console.log(`✅ Token ${tokenAddress} is supported by Chainlink CCIP on the ${sourceBlockchain} blockchain`);
+        console.log(`✅ Token ${tokenAddress} is supported by Chainlink CCIP on the ${hre.network.name} blockchain`);
 
         const tokenToSend: IERC20 = IERC20__factory.connect(tokenAddress, signer);
 
@@ -86,7 +80,7 @@ task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another usi
             spinner.stop();
             console.log(`ℹ️  Estimated fees (juels): ${fees}`);
 
-            const supportedFeeTokens = getRouterConfig(sourceBlockchain).feeTokens;
+            const supportedFeeTokens = getRouterConfig(hre.network.name).feeTokens;
 
             if (!supportedFeeTokens.includes(feeTokenAddress)) {
                 console.error(`❌ Token address ${feeTokenAddress} not in the list of supportedTokens ${supportedFeeTokens}`);
@@ -104,7 +98,7 @@ task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another usi
             spinner.stop();
             console.log(`✅ Approved successfully, transaction hash: ${approvalTx.hash}`);
 
-            console.log(`ℹ️  Attempting to send ${amount} of ${tokenAddress} tokens from the ${sourceBlockchain} blockchain to ${receiver} address on the ${destinationBlockchain} blockchain`);
+            console.log(`ℹ️  Attempting to send ${amount} of ${tokenAddress} tokens from the ${hre.network.name} blockchain to ${receiver} address on the ${destinationBlockchain} blockchain`);
             spinner.start();
 
             const sendTx = await router.ccipSend(targetChainSelector, message);
@@ -113,13 +107,13 @@ task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another usi
             spinner.stop()
             console.log(`✅ Sent successfully! Transaction hash: ${sendTx.hash}`);
 
-            await getCcipMessageId(sendTx, receipt, provider);
+            await getCcipMessageId(sendTx, receipt, hre.ethers.provider);
 
         } else {
             spinner.stop();
             console.log(`ℹ️  Estimated fees (wei): ${fees}`);
 
-            console.log(`ℹ️  Attempting to send ${amount} of ${tokenAddress} tokens from the ${sourceBlockchain} blockchain to ${receiver} address on the ${destinationBlockchain} blockchain`);
+            console.log(`ℹ️  Attempting to send ${amount} of ${tokenAddress} tokens from the ${hre.network.name} blockchain to ${receiver} address on the ${destinationBlockchain} blockchain`);
             spinner.start();
 
             const sendTx = await router.ccipSend(targetChainSelector, message, { value: fees });
@@ -128,7 +122,7 @@ task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another usi
             spinner.stop()
             console.log(`✅ Sent successfully! Transaction hash: ${sendTx.hash}`);
 
-            await getCcipMessageId(sendTx, receipt, provider);
+            await getCcipMessageId(sendTx, receipt, hre.ethers.provider);
         }
 
         console.log(`✅ Task ccip-token-transfer finished with the execution`);

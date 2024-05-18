@@ -1,12 +1,11 @@
 import { task } from "hardhat/config";
-import { TaskArguments } from "hardhat/types";
-import { getPrivateKey, getProviderRpcUrl, getRouterConfig } from "./utils";
-import { Wallet, providers } from "ethers";
+import { HardhatRuntimeEnvironment, TaskArguments } from "hardhat/types";
+import { getRouterConfig } from "./utils";
+import { providers } from "ethers";
 import { IRouterClient, IRouterClient__factory, ProgrammableTokenTransfers, ProgrammableTokenTransfers__factory } from "../typechain-types";
 import { Spinner } from "../utils/spinner";
 
 task(`send-token-and-data`, `Sends token and data using ProgrammableTokenTransfers.sol`)
-    .addParam(`sourceBlockchain`, `The name of the source blockchain (for example ethereumSepolia)`)
     .addParam(`sender`, `The address of the sender ProgrammableTokenTransfers.sol on the source blockchain`)
     .addParam(`destinationBlockchain`, `The name of the destination blockchain (for example polygonMumbai)`)
     .addParam(`receiver`, `The address of the receiver ProgrammableTokenTransfers.sol on the destination blockchain`)
@@ -14,19 +13,14 @@ task(`send-token-and-data`, `Sends token and data using ProgrammableTokenTransfe
     .addParam(`tokenAddress`, `The address of a token to be sent on the source blockchain`)
     .addParam(`amount`, `The amount of token to be sent`)
     .addOptionalParam("router", `The address of the Router contract on the source blockchain`)
-    .setAction(async (taskArguments: TaskArguments) => {
-        const { sourceBlockchain, sender, destinationBlockchain, receiver, message, tokenAddress, amount } = taskArguments;
+    .setAction(async (taskArguments: TaskArguments, hre: HardhatRuntimeEnvironment) => {
+        const { sender, destinationBlockchain, receiver, message, tokenAddress, amount } = taskArguments;
 
-        const privateKey = getPrivateKey();
-        const sourceRpcProviderUrl = getProviderRpcUrl(sourceBlockchain);
-
-        const sourceProvider = new providers.JsonRpcProvider(sourceRpcProviderUrl);
-        const wallet = new Wallet(privateKey);
-        const signer = wallet.connect(sourceProvider);
+        const [signer] = await hre.ethers.getSigners();
 
         const senderContract: ProgrammableTokenTransfers = ProgrammableTokenTransfers__factory.connect(sender, signer);
 
-        const routerAddress = taskArguments.router ? taskArguments.router : getRouterConfig(sourceBlockchain).address;
+        const routerAddress = taskArguments.router ? taskArguments.router : getRouterConfig(hre.network.name).address;
         const destinationChainSelector = getRouterConfig(destinationBlockchain).chainSelector;
 
         const router: IRouterClient = IRouterClient__factory.connect(routerAddress, signer);
@@ -38,7 +32,7 @@ task(`send-token-and-data`, `Sends token and data using ProgrammableTokenTransfe
 
         const spinner: Spinner = new Spinner();
 
-        console.log(`ℹ️  Attempting to call the sendMessage function of ProgrammableTokenTransfers smart contract on the ${sourceBlockchain} blockchain using ${signer.address} address`);
+        console.log(`ℹ️  Attempting to call the sendMessage function of ProgrammableTokenTransfers smart contract on the ${hre.network.name} blockchain using ${signer.address} address`);
         spinner.start();
 
         const tx = await senderContract.sendMessage(
@@ -58,14 +52,10 @@ task(`send-token-and-data`, `Sends token and data using ProgrammableTokenTransfe
 
 task(`get-received-message-details`, `Gets details of any CCIP message received by the ProgrammableTokenTransfers.sol smart contract`)
     .addParam(`contractAddress`, `The address of the ProgrammableTokenTransfers.sol smart contract`)
-    .addParam(`blockchain`, `The name of the blockchain where the contract is (for example ethereumSepolia)`)
-    .setAction(async (taskArguments: TaskArguments) => {
-        const { contractAddress, blockchain } = taskArguments;
+    .setAction(async (taskArguments: TaskArguments, hre: HardhatRuntimeEnvironment) => {
+        const { contractAddress } = taskArguments;
 
-        const rpcProviderUrl = getProviderRpcUrl(blockchain);
-        const provider = new providers.JsonRpcProvider(rpcProviderUrl);
-
-        const receiverContract: ProgrammableTokenTransfers = ProgrammableTokenTransfers__factory.connect(contractAddress, provider);
+        const receiverContract: ProgrammableTokenTransfers = ProgrammableTokenTransfers__factory.connect(contractAddress, hre.ethers.provider);
 
         console.log(await receiverContract.getLastReceivedMessageDetails());
     })

@@ -1,7 +1,6 @@
 import { task } from "hardhat/config";
 import { HardhatRuntimeEnvironment, TaskArguments } from "hardhat/types";
-import { getPrivateKey, getProviderRpcUrl, getRouterConfig } from "./utils";
-import { Wallet, providers } from "ethers";
+import { getRouterConfig } from "./utils";
 import { BasicMessageReceiver__factory, BasicMessageReceiver } from "../typechain-types";
 import { Spinner } from "../utils/spinner";
 
@@ -10,12 +9,7 @@ task(`deploy-basic-message-receiver`, `Deploys the BasicMessageReceiver smart co
     .setAction(async (taskArguments: TaskArguments, hre: HardhatRuntimeEnvironment) => {
         const routerAddress = taskArguments.router ? taskArguments.router : getRouterConfig(hre.network.name).address;
 
-        const privateKey = getPrivateKey();
-        const rpcProviderUrl = getProviderRpcUrl(hre.network.name);
-
-        const provider = new providers.JsonRpcProvider(rpcProviderUrl);
-        const wallet = new Wallet(privateKey);
-        const deployer = wallet.connect(provider);
+        const [deployer] = await hre.ethers.getSigners();
 
         const spinner: Spinner = new Spinner();
 
@@ -27,5 +21,5 @@ task(`deploy-basic-message-receiver`, `Deploys the BasicMessageReceiver smart co
         await basicMessageReceiver.deployed();
 
         spinner.stop();
-        console.log(`✅ Basic Message Receiver deployed at address ${basicMessageReceiver.address} on ${hre.network.name} blockchain`)
+        console.log(`✅ Basic Message Receiver deployed at address ${basicMessageReceiver.address} on ${hre.network.name} blockchain`);
     });

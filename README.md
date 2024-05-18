@@ -127,7 +127,6 @@ To transfer tokens from one EOA on one blockchain to another EOA on another bloc
 
 ```shell
 npx hardhat ccip-token-transfer
---source-blockchain <sourceBlockchain>
 --destination-blockchain <destinationBlockchain>
 --receiver <receiverAddressOnDestinationBlockchain>
 --token-address <tokenToSendAddressOnSourceBlockchain>
@@ -135,6 +134,7 @@ npx hardhat ccip-token-transfer
 --fee-token-address  <feeTokenAddress> # Optional
 --router <sourceChainRouterAddress> # Optional
 --gasLimit <gasLimit> # Optional
+--network <sourceNetwork>
 ```
 
 Where the list of supported chains consists of (case sensitive):
@@ -150,19 +150,19 @@ Where the list of supported chains consists of (case sensitive):
 For example, if you want to send 100 units of CCIP-BnM token from Avalanche Fuji to Ethereum Sepolia, and you want to pay for CCIP fees in native coin (Avalanche Fuji AVAX in this case), run:
 
 ```shell
-npx hardhat ccip-token-transfer --source-blockchain avalancheFuji --destination-blockchain ethereumSepolia --receiver <RECEIVER_ADDRESS> --token-address 0xD21341536c5cF5EB1bcb58f6723cE26e8D8E90e4 --amount 100 --gas-limit 0
+npx hardhat ccip-token-transfer --destination-blockchain ethereumSepolia --receiver <RECEIVER_ADDRESS> --token-address 0xD21341536c5cF5EB1bcb58f6723cE26e8D8E90e4 --amount 100 --gas-limit 0 --network avalancheFuji
 ```
 
 If you want to pay for CCIP fees in Avalanche Fuji test LINK, expand the previous command with the additional `--fee-token-address` flag:
 
 ```shell
-npx hardhat ccip-token-transfer --source-blockchain avalancheFuji --destination-blockchain ethereumSepolia --receiver <RECEIVER_ADDRESS> --token-address 0xD21341536c5cF5EB1bcb58f6723cE26e8D8E90e4 --amount 100 --gas-limit 0 --fee-token-address 0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846
+npx hardhat ccip-token-transfer --destination-blockchain ethereumSepolia --receiver <RECEIVER_ADDRESS> --token-address 0xD21341536c5cF5EB1bcb58f6723cE26e8D8E90e4 --amount 100 --gas-limit 0 --fee-token-address 0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846 --network avalancheFuji
 ```
 
 The proposed CCIP best practice is to always verify the `Router.sol` address. If you want to pass the source blockchain `Router.sol` address you can use the optional `--router` flag:
 
 ```shell
-npx hardhat ccip-token-transfer --source-blockchain avalancheFuji --destination-blockchain ethereumSepolia --receiver <RECEIVER_ADDRESS> --token-address 0xD21341536c5cF5EB1bcb58f6723cE26e8D8E90e4 --amount 100 --gas-limit 0 --fee-token-address 0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846 --router <ROUTER_ADDRESS>
+npx hardhat ccip-token-transfer --destination-blockchain ethereumSepolia --receiver <RECEIVER_ADDRESS> --token-address 0xD21341536c5cF5EB1bcb58f6723cE26e8D8E90e4 --amount 100 --gas-limit 0 --fee-token-address 0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846 --router <ROUTER_ADDRESS> --network avalancheFuji
 ```
 
 > ⚠️ **Note:** The gas limit is set to 0 because the transaction is directed to an Externally Owned Account (EOA). Gas limits on destination chains are needed only when sending data or tokens to a smart contract.
@@ -176,6 +176,7 @@ To transfer tokens from EOA from the source blockchain to the smart contract on 
 ```shell
 npx hardhat deploy-basic-message-receiver
 --router <routerAddress> # Optional
+--network <sourceNetwork>
 ```
 
 For example, if you want to send tokens from avalancheFuji to ethereumSepolia, you need to deploy this contract on ethereumSepolia, by running:
@@ -193,7 +194,7 @@ npx hardhat deploy-basic-message-receiver --network ethereumSepolia --router <RO
 2. Transfer tokens to the deployed smart contract using the `ccip-token-transfer` task, by putting its address as a receiver flag. For example, if you want to send 100 units of CCIP-BnM from avalancheFuji run:
 
 ```shell
-npx hardhat ccip-token-transfer --source-blockchain avalancheFuji --destination-blockchain ethereumSepolia --receiver <BASIC_MESSAGE_RECEIVER_ADDRESS> --token-address 0xD21341536c5cF5EB1bcb58f6723cE26e8D8E90e4 --amount 100 --fee-token-address 0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846
+npx hardhat ccip-token-transfer --destination-blockchain ethereumSepolia --receiver <BASIC_MESSAGE_RECEIVER_ADDRESS> --token-address 0xD21341536c5cF5EB1bcb58f6723cE26e8D8E90e4 --amount 100 --fee-token-address 0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846 --network avalancheFuji
 ```
 
 3. Once the CCIP message is finalized on the destination blockchain, you can always withdraw received tokens from the [`BasicMessageReceiver.sol`](./contracts/BasicMessageReceiver.sol) smart contract using the `withdraw` task. Note that the `--token-address` flag is optional. If not provided, native coins will be withdrawn.
@@ -201,15 +202,15 @@ npx hardhat ccip-token-transfer --source-blockchain avalancheFuji --destination-
 ```shell
 npx hardhat withdraw
 --beneficiary <withdrawTo>
---blockchain <basicMessageReceiverBlockchain>
 --from <basicMessageReceiverAddress>
 --token-address <tokenToWithdraw> # Optional, if left empty native coins will be withdrawn
+--network <sourceNetwork>
 ```
 
 For example, to withdraw 100 units of CCIP-BnM previously sent, run:
 
 ```shell
-npx hardhat withdraw --beneficiary <BENEFICIARY_ADDRESS> --blockchain ethereumSepolia --from <BASIC_MESSAGE_RECEIVER_ADDRESS> --token-address 0xFd57b4ddBf88a4e07fF4e34C487b99af2Fe82a05
+npx hardhat withdraw --beneficiary <BENEFICIARY_ADDRESS> --from <BASIC_MESSAGE_RECEIVER_ADDRESS> --token-address 0xFd57b4ddBf88a4e07fF4e34C487b99af2Fe82a05 --network ethereumSepolia
 ```
 
 ### Example 3 - Transfer Token(s) from Smart Contract to any destination
@@ -222,6 +223,7 @@ To transfer a token or batch of tokens from a single, universal, smart contract 
 npx hardhat deploy-basic-token-sender
 --router <routerAddress> # Optional
 --link <linkTokenAddress> # Optional
+--network <sourceNetwork>
 ```
 
 For example, if you want to send tokens from avalancheFuji to ethereumSepolia, run:
@@ -243,28 +245,28 @@ npx hardhat deploy-basic-message-receiver --network ethereumSepolia
 ```shell
 npx hardhat fill-sender
 --sender-address <addressOfBasicTokenSenderContractWeDeployed>
---blockchain <blockchain>
 --amount <amountToSend>
 --pay-fees-in <Native | LINK>
+--network <sourceNetwork>
 ```
 
 For example, if you want to send tokens from avalancheFuji and fund it with 3 Avalanche Fuji LINK for Chainlink CCIP fees, run:
 
 ```shell
-npx hardhat fill-sender --sender-address <BASIC_TOKEN_SENDER_ADDRESS> --blockchain avalancheFuji --amount 3000000000000000000 --pay-fees-in LINK
+npx hardhat fill-sender --sender-address <BASIC_TOKEN_SENDER_ADDRESS> --amount 3000000000000000000 --pay-fees-in LINK --network avalancheFuji
 ```
 
 4. Finally, send tokens by providing the array of `{token, amount}` objects, using the `ccip-token-transfer-batch` task:
 
 ```shell
 npx hardhat ccip-token-transfer-batch
---source-blockchain <sourceBlockchain>
 --basic-token-sender-address <addressOfBasicTokenSenderContractWeDeployed>
 --destination-blockchain <destinationBlockchain>
 --receiver <receiverAddressOnDestinationBlockchain>
 --token-amounts <tokenAmounts>
 --pay-fees-in <Native | LINK>
 --router <router> # Optional
+--network <sourceNetwork>
 ```
 
 The `payFeesIn` flag determines whether you are paying for CCIP fees with LINK tokens or native coins on the source blockchain (Pass "Native" or "LINK").
@@ -272,7 +274,7 @@ The `payFeesIn` flag determines whether you are paying for CCIP fees with LINK t
 For example, to send 100 units of CCIP-BnM tokens from avalancheFuji to ethereumSepolia and pay fees in Avalanche Fuji LINK, run:
 
 ```shell
-npx hardhat ccip-token-transfer-batch --source-blockchain avalancheFuji --basic-token-sender-address <BASIC_TOKEN_SENDER_ADDRESS> --destination-blockchain ethereumSepolia --receiver <RECEIVER_ADDRESS> --token-amounts '[{"token":"0xD21341536c5cF5EB1bcb58f6723cE26e8D8E90e4","amount":"100"}]' --pay-fees-in LINK
+npx hardhat ccip-token-transfer-batch --basic-token-sender-address <BASIC_TOKEN_SENDER_ADDRESS> --destination-blockchain ethereumSepolia --receiver <RECEIVER_ADDRESS> --token-amounts '[{"token":"0xD21341536c5cF5EB1bcb58f6723cE26e8D8E90e4","amount":"100"}]' --pay-fees-in LINK --network avalancheFuji
 ```
 
 5. You can always withdraw tokens for Chainlink CCIP fees from the [`BasicTokenSender.sol`](./contracts/BasicTokenSender.sol) smart contract using the `withdraw` task. Note that the `--token-address` flag is optional. If not provided, native coins will be withdrawn.
@@ -280,15 +282,15 @@ npx hardhat ccip-token-transfer-batch --source-blockchain avalancheFuji --basic-
 ```shell
 npx hardhat withdraw
 --beneficiary <withdrawTo>
---blockchain <basicTokenSenderBlockchain>
 --from <basicTokenSenderAddress>
 --token-address <tokensToWithdraw> # Optional, if left empty native coins will be withdrawn
+--network <basicTokenSenderBlockchain>
 ```
 
 For example, to withdraw the Avalanche Fuji LINK you previously sent for Chainlink CCIP fees, run:
 
 ```shell
-npx hardhat withdraw --beneficiary <BENEFICIARY_ADDRESS> --blockchain avalancheFuji --from <BASIC_TOKEN_SENDER_ADDRESS> --token-address 0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846
+npx hardhat withdraw --beneficiary <BENEFICIARY_ADDRESS> --from <BASIC_TOKEN_SENDER_ADDRESS> --token-address 0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846 --network avalancheFuji
 ```
 
 ### Example 4 - Send & Receive Tokens and Data
@@ -300,6 +302,7 @@ To transfer tokens and data across multiple chains, follow the next steps:
 ```shell
 npx hardhat deploy-programmable-token-transfers
 --router <router> # Optional
+--network <sourceNetwork>
 ```
 
 For example, if you want to send a message from Ethereum Sepolia to Polygon Mumbai type:
@@ -326,7 +329,6 @@ At this point, you have one **sender** contract on the source blockchain, and on
 
 ```shell
 npx hardhat send-token-and-data
---source-blockchain <sourceBlockchain>
 --sender <addressOfProgrammableTokenTransfersOnSourceBlockchain>
 --destination-blockchain <destinationBlockchain>
 --receiver <ddressOfProgrammableTokenTransfersOnDestinationBlockchain>
@@ -334,26 +336,27 @@ npx hardhat send-token-and-data
 --token-address <tokenToSendAddressOnSourceBlockchain>
 --amount <amountToSend>
 --router <router> # Optional
+--network <sourceNetwork>
 ```
 
 For example, if you want to send a "Hello World" message alongside 100 Sepolia LINK from Ethereum Sepolia to Polygon Mumbai type:
 
 ```shell
-npx hardhat send-token-and-data --source-blockchain ethereumSepolia --sender <CONTRACT_ADDRESS_ON_SOURCE_BLOCKCHAIN> --destination-blockchain polygonMumbai --receiver <CONTRACT_ADDRESS_ON_DESTINATION_BLOCKCHAIN> --message "Hello World" --token-address 0xFd57b4ddBf88a4e07fF4e34C487b99af2Fe82a05 --amount 100
+npx hardhat send-token-and-data --sender <CONTRACT_ADDRESS_ON_SOURCE_BLOCKCHAIN> --destination-blockchain polygonMumbai --receiver <CONTRACT_ADDRESS_ON_DESTINATION_BLOCKCHAIN> --message "Hello World" --token-address 0xFd57b4ddBf88a4e07fF4e34C487b99af2Fe82a05 --amount 100 --network ethereumSepolia
 ```
 
 6. Once the CCIP message is finalized on the destination blockchain, you can see the details of the latest CCIP message received, by running the `get-received-message-details` task:
 
 ```shell
 npx hardhat get-received-message-details
---blockchain <destinationBlockchain>
 --contract-address <programmableTokenTransfersAddressOnDestinationBlockchain>
+--network <destinationBlockchain>
 ```
 
 For example,
 
 ```shell
-npx hardhat get-received-message-details --blockchain polygonMumbai --contract-address <PROGRAMMABLE_TOKEN_TRANSFERS_ADDRESS_ON_DESTINATION_BLOCKCHAIN>
+npx hardhat get-received-message-details --contract-address <PROGRAMMABLE_TOKEN_TRANSFERS_ADDRESS_ON_DESTINATION_BLOCKCHAIN> --network polygonMumbai
 ```
 
 ### Example 5 - Send & Receive Cross-Chain Messages and Pay with Native Coins
@@ -366,6 +369,7 @@ To send simple Text Cross-Chain Messages and pay for CCIP fees in Native Tokens,
 npx hardhat deploy-basic-message-sender
 --router <routerAddress> # Optional
 --link <linkTokenAddress> # Optional
+--network <sourceNetwork>
 ```
 
 For example, if you want to send a simple cross-chain message from ethereumSepolia, run
@@ -379,7 +383,7 @@ npx hardhat deploy-basic-message-sender --network ethereumSepolia
 For example, if you want to send 0.01 Sepolia ether, run:
 
 ```shell
-npx hardhat fill-sender --sender-address <BASIC_MESSAGE_SENDER_ADDRESS> --blockchain ethereumSepolia --amount 10000000000000000 --pay-fees-in Native
+npx hardhat fill-sender --sender-address <BASIC_MESSAGE_SENDER_ADDRESS> --amount 10000000000000000 --pay-fees-in Native --network ethereumSepolia
 ```
 
 3. Deploy the [`BasicMessageReceiver.sol`](./contracts/BasicMessageReceiver.sol) smart contract to the **destination blockchain**, using the `deploy-basic-message-receiver` task.
@@ -394,18 +398,18 @@ npx hardhat deploy-basic-message-receiver --network avalancheFuji
 
 ```shell
 npx hardhat send-message
---source-blockchain <sourceBlockchain>
 --sender <addressOfBasicMessageSenderOnSourceBlockchain>
 --destination-blockchain <destinationBlockchain>
 --receiver <ddressOfBasicMessageReceiverOnDestinationBlockchain>
 --message <messageToSend>
 --pay-fees-in <Native>
+--network <sourceBlockchain>
 ```
 
 For example, if you want to send a "Hello, World!" message type:
 
 ```shell
-npx hardhat send-message --source-blockchain ethereumSepolia --sender <BASIC_MESSAGE_SENDER_ADDRESS> --destination-blockchain avalancheFuji --receiver <BASIC_MESSAGE_RECEIVER_ADDRESS> --message 'Hello, World!' --pay-fees-in Native
+npx hardhat send-message --sender <BASIC_MESSAGE_SENDER_ADDRESS> --destination-blockchain avalancheFuji --receiver <BASIC_MESSAGE_RECEIVER_ADDRESS> --message 'Hello, World!' --pay-fees-in Native --network ethereumSepolia
 ```
 
 5. Once the CCIP message is finalized on the destination blockchain, you can query the latest received message details, using the `get-message` task:
@@ -414,14 +418,14 @@ npx hardhat send-message --source-blockchain ethereumSepolia --sender <BASIC_MES
 
 ```shell
 npx hardhat get-message
---blockchain <destinationBlockchain>
 --receiver-address <basicMessageReceiverAddress>
+--network <destinationBlockchain>
 ```
 
 For example, to get the message details sent in the previous step, type:
 
 ```shell
-npx hardhat get-message --blockchain avalancheFuji --receiver-address <BASIC_MESSAGE_RECEIVER_ADDRESS>
+npx hardhat get-message --receiver-address <BASIC_MESSAGE_RECEIVER_ADDRESS> --network avalancheFuji
 ```
 
 6. You can always withdraw tokens for Chainlink CCIP fees from the [`BasicMessageSender.sol`](./contracts/BasicMessageSender.sol) smart contract using the `withdraw` task. Note that the `--token-address` flag is optional. If not provided, native coins will be withdrawn.
@@ -429,15 +433,15 @@ npx hardhat get-message --blockchain avalancheFuji --receiver-address <BASIC_MES
 ```shell
 npx hardhat withdraw
 --beneficiary <withdrawTo>
---blockchain <basicMessageSenderBlockchain>
 --from <basicMessageSenderAddress>
 --token-address <tokensToWithdraw> # Optional, if left empty native coins will be withdrawn
+--network <basicMessageSenderBlockchain>
 ```
 
 For example, to withdraw Sepolia ether previously sent for Chainlink CCIP fees, run:
 
 ```shell
-npx hardhat withdraw --beneficiary <BENEFICIARY_ADDRESS> --blockchain ethereumSepolia --from <BASIC_MESSAGE_SENDER_ADDRESS>
+npx hardhat withdraw --beneficiary <BENEFICIARY_ADDRESS> --from <BASIC_MESSAGE_SENDER_ADDRESS> --network ethereumSepolia 
 ```
 
 ### Example 6 - Send & Receive Cross-Chain Messages and Pay with LINK Tokens
@@ -450,6 +454,7 @@ To send simple Text Cross-Chain Messages and pay for CCIP fees in LINK Tokens, f
 npx hardhat deploy-basic-message-sender
 --router <routerAddress> # Optional
 --link <linkTokenAddress> # Optional
+--network <sourceBlockchain>
 ```
 
 For example, if you want to send a simple cross-chain message from ethereumSepolia, run
@@ -463,7 +468,7 @@ npx hardhat deploy-basic-message-sender --network ethereumSepolia
 For example, if you want to send 0.001 Sepolia LINK, run:
 
 ```shell
-npx hardhat fill-sender --sender-address <BASIC_MESSAGE_SENDER_ADDRESS> --blockchain ethereumSepolia --amount 1000000000000000 --pay-fees-in LINK
+npx hardhat fill-sender --sender-address <BASIC_MESSAGE_SENDER_ADDRESS> --amount 1000000000000000 --pay-fees-in LINK --network ethereumSepolia
 ```
 
 3. Deploy the [`BasicMessageReceiver.sol`](./contracts/BasicMessageReceiver.sol) smart contract to the **destination blockchain**, using the `deploy-basic-message-receiver` task.
@@ -478,18 +483,18 @@ npx hardhat deploy-basic-message-receiver --network avalancheFuji
 
 ```shell
 npx hardhat send-message
---source-blockchain <sourceBlockchain>
 --sender <addressOfBasicMessageSenderOnSourceBlockchain>
 --destination-blockchain <destinationBlockchain>
 --receiver <ddressOfBasicMessageReceiverOnDestinationBlockchain>
 --message <messageToSend>
 --pay-fees-in <LINK>
+--network <sourceBlockchain>
 ```
 
 For example, if you want to send a "Hello, World!" message type:
 
 ```shell
-npx hardhat send-message --source-blockchain ethereumSepolia --sender <BASIC_MESSAGE_SENDER_ADDRESS> --destination-blockchain avalancheFuji --receiver <BASIC_MESSAGE_RECEIVER_ADDRESS> --message 'Hello, World!' --pay-fees-in LINK
+npx hardhat send-message --sender <BASIC_MESSAGE_SENDER_ADDRESS> --destination-blockchain avalancheFuji --receiver <BASIC_MESSAGE_RECEIVER_ADDRESS> --message 'Hello, World!' --pay-fees-in LINK --network ethereumSepolia
 ```
 
 5. Once the CCIP message is finalized on the destination blockchain, you can query the latest received message details, using the `get-message` task:
@@ -498,14 +503,14 @@ npx hardhat send-message --source-blockchain ethereumSepolia --sender <BASIC_MES
 
 ```shell
 npx hardhat get-message
---blockchain <destinationBlockchain>
 --receiver-address <basicMessageReceiverAddress>
+--network <destinationBlockchain>
 ```
 
 For example, to get the message details sent in the previous step, type:
 
 ```shell
-npx hardhat get-message --blockchain avalancheFuji --receiver-address <BASIC_MESSAGE_RECEIVER_ADDRESS>
+npx hardhat get-message --receiver-address <BASIC_MESSAGE_RECEIVER_ADDRESS> --network avalancheFuji
 ```
 
 6. You can always withdraw tokens for Chainlink CCIP fees from the [`BasicMessageSender.sol`](./contracts/BasicMessageSender.sol) smart contract using the `withdraw` task. Note that the `--token-address` flag is optional. If not provided, native coins will be withdrawn.
@@ -513,15 +518,15 @@ npx hardhat get-message --blockchain avalancheFuji --receiver-address <BASIC_MES
 ```shell
 npx hardhat withdraw
 --beneficiary <withdrawTo>
---blockchain <basicMessageSenderBlockchain>
 --from <basicMessageSenderAddress>
 --token-address <tokensToWithdraw> # Optional, if left empty native coins will be withdrawn
+--network <basicMessageSenderBlockchain>
 ```
 
 For example, to withdraw Sepolia LINK previously sent for Chainlink CCIP fees, run:
 
 ```shell
-npx hardhat withdraw --beneficiary <BENEFICIARY_ADDRESS> --blockchain ethereumSepolia --from <BASIC_MESSAGE_SENDER_ADDRESS> --token-address 0x779877A7B0D9E8603169DdbD7836e478b4624789
+npx hardhat withdraw --beneficiary <BENEFICIARY_ADDRESS> --from <BASIC_MESSAGE_SENDER_ADDRESS> --token-address 0x779877A7B0D9E8603169DdbD7836e478b4624789 --network ethereumSepolia
 ```
 
 ### Example 7 - Execute Received Message as a Function Call
@@ -551,6 +556,7 @@ end
 ```shell
 npx hardhat deploy-destination-cross-chain-nft-minter
 --router <routerAddress> # Optional
+--network <destinationNetwork>
 ```
 
 For example, if you want to mint NFTs on Ethereum Sepolia, run:
@@ -565,6 +571,7 @@ npx hardhat deploy-destination-cross-chain-nft-minter --network ethereumSepolia
 npx hardhat deploy-source-cross-chain-nft-minter
 --router <routerAddress> # Optional
 --link <linkTokenAddress> # Optional
+--network <sourceNetwork>
 ```
 
 For example, if you want to mint NFTs on avalancheFuji by sending requests from Avalanche Fuji, run:
@@ -584,15 +591,15 @@ npx hardhat deploy-source-cross-chain-nft-minter --network avalancheFuji
 ```shell
 npx hardhat fill-sender
 --sender-address <sourceMinterAddress>
---blockchain <blockchain>
 --amount <amountToSend>
 --pay-fees-in <Native>
+--network <sourceNetwork>
 ```
 
 For example, if you want to fund it with 0.1 Avalanche Fuji AVAX, run:
 
 ```shell
-npx hardhat fill-sender --sender-address <SOURCE_MINTER_ADDRESS> --blockchain avalancheFuji --amount 100000000000000000 --pay-fees-in Native
+npx hardhat fill-sender --sender-address <SOURCE_MINTER_ADDRESS> --amount 100000000000000000 --pay-fees-in Native --network avalancheFuji
 ```
 
 - If you want to pay for CCIP fees in LINK tokens:
@@ -604,15 +611,15 @@ npx hardhat fill-sender --sender-address <SOURCE_MINTER_ADDRESS> --blockchain av
 ```shell
 npx hardhat fill-sender
 --sender-address <sourceMinterAddress>
---blockchain <blockchain>
 --amount <amountToSend>
 --pay-fees-in <LINK>
+--network <sourceNetwork>
 ```
 
 For example, if you want to fund it with 1 Avalanche Fuji LINK, run:
 
 ```shell
-npx hardhat fill-sender --sender-address <SOURCE_MINTER_ADDRESS> --blockchain avalancheFuji --amount 1000000000000000000 --pay-fees-in LINK
+npx hardhat fill-sender --sender-address <SOURCE_MINTER_ADDRESS> --amount 1000000000000000000 --pay-fees-in LINK --network avalancheFuji
 ```
 
 4. Mint NFTs by calling the `mint()` function of the [`SourceMinter.sol`](./contracts/cross-chain-nft-minter/SourceMinter.sol) smart contract on the **source blockchain**. It will send the CCIP Cross-Chain Message with the ABI-encoded mint function signature from the [`MyNFT.sol`](./contracts/cross-chain-nft-minter/MyNFT.sol) smart contract. The [`DestinationMinter.sol`](./contracts/cross-chain-nft-minter/DestinationMinter.sol) smart contracts will receive the CCIP Cross-Chain Message with the ABI-encoded mint function signature as a payload and call the [`MyNFT.sol`](./contracts/cross-chain-nft-minter/MyNFT.sol) smart contract using it. The [`MyNFT.sol`](./contracts/cross-chain-nft-minter/MyNFT.sol) smart contract will then mint the new NFT to the `msg.sender` account from the `mint()` function of the [`SourceMinter.sol`](./contracts/cross-chain-nft-minter/SourceMinter.sol) smart contract, a.k.a to the account from which you will call the following command:
@@ -620,16 +627,16 @@ npx hardhat fill-sender --sender-address <SOURCE_MINTER_ADDRESS> --blockchain av
 ```shell
 npx hardhat cross-chain-mint
 --source-minter <sourceMinterAddress>
---source-blockchain <sourceBlockchain>
 --destination-blockchain <destinationBlockchain>
 --destination-minter <destinationMinterAddress>
 --pay-fees-in <Native | LINK>
+--network <sourceNetwork>
 ```
 
 For example, if you want to mint NFTs on Ethereum Sepolia by sending requests from Avalanche Fuji, run:
 
 ```shell
-npx hardhat cross-chain-mint --source-minter <SOURCE_MINTER_ADDRESS> --source-blockchain avalancheFuji --destination-blockchain ethereumSepolia --destination-minter <DESTNATION_MINTER_ADDRESS> --pay-fees-in LINK
+npx hardhat cross-chain-mint --source-minter <SOURCE_MINTER_ADDRESS> --destination-blockchain ethereumSepolia --destination-minter <DESTNATION_MINTER_ADDRESS> --pay-fees-in LINK --network avalancheFuji
 ```
 
 5. Once the CCIP message is finalized on the destination blockchain, you can query the MyNFTs balance of your account, using the `cross-chain-mint-balance-of` task:
@@ -639,14 +646,14 @@ npx hardhat cross-chain-mint --source-minter <SOURCE_MINTER_ADDRESS> --source-bl
 ```shell
 npx hardhat cross-chain-mint-balance-of
 --my-nft <myNftContractAddress>
---blockchain <destinationBlockchain>
 --owner <theAccountToCheckBalanceOf>
+--network <destinationBlockchain>
 ```
 
 For example, to verify that the new MyNFT was minted, type:
 
 ```shell
-npx hardhat cross-chain-mint-balance-of --my-nft <MY_NFT_CONTRACT_ADDRESS> --blockchain ethereumSepolia --owner <PUT_YOUR_EOA_ADDRESS_HERE>
+npx hardhat cross-chain-mint-balance-of --my-nft <MY_NFT_CONTRACT_ADDRESS> --owner <PUT_YOUR_EOA_ADDRESS_HERE> --network ethereumSepolia
 ```
 
 Of course, you can see your newly minted NFT on popular NFT Marketplaces, like OpenSea for instance:
@@ -658,21 +665,21 @@ Of course, you can see your newly minted NFT on popular NFT Marketplaces, like O
 ```shell
 npx hardhat withdraw
 --beneficiary <withdrawTo>
---blockchain <sourceMinterBlockchain>
 --from <sourceMinterAddress>
 --token-address <tokensToWithdraw> # Optional, if left empty native coins will be withdrawn
+--network <sourceMinterBlockchain>
 ```
 
 For example, to withdraw tokens previously sent for Chainlink CCIP fees, run:
 
 ```shell
-npx hardhat withdraw --beneficiary <BENEFICIARY_ADDRESS> --blockchain avalancheFuji --from <SOURCE_MINTER_ADDRESS>
+npx hardhat withdraw --beneficiary <BENEFICIARY_ADDRESS> --from <SOURCE_MINTER_ADDRESS> --network avalancheFuji
 ```
 
 or
 
 ```shell
-npx hardhat withdraw --beneficiary <BENEFICIARY_ADDRESS> --blockchain avalancheFuji --from <SOURCE_MINTER_ADDRESS> --token-address 0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846
+npx hardhat withdraw --beneficiary <BENEFICIARY_ADDRESS> --from <SOURCE_MINTER_ADDRESS> --token-address 0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846 --network avalancheFuji
 ```
 
 depending on whether you filled the [`SourceMinter.sol`](./contracts/cross-chain-nft-minter/SourceMinter.sol) contract with `Native` or `LINK` in step number 3.

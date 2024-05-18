@@ -1,7 +1,7 @@
 import { task } from "hardhat/config";
 import { HardhatRuntimeEnvironment, TaskArguments } from "hardhat/types";
-import { getPayFeesIn, getPrivateKey, getProviderRpcUrl, getRouterConfig } from "./utils";
-import { Wallet, providers } from "ethers";
+import { getPayFeesIn, getRouterConfig } from "./utils";
+import {  providers } from "ethers";
 import { DestinationMinter, DestinationMinter__factory, MyNFT, MyNFT__factory, SourceMinter, SourceMinter__factory } from "../typechain-types";
 import { Spinner } from "../utils/spinner";
 import { LINK_ADDRESSES } from "./constants";
@@ -12,12 +12,7 @@ task(`deploy-destination-cross-chain-nft-minter`, `Deploys MyNFT.sol and Destina
     .setAction(async (taskArguments: TaskArguments, hre: HardhatRuntimeEnvironment) => {
         const routerAddress = taskArguments.router ? taskArguments.router : getRouterConfig(hre.network.name).address;
 
-        const privateKey = getPrivateKey();
-        const rpcProviderUrl = getProviderRpcUrl(hre.network.name);
-
-        const provider = new providers.JsonRpcProvider(rpcProviderUrl);
-        const wallet = new Wallet(privateKey);
-        const deployer = wallet.connect(provider);
+        const [deployer] = await hre.ethers.getSigners();
 
         const spinner: Spinner = new Spinner();
 
@@ -57,12 +52,7 @@ task(`deploy-source-cross-chain-nft-minter`, `Deploys SourceMinter.sol smart con
         const routerAddress = taskArguments.router ? taskArguments.router : getRouterConfig(hre.network.name).address;
         const linkAddress = taskArguments.link ? taskArguments.link : LINK_ADDRESSES[hre.network.name]
 
-        const privateKey = getPrivateKey();
-        const rpcProviderUrl = getProviderRpcUrl(hre.network.name);
-
-        const provider = new providers.JsonRpcProvider(rpcProviderUrl);
-        const wallet = new Wallet(privateKey);
-        const deployer = wallet.connect(provider);
+        const [deployer] = await hre.ethers.getSigners();
 
         const spinner: Spinner = new Spinner();
 
@@ -78,20 +68,14 @@ task(`deploy-source-cross-chain-nft-minter`, `Deploys SourceMinter.sol smart con
     })
 
 task(`cross-chain-mint`, `Mints the new NFT by sending the Cross-Chain Message`)
-    .addParam(`sourceBlockchain`, `The name of the source blockchain (for example ethereumSepolia)`)
     .addParam(`sourceMinter`, `The address of the SourceMinter.sol smart contract on the source blockchain`)
     .addParam(`destinationBlockchain`, `The name of the destination blockchain (for example polygonMumbai)`)
     .addParam(`destinationMinter`, `The address of the DestinationMinter.sol smart contract on the destination blockchain`)
     .addParam(`payFeesIn`, `Choose between 'Native' and 'LINK'`)
-    .setAction(async (taskArguments: TaskArguments) => {
-        const { sourceBlockchain, sourceMinter, destinationBlockchain, destinationMinter, payFeesIn } = taskArguments;
-
-        const privateKey = getPrivateKey();
-        const sourceRpcProviderUrl = getProviderRpcUrl(sourceBlockchain);
-
-        const sourceProvider = new providers.JsonRpcProvider(sourceRpcProviderUrl);
-        const wallet = new Wallet(privateKey);
-        const signer = wallet.connect(sourceProvider);
+    .setAction(async (taskArguments: TaskArguments, hre: HardhatRuntimeEnvironment) => {
+        const { sourceMinter, destinationBlockchain, destinationMinter, payFeesIn } = taskArguments;
+        
+        const [signer] = await hre.ethers.getSigners();
 
         const spinner: Spinner = new Spinner();
 
@@ -100,7 +84,7 @@ task(`cross-chain-mint`, `Mints the new NFT by sending the Cross-Chain Message`)
         const destinationChainSelector = getRouterConfig(destinationBlockchain).chainSelector;
         const fees = getPayFeesIn(payFeesIn);
 
-        console.log(`ℹ️  Attempting to call the mint function of the SourceMinter.sol smart contract on the ${sourceBlockchain} from ${signer.address} account`);
+        console.log(`ℹ️  Attempting to call the mint function of the SourceMinter.sol smart contract on the ${hre.network.name} from ${signer.address} account`);
         spinner.start();
 
         const tx = await sourceMinterContract.mint(
@@ -114,22 +98,19 @@ task(`cross-chain-mint`, `Mints the new NFT by sending the Cross-Chain Message`)
         spinner.stop();
         console.log(`✅ Mint request sent, transaction hash: ${tx.hash}`);
 
-        await getCcipMessageId(tx, receipt, sourceProvider);
+        await getCcipMessageId(tx, receipt, hre.ethers.provider);
 
         console.log(`✅ Task cross-chain-mint finished with the execution`);
     })
 
 task('cross-chain-mint-balance-of', 'Gets the balance of MyNFTs for provided address')
     .addParam(`myNft`, `The address of the MyNFT smart contract`)
-    .addParam(`blockchain`, `The blockchain where the MyNFT smart contract was deployed`)
     .addParam(`owner`, `The address to check the balance of MyNFTs`)
-    .setAction(async (taskArguments: TaskArguments) => {
-        const rpcProviderUrl = getProviderRpcUrl(taskArguments.blockchain);
-        const provider = new providers.JsonRpcProvider(rpcProviderUrl);
+    .setAction(async (taskArguments: TaskArguments, hre: HardhatRuntimeEnvironment) => {
 
         const spinner: Spinner = new Spinner();
 
-        const myNft: MyNFT = MyNFT__factory.connect(taskArguments.myNft, provider);
+        const myNft: MyNFT = MyNFT__factory.connect(taskArguments.myNft, hre.ethers.provider);
 
         console.log(`ℹ️  Attempting to check the balance of MyNFTs (${taskArguments.myNft}) for the ${taskArguments.owner} account`);
         spinner.start();

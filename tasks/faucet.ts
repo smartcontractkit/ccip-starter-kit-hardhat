@@ -1,7 +1,6 @@
 import { task } from "hardhat/config";
 import { HardhatRuntimeEnvironment, TaskArguments } from "hardhat/types";
-import { getPrivateKey, getProviderRpcUrl, getFaucetTokensAddresses } from "./utils";
-import { Wallet, providers } from "ethers";
+import { getFaucetTokensAddresses } from "./utils";
 import { BurnMintERC677Helper, BurnMintERC677Helper__factory } from "../typechain-types";
 import { Spinner } from "../utils/spinner";
 
@@ -15,12 +14,7 @@ task(`faucet`, `Mints 10**18 units of CCIP-BnM and CCIP-LnM tokens to receiver a
 
         const ccipBnmAddress = ccipBnm ? ccipBnm : getFaucetTokensAddresses(hre.network.name).ccipBnM;
 
-        const privateKey = getPrivateKey();
-        const rpcProviderUrl = getProviderRpcUrl(hre.network.name);
-
-        const provider = new providers.JsonRpcProvider(rpcProviderUrl);
-        const wallet = new Wallet(privateKey);
-        const signer = wallet.connect(provider);
+        const [signer] = await hre.ethers.getSigners();
 
         const spinner: Spinner = new Spinner();
 
