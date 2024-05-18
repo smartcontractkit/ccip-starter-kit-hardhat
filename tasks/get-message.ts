@@ -1,24 +1,18 @@
 import { task } from "hardhat/config";
 import { HardhatRuntimeEnvironment, TaskArguments } from "hardhat/types";
-import { getProviderRpcUrl } from "./utils";
-import { providers } from "ethers";
 import { BasicMessageReceiver__factory, BasicMessageReceiver } from "../typechain-types";
 import { Spinner } from "../utils/spinner";
 
 task(`get-message`, `Gets BasicMessageSender latest received message details`)
     .addParam(`receiverAddress`, `The BasicMessageReceiver address`)
-    .addParam(`blockchain`, `The name of the blockchain (for example ethereumSepolia)`)
     .setAction(async (taskArguments: TaskArguments, hre: HardhatRuntimeEnvironment) => {
-        const { receiverAddress, blockchain } = taskArguments;
+        const { receiverAddress } = taskArguments;
 
-        const rpcProviderUrl = getProviderRpcUrl(blockchain);
-        const provider = new providers.JsonRpcProvider(rpcProviderUrl);
-
-        const basicMessageReceiver: BasicMessageReceiver = BasicMessageReceiver__factory.connect(receiverAddress, provider);
+        const basicMessageReceiver: BasicMessageReceiver = BasicMessageReceiver__factory.connect(receiverAddress, hre.ethers.provider);
 
         const spinner: Spinner = new Spinner();
 
-        console.log(`ℹ️  Attempting to get the latest received message details from the BasicMessageReceiver smart contract (${receiverAddress}) on the ${blockchain} blockchain`);
+        console.log(`ℹ️  Attempting to get the latest received message details from the BasicMessageReceiver smart contract (${receiverAddress}) on the ${hre.network.name} blockchain`);
         spinner.start();
 
         const latestMessageDetails = await basicMessageReceiver.getLatestMessageDetails();

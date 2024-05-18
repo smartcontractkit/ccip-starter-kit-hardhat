@@ -1,10 +1,9 @@
 
 
 import { task } from "hardhat/config";
-import { TaskArguments } from "hardhat/types";
-import { getPrivateKey, getProviderRpcUrl, getRouterConfig, getPayFeesIn } from "./utils";
-import { Wallet, providers } from "ethers";
-import { IRouterClient, IRouterClient__factory, IERC20, IERC20__factory } from "../typechain-types";
+import { HardhatRuntimeEnvironment, TaskArguments } from "hardhat/types";
+import { getRouterConfig, getPayFeesIn } from "./utils";
+import { IRouterClient__factory, IERC20, IERC20__factory } from "../typechain-types";
 import { TokenAmounts } from "./constants";
 import { BasicTokenSender } from "../typechain-types/artifacts/contracts/BasicTokenSender";
 import { BasicTokenSender__factory } from "../typechain-types/factories/artifacts/contracts/BasicTokenSender__factory";
@@ -12,28 +11,22 @@ import { Spinner } from "../utils/spinner";
 import { getCcipMessageId } from "./helpers";
 
 task(`ccip-token-transfer-batch`, `Transfers tokens from one blockchain to another using Chainlink CCIP via BasicTokenSender.sol`)
-    .addParam(`sourceBlockchain`, `The name of the source blockchain (for example ethereumSepolia)`)
     .addParam(`basicTokenSenderAddress`, `The address of a BasicTokenSender.sol on the source blockchain`)
     .addParam(`destinationBlockchain`, `The name of the destination blockchain (for example polygonMumbai)`)
     .addParam(`receiver`, `The address of the receiver account on the destination blockchain`)
     .addParam(`tokenAmounts`, `The array of {token,amount} objects of tokens to send`)
     .addParam(`payFeesIn`, `Choose between 'Native' and 'LINK'`)
     .addOptionalParam(`router`, `The address of the Router contract on the source blockchain`)
-    .setAction(async (taskArguments: TaskArguments) => {
-        const { sourceBlockchain, basicTokenSenderAddress, destinationBlockchain, receiver, tokenAmounts, payFeesIn } = taskArguments;
+    .setAction(async (taskArguments: TaskArguments, hre: HardhatRuntimeEnvironment) => {
+        const { basicTokenSenderAddress, destinationBlockchain, receiver, tokenAmounts, payFeesIn } = taskArguments;
         const tokensToSendDetails: TokenAmounts[] = JSON.parse(tokenAmounts);
+        
+        const [signer] = await hre.ethers.getSigners();
 
-        const privateKey = getPrivateKey();
-        const sourceRpcProviderUrl = getProviderRpcUrl(sourceBlockchain);
-
-        const provider = new providers.JsonRpcProvider(sourceRpcProviderUrl);
-        const wallet = new Wallet(privateKey);
-        const signer = wallet.connect(provider);
-
-        const routerAddress = taskArguments.router ? taskArguments.router : getRouterConfig(sourceBlockchain).address;
+        const routerAddress = taskArguments.router ? taskArguments.router : getRouterConfig(hre.network.name).address;
         const targetChainSelector = getRouterConfig(destinationBlockchain).chainSelector;
 
-        const router: IRouterClient = IRouterClient__factory.connect(routerAddress, provider);
+        const router = IRouterClient__factory.connect(routerAddress, hre.ethers.provider);
         const supportedTokens = await router.getSupportedTokens(targetChainSelector);
 
         const spinner: Spinner = new Spinner();
@@ -41,7 +34,7 @@ task(`ccip-token-transfer-batch`, `Transfers tokens from one blockchain to anoth
         for (let i = 0; i < tokensToSendDetails.length; i++) {
             const { token, amount } = tokensToSendDetails[i];
 
-            console.log(`ℹ️  Checking whether the ${token} token is supported by Chainlink CCIP on the ${sourceBlockchain} blockchain`);
+            console.log(`ℹ️  Checking whether the ${token} token is supported by Chainlink CCIP on the ${hre.network.name} blockchain`);
             spinner.start();
 
             if (!supportedTokens.includes(token)) {
@@ -51,7 +44,7 @@ task(`ccip-token-transfer-batch`, `Transfers tokens from one blockchain to anoth
             }
 
             spinner.stop();
-            console.log(`✅ Token ${token} is supported by Chainlink CCIP on the ${sourceBlockchain} blockchain`);
+            console.log(`✅ Token ${token} is supported by Chainlink CCIP on the ${hre.network.name} blockchain`);
 
             const tokenToSend: IERC20 = IERC20__factory.connect(token, signer);
 
@@ -69,7 +62,7 @@ task(`ccip-token-transfer-batch`, `Transfers tokens from one blockchain to anoth
 
         const fees = getPayFeesIn(payFeesIn);
 
-        console.log(`ℹ️  Attempting to send tokens [${tokensToSendDetails.map(t => t.token)}] from the BasicTokenSender smart contract (${basicTokenSenderAddress}) from ${sourceBlockchain} to ${receiver} on the ${destinationBlockchain}`);
+        console.log(`ℹ️  Attempting to send tokens [${tokensToSendDetails.map(t => t.token)}] from the BasicTokenSender smart contract (${basicTokenSenderAddress}) from ${hre.network.name} to ${receiver} on the ${destinationBlockchain}`);
         spinner.start();
 
         const sendTx = await basicTokenSender.send(targetChainSelector, receiver, tokensToSendDetails, fees)
@@ -78,5 +71,5 @@ task(`ccip-token-transfer-batch`, `Transfers tokens from one blockchain to anoth
         spinner.stop();
         console.log(`✅ Tokens sent, transaction hash: ${sendTx.hash}`);
 
-        await getCcipMessageId(sendTx, receipt, provider);
+        await getCcipMessageId(sendTx, receipt, hre.ethers.provider);
     })

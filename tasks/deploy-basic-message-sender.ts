@@ -1,7 +1,6 @@
 import { task } from "hardhat/config";
 import { HardhatRuntimeEnvironment, TaskArguments } from "hardhat/types";
-import { getPrivateKey, getProviderRpcUrl, getRouterConfig } from "./utils";
-import { Wallet, providers } from "ethers";
+import { getRouterConfig } from "./utils";
 import { Spinner } from "../utils/spinner";
 import { LINK_ADDRESSES } from "./constants";
 import { BasicMessageSender, BasicMessageSender__factory } from "../typechain-types";
@@ -13,12 +12,7 @@ task(`deploy-basic-message-sender`, `Deploys the BasicMessageSender smart contra
         const routerAddress = taskArguments.router ? taskArguments.router : getRouterConfig(hre.network.name).address;
         const linkAddress = taskArguments.link ? taskArguments.link : LINK_ADDRESSES[hre.network.name]
 
-        const privateKey = getPrivateKey();
-        const rpcProviderUrl = getProviderRpcUrl(hre.network.name);
-
-        const provider = new providers.JsonRpcProvider(rpcProviderUrl);
-        const wallet = new Wallet(privateKey);
-        const deployer = wallet.connect(provider);
+        const [deployer] = await hre.ethers.getSigners();
 
         const spinner: Spinner = new Spinner();
 
