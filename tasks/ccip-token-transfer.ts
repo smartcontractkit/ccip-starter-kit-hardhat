@@ -8,7 +8,7 @@ import { getCcipMessageId } from "./helpers";
 
 task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another using Chainlink CCIP`)
     .addParam(`sourceBlockchain`, `The name of the source blockchain (for example ethereumSepolia)`)
-    .addParam(`destinationBlockchain`, `The name of the destination blockchain (for example polygonMumbai)`)
+    .addParam(`destinationBlockchain`, `The name of the destination blockchain (for example polygonAmoy)`)
     .addParam(`receiver`, `The address of the receiver account on the destination blockchain`)
     .addParam(`tokenAddress`, `The address of a token to be sent on the source blockchain`)
     .addParam(`amount`, `The amount of token to be sent in units (eg wei, satoshi, etc))`)

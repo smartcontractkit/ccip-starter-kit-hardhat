@@ -10,7 +10,7 @@ import { Spinner } from "../utils/spinner";
 task(`send-message`, `Sends basic text messages`)
     .addParam(`sourceBlockchain`, `The name of the source blockchain (for example ethereumSepolia)`)
     .addParam(`sender`, `The address of the BasicMessageSender.sol on the source blockchain`)
-    .addParam(`destinationBlockchain`, `The name of the destination blockchain (for example polygonMumbai)`)
+    .addParam(`destinationBlockchain`, `The name of the destination blockchain (for example polygonAmoy)`)
     .addParam(`receiver`, `The address of the receiver BasicMessageReceiver.sol on the destination blockchain`)
     .addParam(`message`, `The string message to be sent (for example "Hello, World")`)
     .addParam(`payFeesIn`, `Choose between 'Native' and 'LINK'`)
