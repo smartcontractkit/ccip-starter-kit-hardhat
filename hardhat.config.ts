@@ -61,6 +61,11 @@ const config: HardhatUserConfig = {
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       chainId: 59902
     },
+    zksyncSepolia: {
+      url: ZKSYNC_SEPOLIA_RPC_URL !== undefined ? ZKSYNC_SEPOLIA_RPC_URL : '',
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      chainId: 300
+    },
   },
   typechain: {
     externalArtifacts: ['./abi/*.json']

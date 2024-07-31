@@ -16,6 +16,7 @@ export const supportedNetworks = [
     `bnbChainTestnet`,
     `baseGoerli`,
     `metisSepolia`,
+    `zksyncSepolia`,
 ];
 
 export const LINK_ADDRESSES: AddressMap = {
@@ -27,6 +28,7 @@ export const LINK_ADDRESSES: AddressMap = {
     [`bnbChainTestnet`]: `0x84b9B910527Ad5C03A9Ca831909E21e236EA7b06`,
     [`baseGoerli`]: `0xD886E2286Fd1073df82462ea1822119600Af80b6`,
     [`metisSepolia`]: `0x9870D6a0e05F867EAAe696e106741843F7fD116D`,
+    [`zksyncSepolia`]: `0x23A1aFD896c8c8876AF46aDc38521f4432658d1e`,
 };
 
 export const CCIP_BnM_ADDRESSES: AddressMap = {
@@ -98,5 +100,10 @@ export const routerConfig = {
         address: `0xaCdaBa07ECad81dc634458b98673931DD9d3Bc14`,
         chainSelector: `3777822886988675105`,
         feeTokens: [LINK_ADDRESSES[`metisSepolia`], `0x5c48e07062aC4E2Cf4b9A768a711Aef18e8fbdA0`]
+    },
+    zksyncSepolia: {
+        address: `0xA1fdA8aa9A8C4b945C45aD30647b01f07D7A0B16`,
+        chainSelector: `6898391096552792247`,
+        feeTokens: [LINK_ADDRESSES[`zksyncSepolia`], `0x4317b2eCD41851173175005783322D29E9bAee9E`]
     },
 }
