@@ -25,6 +25,9 @@ export const getProviderRpcUrl = (network: string) => {
         case "baseGoerli":
             rpcUrl = process.env.BASE_GOERLI_RPC_URL;
             break;
+        case "metisSepolia":
+            rpcUrl = process.env.METIS_SEPOLIA_RPC_URL;
+            break;
         default:
             throw new Error("Unknown network: " + network);
     }
@@ -65,6 +68,8 @@ export const getRouterConfig = (network: string) => {
             return routerConfig.bnbChainTestnet;
         case "baseGoerli":
             return routerConfig.baseGoerli;
+        case "metisSepolia":
+            return routerConfig.metisSepolia;
         default:
             throw new Error("Unknown network: " + network);
     }
