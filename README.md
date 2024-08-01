@@ -86,6 +86,8 @@ AVALANCHE_FUJI_RPC_URL=""
 POLYGON_MUMBAI_RPC_URL=""
 BNB_CHAIN_TESTNET_RPC_URL=""
 BASE_GOERLI_RPC_URL=""
+METIS_SEPOLIA_RPC_URL=""
+ZKSYNC_SEPOLIA_RPC_URL=""
 ```
 
 To set these variables, type the following command and follow the instructions in the terminal:
@@ -146,6 +148,8 @@ Where the list of supported chains consists of (case sensitive):
 - polygonMumbai
 - bnbChainTestnet
 - baseGoerli
+- metisSepolia
+- zksyncSepolia
 
 For example, if you want to send 100 units of CCIP-BnM token from Avalanche Fuji to Ethereum Sepolia, and you want to pay for CCIP fees in native coin (Avalanche Fuji AVAX in this case), run:
 

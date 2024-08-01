@@ -14,7 +14,9 @@ export const supportedNetworks = [
     `avalancheFuji`,
     `polygonMumbai`,
     `bnbChainTestnet`,
-    `baseGoerli`
+    `baseGoerli`,
+    `metisSepolia`,
+    `zksyncSepolia`,
 ];
 
 export const LINK_ADDRESSES: AddressMap = {
@@ -24,7 +26,9 @@ export const LINK_ADDRESSES: AddressMap = {
     [`arbitrumSepolia`]: `0xb1D4538B4571d411F07960EF2838Ce337FE1E80E`,
     [`avalancheFuji`]: `0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846`,
     [`bnbChainTestnet`]: `0x84b9B910527Ad5C03A9Ca831909E21e236EA7b06`,
-    [`baseGoerli`]: `0xD886E2286Fd1073df82462ea1822119600Af80b6`
+    [`baseGoerli`]: `0xD886E2286Fd1073df82462ea1822119600Af80b6`,
+    [`metisSepolia`]: `0x9870D6a0e05F867EAAe696e106741843F7fD116D`,
+    [`zksyncSepolia`]: `0x23A1aFD896c8c8876AF46aDc38521f4432658d1e`,
 };
 
 export const CCIP_BnM_ADDRESSES: AddressMap = {
@@ -34,7 +38,8 @@ export const CCIP_BnM_ADDRESSES: AddressMap = {
     [`arbitrumSepolia`]: `0xA8C0c11bf64AF62CDCA6f93D3769B88BdD7cb93D`,
     [`avalancheFuji`]: `0xD21341536c5cF5EB1bcb58f6723cE26e8D8E90e4`,
     [`bnbChainTestnet`]: `0xbFA2ACd33ED6EEc0ed3Cc06bF1ac38d22b36B9e9`,
-    [`baseGoerli`]: `0xbf9036529123DE264bFA0FC7362fE25B650D4B16`
+    [`baseGoerli`]: `0xbf9036529123DE264bFA0FC7362fE25B650D4B16`,
+    [`metisSepolia`]: `0x20Aa09AAb761e2E600d65c6929A9fd1E59821D3f`,
 }
 
 export const CCIP_LnM_ADDRESSES: AddressMap = {
@@ -44,7 +49,8 @@ export const CCIP_LnM_ADDRESSES: AddressMap = {
     [`arbitrumSepolia`]: `0x139E99f0ab4084E14e6bb7DacA289a91a2d92927`,
     [`avalancheFuji`]: `0x70F5c5C40b873EA597776DA2C21929A8282A3b35`,
     [`bnbChainTestnet`]: `0x79a4Fc27f69323660f5Bfc12dEe21c3cC14f5901`,
-    [`baseGoerli`]: `0x73ed16c1a61b098fd6924CCE5cC6a9A30348D944`
+    [`baseGoerli`]: `0x73ed16c1a61b098fd6924CCE5cC6a9A30348D944`,
+    [`metisSepolia`]: `0x705b364CadE0e515577F2646529e3A417473a155`,
 }
 
 export const USDC_ADDRESSES: AddressMap = {
@@ -89,5 +95,15 @@ export const routerConfig = {
         address: `0x80AF2F44ed0469018922c9F483dc5A909862fdc2`,
         chainSelector: `5790810961207155433`,
         feeTokens: [LINK_ADDRESSES[`baseGoerli`], `0x4200000000000000000000000000000000000006`]
-    }
+    },
+    metisSepolia: {
+        address: `0xaCdaBa07ECad81dc634458b98673931DD9d3Bc14`,
+        chainSelector: `3777822886988675105`,
+        feeTokens: [LINK_ADDRESSES[`metisSepolia`], `0x5c48e07062aC4E2Cf4b9A768a711Aef18e8fbdA0`]
+    },
+    zksyncSepolia: {
+        address: `0xA1fdA8aa9A8C4b945C45aD30647b01f07D7A0B16`,
+        chainSelector: `6898391096552792247`,
+        feeTokens: [LINK_ADDRESSES[`zksyncSepolia`], `0x4317b2eCD41851173175005783322D29E9bAee9E`]
+    },
 }

@@ -13,6 +13,7 @@ const ARBITRUM_SEPOLIA_RPC_URL = process.env.ARBITRUM_SEPOLIA_RPC_URL;
 const AVALANCHE_FUJI_RPC_URL = process.env.AVALANCHE_FUJI_RPC_URL;
 const BNB_CHAIN_TESTNET_RPC_URL = process.env.BNB_CHAIN_TESTNET_RPC_URL;
 const BASE_GOERLI_RPC_URL = process.env.BASE_GOERLI_RPC_URL;
+const METIS_SEPOLIA_RPC_URL = process.env.METIS_SEPOLIA_RPC_URL;
 
 const config: HardhatUserConfig = {
   solidity: '0.8.19',
@@ -54,7 +55,17 @@ const config: HardhatUserConfig = {
       url: BASE_GOERLI_RPC_URL !== undefined ? BASE_GOERLI_RPC_URL : '',
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       chainId: 84531
-    }
+    },
+    metisSepolia: {
+      url: METIS_SEPOLIA_RPC_URL !== undefined ? METIS_SEPOLIA_RPC_URL : '',
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      chainId: 59902
+    },
+    zksyncSepolia: {
+      url: ZKSYNC_SEPOLIA_RPC_URL !== undefined ? ZKSYNC_SEPOLIA_RPC_URL : '',
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      chainId: 300
+    },
   },
   typechain: {
     externalArtifacts: ['./abi/*.json']
