@@ -4,3 +4,4 @@
 export * as applications from "./applications";
 export * as interfaces from "./interfaces";
 export * as libraries from "./libraries";
+export * as test from "./test";

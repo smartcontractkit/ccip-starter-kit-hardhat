@@ -2,4 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { IAny2EVMMessageReceiver } from "./IAny2EVMMessageReceiver";
+export type { IRouter } from "./IRouter";
 export type { IRouterClient } from "./IRouterClient";

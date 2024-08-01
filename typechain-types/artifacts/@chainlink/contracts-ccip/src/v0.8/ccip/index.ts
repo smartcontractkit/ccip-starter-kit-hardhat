@@ -7,3 +7,5 @@ import type * as interfaces from "./interfaces";
 export type { interfaces };
 import type * as libraries from "./libraries";
 export type { libraries };
+import type * as test from "./test";
+export type { test };

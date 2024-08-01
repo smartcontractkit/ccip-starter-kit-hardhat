@@ -3,3 +3,4 @@
 /* eslint-disable */
 export * as contracts from "./contracts";
 export * as contractsCcip from "./contracts-ccip";
+export * as local from "./local";
