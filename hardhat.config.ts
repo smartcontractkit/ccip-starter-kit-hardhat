@@ -17,6 +17,8 @@ const KROMA_SEPOLIA_RPC_URL = process.env.KROMA_SEPOLIA_RPC_URL;
 const WEMIX_TESTNET_RPC_URL = process.env.WEMIX_TESTNET_RPC_URL;
 const GNOSIS_CHIADO_RPC_URL = process.env.GNOSIS_CHIADO_RPC_URL;
 const CELO_ALFAJORES_RPC_URL = process.env.CELO_ALFAJORES_RPC_URL;
+const METIS_SEPOLIA_RPC_URL = process.env.METIS_SEPOLIA_RPC_URL;
+const ZKSYNC_SEPOLIA_RPC_URL = process.env.ZKSYNC_SEPOLIA_RPC_URL;
 
 const config: HardhatUserConfig = {
   solidity: '0.8.19',
@@ -78,6 +80,16 @@ const config: HardhatUserConfig = {
       url: CELO_ALFAJORES_RPC_URL !== undefined ? CELO_ALFAJORES_RPC_URL : '',
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       chainId: 44787
+    },
+    metisSepolia: {
+      url: METIS_SEPOLIA_RPC_URL !== undefined ? METIS_SEPOLIA_RPC_URL : '',
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      chainId: 59902
+    },
+    zksyncSepolia: {
+      url: ZKSYNC_SEPOLIA_RPC_URL !== undefined ? ZKSYNC_SEPOLIA_RPC_URL : '',
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      chainId: 300
     }
   },
   typechain: {

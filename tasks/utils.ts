@@ -38,6 +38,12 @@ export const getProviderRpcUrl = (network: string) => {
         case "celoAlfajores":
             rpcUrl = process.env.CELO_ALFAJORES_RPC_URL;
             break;
+        case "metisSepolia":
+            rpcUrl = process.env.METIS_SEPOLIA_RPC_URL;
+            break;
+        case "zksyncSepolia":
+            rpcUrl = process.env.ZKSYNC_SEPOLIA_RPC_URL;
+            break;
         default:
             throw new Error("Unknown network: " + network);
     }
@@ -86,6 +92,10 @@ export const getRouterConfig = (network: string) => {
             return routerConfig.gnosisChiado;
         case "celoAlfajores":
             return routerConfig.celoAlfajores;
+        case "metisSepolia":
+            return routerConfig.metisSepolia;
+        case "zksyncSepolia":
+            return routerConfig.zksyncSepolia;
         default:
             throw new Error("Unknown network: " + network);
     }

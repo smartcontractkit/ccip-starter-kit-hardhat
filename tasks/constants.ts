@@ -18,7 +18,9 @@ export const supportedNetworks = [
     `kromaSepolia`,
     `wemixTestnet`,
     `gnosisChiado`,
-    `celoAlfajores`
+    `celoAlfajores`,
+    `metisSepolia`,
+    `zksyncSepolia`
 ];
 
 export const LINK_ADDRESSES: AddressMap = {
@@ -33,6 +35,8 @@ export const LINK_ADDRESSES: AddressMap = {
     [`wemixTestnet`]: `0x3580c7A817cCD41f7e02143BFa411D4EeAE78093`,
     [`gnosisChiado`]: `0xDCA67FD8324990792C0bfaE95903B8A64097754F`,
     [`celoAlfajores`]: `0x32E08557B14FaD8908025619797221281D439071`
+    [`metisSepolia`]: `0x9870D6a0e05F867EAAe696e106741843F7fD116D`,
+    [`zksyncSepolia`]: `0x23A1aFD896c8c8876AF46aDc38521f4432658d1e`
 };
 
 export const CCIP_BnM_ADDRESSES: AddressMap = {
@@ -47,6 +51,7 @@ export const CCIP_BnM_ADDRESSES: AddressMap = {
     [`wemixTestnet`]: `0xF4E4057FbBc86915F4b2d63EEFFe641C03294ffc`,
     [`gnosisChiado`]: `0xA189971a2c5AcA0DFC5Ee7a2C44a2Ae27b3CF389`,
     [`celoAlfajores`]: `0x7e503dd1dAF90117A1b79953321043d9E6815C72`
+    [`metisSepolia`]: `0x20Aa09AAb761e2E600d65c6929A9fd1E59821D3f`
 }
 
 export const CCIP_LnM_ADDRESSES: AddressMap = {
@@ -61,6 +66,7 @@ export const CCIP_LnM_ADDRESSES: AddressMap = {
     [`wemixTestnet`]: `0xcb342aE3D65E3fEDF8F912B0432e2B8F88514d5D`,
     [`gnosisChiado`]: `0x30DeCD269277b8094c00B0bacC3aCaF3fF4Da7fB`,
     [`celoAlfajores`]: `0x7F4e739D40E58BBd59dAD388171d18e37B26326f`
+    [`metisSepolia`]: `0x705b364CadE0e515577F2646529e3A417473a155`,
 }
 
 export const USDC_ADDRESSES: AddressMap = {
@@ -125,5 +131,15 @@ export const routerConfig = {
         address: `0xb00E95b773528E2Ea724DB06B75113F239D15Dca`,
         chainSelector: `3552045678561919002`,
         feeTokens: [LINK_ADDRESSES[`celoAlfajores`], `0x99604d0e2EfE7ABFb58BdE565b5330Bb46Ab3Dca`]
-    }
+    },
+    metisSepolia: {
+        address: `0xaCdaBa07ECad81dc634458b98673931DD9d3Bc14`,
+        chainSelector: `3777822886988675105`,
+        feeTokens: [LINK_ADDRESSES[`metisSepolia`], `0x5c48e07062aC4E2Cf4b9A768a711Aef18e8fbdA0`]
+    },
+    zksyncSepolia: {
+        address: `0xA1fdA8aa9A8C4b945C45aD30647b01f07D7A0B16`,
+        chainSelector: `6898391096552792247`,
+        feeTokens: [LINK_ADDRESSES[`zksyncSepolia`], `0x4317b2eCD41851173175005783322D29E9bAee9E`]
+    },
 }

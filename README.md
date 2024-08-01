@@ -90,6 +90,8 @@ KROMA_SEPOLIA_RPC_URL=""
 WEMIX_TESTNET_RPC_URL=""
 GNOSIS_CHIADO_RPC_URL=""
 CELO_ALFAJORES_RPC_URL=""
+METIS_SEPOLIA_RPC_URL=""
+ZKSYNC_SEPOLIA_RPC_URL=""
 ```
 
 To set these variables, type the following command and follow the instructions in the terminal:
@@ -154,6 +156,8 @@ Where the list of supported chains consists of (case sensitive):
 - wemixTestnet
 - gnosisChiado
 - celoAlfajores
+- metisSepolia
+- zksyncSepolia
 
 For example, if you want to send 100 units of CCIP-BnM token from Avalanche Fuji to Ethereum Sepolia, and you want to pay for CCIP fees in native coin (Avalanche Fuji AVAX in this case), run:
 
