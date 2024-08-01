@@ -80,7 +80,7 @@ task(`deploy-source-cross-chain-nft-minter`, `Deploys SourceMinter.sol smart con
 task(`cross-chain-mint`, `Mints the new NFT by sending the Cross-Chain Message`)
     .addParam(`sourceBlockchain`, `The name of the source blockchain (for example ethereumSepolia)`)
     .addParam(`sourceMinter`, `The address of the SourceMinter.sol smart contract on the source blockchain`)
-    .addParam(`destinationBlockchain`, `The name of the destination blockchain (for example polygonMumbai)`)
+    .addParam(`destinationBlockchain`, `The name of the destination blockchain (for example polygonAmoy)`)
     .addParam(`destinationMinter`, `The address of the DestinationMinter.sol smart contract on the destination blockchain`)
     .addParam(`payFeesIn`, `Choose between 'Native' and 'LINK'`)
     .setAction(async (taskArguments: TaskArguments) => {

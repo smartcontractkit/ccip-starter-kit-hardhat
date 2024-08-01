@@ -80,12 +80,16 @@ npx env-enc set-pw
 
 ```shell
 ETHEREUM_SEPOLIA_RPC_URL=""
-OPTIMISM_GOERLI_RPC_URL=""
+OPTIMISM_SEPOLIA_RPC_URL=""
 ARBITRUM_SEPOLIA_RPC_URL=""
 AVALANCHE_FUJI_RPC_URL=""
-POLYGON_MUMBAI_RPC_URL=""
+POLYGON_AMOY_RPC_URL=""
 BNB_CHAIN_TESTNET_RPC_URL=""
-BASE_GOERLI_RPC_URL=""
+BASE_SEPOLIA_RPC_URL=""
+KROMA_SEPOLIA_RPC_URL=""
+WEMIX_TESTNET_RPC_URL=""
+GNOSIS_CHIADO_RPC_URL=""
+CELO_ALFAJORES_RPC_URL=""
 METIS_SEPOLIA_RPC_URL=""
 ZKSYNC_SEPOLIA_RPC_URL=""
 ```
@@ -142,12 +146,16 @@ npx hardhat ccip-token-transfer
 Where the list of supported chains consists of (case sensitive):
 
 - ethereumSepolia
-- optimismGoerli
+- polygonAmoy
+- optimismSepolia
 - arbitrumSepolia
 - avalancheFuji
-- polygonMumbai
 - bnbChainTestnet
-- baseGoerli
+- baseSepolia
+- kromaSepolia
+- wemixTestnet
+- gnosisChiado
+- celoAlfajores
 - metisSepolia
 - zksyncSepolia
 
@@ -182,19 +190,19 @@ npx hardhat deploy-basic-message-receiver
 --router <routerAddress> # Optional
 ```
 
-For example, if you want to send tokens from avalancheFuji to ethereumSepolia, you need to deploy this contract on ethereumSepolia, by running:
+For example, if you want to send tokens from Avalanche Fuji to Ethereum Sepolia, you need to deploy this contract on Ethereum Sepolia, by running:
 
 ```shell
 npx hardhat deploy-basic-message-receiver --network ethereumSepolia
 ```
 
-Optionally, you can pass the address of the Chainlink CCIP `Router.sol` smart contract on the ethereumSepolia blockchain as a constructor argument. To do so, run the following command:
+Optionally, you can pass the address of the Chainlink CCIP `Router.sol` smart contract on the Ethereum Sepolia blockchain as a constructor argument. To do so, run the following command:
 
 ```shell
 npx hardhat deploy-basic-message-receiver --network ethereumSepolia --router <ROUTER_ADDRESS>
 ```
 
-2. Transfer tokens to the deployed smart contract using the `ccip-token-transfer` task, by putting its address as a receiver flag. For example, if you want to send 100 units of CCIP-BnM from avalancheFuji run:
+2. Transfer tokens to the deployed smart contract using the `ccip-token-transfer` task, by putting its address as a receiver flag. For example, if you want to send 100 units of CCIP-BnM from Avalanche Fuji run:
 
 ```shell
 npx hardhat ccip-token-transfer --source-blockchain avalancheFuji --destination-blockchain ethereumSepolia --receiver <BASIC_MESSAGE_RECEIVER_ADDRESS> --token-address 0xD21341536c5cF5EB1bcb58f6723cE26e8D8E90e4 --amount 100 --fee-token-address 0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846
@@ -252,7 +260,7 @@ npx hardhat fill-sender
 --pay-fees-in <Native | LINK>
 ```
 
-For example, if you want to send tokens from avalancheFuji and fund it with 3 Avalanche Fuji LINK for Chainlink CCIP fees, run:
+For example, if you want to send tokens from Avalanche Fuji and fund it with 3 Avalanche Fuji LINK for Chainlink CCIP fees, run:
 
 ```shell
 npx hardhat fill-sender --sender-address <BASIC_TOKEN_SENDER_ADDRESS> --blockchain avalancheFuji --amount 3000000000000000000 --pay-fees-in LINK
@@ -306,22 +314,22 @@ npx hardhat deploy-programmable-token-transfers
 --router <router> # Optional
 ```
 
-For example, if you want to send a message from Ethereum Sepolia to Polygon Mumbai type:
+For example, if you want to send a message from Ethereum Sepolia to Polygon Amoy type:
 
 ```shell
 npx hardhat deploy-programmable-token-transfers --network ethereumSepolia
 ```
 
-2. Open Metamask and fund your contract with Native tokens. For example, if you want to send a message from Ethereum Sepolia to Polygon Mumbai, you can send 0.1 Sepolia ETH to your contract.
+2. Open Metamask and fund your contract with Native tokens. For example, if you want to send a message from Ethereum Sepolia to Polygon Amoy, you can send 0.1 Sepolia ETH to your contract.
 
-3. Open Metamask and fund your contract with LINK tokens. For example, if you want to send a message from Ethereum Sepolia to Polygon Mumbai, you can send 0.0000000000000001 Sepolia CCIP-BnM to your contract.
+3. Open Metamask and fund your contract with LINK tokens. For example, if you want to send a message from Ethereum Sepolia to Polygon Amoy, you can send 0.0000000000000001 Sepolia CCIP-BnM to your contract.
 
 4. Deploy the [`ProgrammableTokenTransfers.sol`](./contracts/ProgrammableTokenTransfers.sol) smart contract to the **destination blockchain**:
 
-For example, if you want to receive a message from Ethereum Sepolia on Polygon Mumbai type:
+For example, if you want to receive a message from Ethereum Sepolia on Polygon Amoy type:
 
 ```shell
-npx hardhat deploy-programmable-token-transfers --network polygonMumbai
+npx hardhat deploy-programmable-token-transfers --network polygonAmoy
 ```
 
 At this point, you have one **sender** contract on the source blockchain, and one **receiver** contract on the destination blockchain. Please note that [`ProgrammableTokenTransfers.sol`](./contracts/ProgrammableTokenTransfers.sol) can both send & receive tokens and data, hence we have two identical instances on both source and destination blockchains.
@@ -340,10 +348,10 @@ npx hardhat send-token-and-data
 --router <router> # Optional
 ```
 
-For example, if you want to send a "Hello World" message alongside 100 Sepolia LINK from Ethereum Sepolia to Polygon Mumbai type:
+For example, if you want to send a "Hello World" message alongside 100 Sepolia CCIP-BnM from Ethereum Sepolia to Polygon Amoy type:
 
 ```shell
-npx hardhat send-token-and-data --source-blockchain ethereumSepolia --sender <CONTRACT_ADDRESS_ON_SOURCE_BLOCKCHAIN> --destination-blockchain polygonMumbai --receiver <CONTRACT_ADDRESS_ON_DESTINATION_BLOCKCHAIN> --message "Hello World" --token-address 0xFd57b4ddBf88a4e07fF4e34C487b99af2Fe82a05 --amount 100
+npx hardhat send-token-and-data --source-blockchain ethereumSepolia --sender <CONTRACT_ADDRESS_ON_SOURCE_BLOCKCHAIN> --destination-blockchain polygonAmoy --receiver <CONTRACT_ADDRESS_ON_DESTINATION_BLOCKCHAIN> --message "Hello World" --token-address 0xFd57b4ddBf88a4e07fF4e34C487b99af2Fe82a05 --amount 100
 ```
 
 6. Once the CCIP message is finalized on the destination blockchain, you can see the details of the latest CCIP message received, by running the `get-received-message-details` task:
@@ -357,7 +365,7 @@ npx hardhat get-received-message-details
 For example,
 
 ```shell
-npx hardhat get-received-message-details --blockchain polygonMumbai --contract-address <PROGRAMMABLE_TOKEN_TRANSFERS_ADDRESS_ON_DESTINATION_BLOCKCHAIN>
+npx hardhat get-received-message-details --blockchain polygonAmoy --contract-address <PROGRAMMABLE_TOKEN_TRANSFERS_ADDRESS_ON_DESTINATION_BLOCKCHAIN>
 ```
 
 ### Example 5 - Send & Receive Cross-Chain Messages and Pay with Native Coins
@@ -372,7 +380,7 @@ npx hardhat deploy-basic-message-sender
 --link <linkTokenAddress> # Optional
 ```
 
-For example, if you want to send a simple cross-chain message from ethereumSepolia, run
+For example, if you want to send a simple cross-chain message from Ethereum Sepolia, run
 
 ```shell
 npx hardhat deploy-basic-message-sender --network ethereumSepolia
@@ -388,7 +396,7 @@ npx hardhat fill-sender --sender-address <BASIC_MESSAGE_SENDER_ADDRESS> --blockc
 
 3. Deploy the [`BasicMessageReceiver.sol`](./contracts/BasicMessageReceiver.sol) smart contract to the **destination blockchain**, using the `deploy-basic-message-receiver` task.
 
-For example, if you want to receive a simple cross-chain message on the avalancheFuji blockchain, run:
+For example, if you want to receive a simple cross-chain message on the Avalanche Fuji blockchain, run:
 
 ```shell
 npx hardhat deploy-basic-message-receiver --network avalancheFuji
@@ -456,7 +464,7 @@ npx hardhat deploy-basic-message-sender
 --link <linkTokenAddress> # Optional
 ```
 
-For example, if you want to send a simple cross-chain message from ethereumSepolia, run
+For example, if you want to send a simple cross-chain message from Ethereum Sepolia, run
 
 ```shell
 npx hardhat deploy-basic-message-sender --network ethereumSepolia
@@ -472,7 +480,7 @@ npx hardhat fill-sender --sender-address <BASIC_MESSAGE_SENDER_ADDRESS> --blockc
 
 3. Deploy the [`BasicMessageReceiver.sol`](./contracts/BasicMessageReceiver.sol) smart contract to the **destination blockchain**, using the `deploy-basic-message-receiver` task.
 
-For example, if you want to receive a simple cross-chain message on the avalancheFuji blockchain, run:
+For example, if you want to receive a simple cross-chain message on the Avalanche Fuji blockchain, run:
 
 ```shell
 npx hardhat deploy-basic-message-receiver --network avalancheFuji
