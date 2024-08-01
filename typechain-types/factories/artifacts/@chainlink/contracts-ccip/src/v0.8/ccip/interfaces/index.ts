@@ -2,4 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export { IAny2EVMMessageReceiver__factory } from "./IAny2EVMMessageReceiver__factory";
+export { IRouter__factory } from "./IRouter__factory";
 export { IRouterClient__factory } from "./IRouterClient__factory";

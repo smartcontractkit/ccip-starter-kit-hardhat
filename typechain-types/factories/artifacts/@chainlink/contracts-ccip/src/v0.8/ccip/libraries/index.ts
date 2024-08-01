@@ -2,3 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export { Client__factory } from "./Client__factory";
+export { Internal__factory } from "./Internal__factory";
+export { MerkleMultiProof__factory } from "./MerkleMultiProof__factory";

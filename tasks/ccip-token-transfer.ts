@@ -66,7 +66,7 @@ task(`ccip-token-transfer`, `Transfers tokens from one blockchain to another usi
         const gasLimitValue = taskArguments.gasLimit ? taskArguments.gasLimit : 200_000;
 
         const functionSelector = utils.id("CCIP EVMExtraArgsV1").slice(0, 10);
-        const extraArgs = utils.defaultAbiCoder.encode(["uint256", "bool"], [gasLimitValue, false]); // for transfers to EOA gas limit is 0
+        const extraArgs = utils.defaultAbiCoder.encode(["uint256"], [gasLimitValue]); // for transfers to EOA gas limit is 0
         const encodedExtraArgs = `${functionSelector}${extraArgs.slice(2)}`;
 
         const message = {
