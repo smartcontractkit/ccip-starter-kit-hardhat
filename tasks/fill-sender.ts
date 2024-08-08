@@ -1,10 +1,10 @@
 import { task } from "hardhat/config";
 import { TaskArguments } from "hardhat/types";
-import { getPrivateKey, getProviderRpcUrl, getPayFeesIn } from "./utils";
+import { getPrivateKey, getProviderRpcUrl, getPayFeesIn } from "../helpers/utils";
 import { Wallet, JsonRpcProvider } from "ethers";
 import { IERC20, IERC20__factory } from "../typechain-types";
-import { LINK_ADDRESSES, PayFeesIn } from "./constants";
-import { Spinner } from "../utils/spinner";
+import { LINK_ADDRESSES, PayFeesIn } from "../helpers/constants";
+import { Spinner } from "../helpers/spinner";
 
 task(
   `fill-sender`,

@@ -1,6 +1,6 @@
 import { task } from "hardhat/config";
 import { HardhatRuntimeEnvironment, TaskArguments } from "hardhat/types";
-import { getPrivateKey, getProviderRpcUrl, getRouterConfig } from "./utils";
+import { getPrivateKey, getProviderRpcUrl, getRouterConfig } from "../helpers/utils";
 import { Wallet, JsonRpcProvider, id, AbiCoder, ZeroAddress } from "ethers";
 import {
   IRouterClient,
@@ -8,7 +8,7 @@ import {
   IERC20,
   IERC20__factory,
 } from "../typechain-types";
-import { Spinner } from "../utils/spinner";
+import { Spinner } from "../helpers/spinner";
 import { getCcipMessageId } from "./helpers";
 
 task(

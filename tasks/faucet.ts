@@ -4,13 +4,13 @@ import {
   getPrivateKey,
   getProviderRpcUrl,
   getFaucetTokensAddresses,
-} from "./utils";
+} from "../helpers/utils";
 import { Wallet, JsonRpcProvider } from "ethers";
 import {
   BurnMintERC677Helper,
   BurnMintERC677Helper__factory,
 } from "../typechain-types";
-import { Spinner } from "../utils/spinner";
+import { Spinner } from "../helpers/spinner";
 
 task(
   `faucet`,

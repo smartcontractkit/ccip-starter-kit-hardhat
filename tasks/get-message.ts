@@ -1,12 +1,12 @@
 import { task } from "hardhat/config";
 import { HardhatRuntimeEnvironment, TaskArguments } from "hardhat/types";
-import { getProviderRpcUrl } from "./utils";
+import { getProviderRpcUrl } from "../helpers/utils";
 import { JsonRpcProvider } from "ethers";
 import {
   BasicMessageReceiver__factory,
   BasicMessageReceiver,
 } from "../typechain-types";
-import { Spinner } from "../utils/spinner";
+import { Spinner } from "../helpers/spinner";
 
 task(`get-message`, `Gets BasicMessageSender latest received message details`)
   .addParam(`receiverAddress`, `The BasicMessageReceiver address`)

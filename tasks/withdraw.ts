@@ -1,10 +1,10 @@
 import { task } from "hardhat/config";
 import { TaskArguments } from "hardhat/types";
-import { getPrivateKey, getProviderRpcUrl } from "./utils";
+import { getPrivateKey, getProviderRpcUrl } from "../helpers/utils";
 import { Wallet, JsonRpcProvider } from "ethers";
 import { Withdraw } from "../typechain-types/contracts/utils";
 import { Withdraw__factory } from "../typechain-types/factories/contracts/utils";
-import { Spinner } from "../utils/spinner";
+import { Spinner } from "../helpers/spinner";
 
 task(
   `withdraw`,
