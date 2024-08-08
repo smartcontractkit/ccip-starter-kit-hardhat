@@ -5,7 +5,7 @@ import {
   BasicTokenSender,
   BurnMintERC677Helper,
   CCIPLocalSimulator,
-} from "../typechain-types";
+} from "../../typechain-types";
 
 describe("Example 3", function () {
   enum PayFeesIn {

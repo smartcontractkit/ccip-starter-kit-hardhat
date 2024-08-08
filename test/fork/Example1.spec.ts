@@ -19,9 +19,6 @@ import {
   getFaucetTokensAddresses,
 } from "../../helpers/utils";
 
-// 1st Terminal: npx hardhat node
-// 2nd Terminal: npx hardhat test test/fork/Example1.spec.ts --network localhost
-
 describe("Example 1 - Fork", function () {
   it("Should transfer CCIP test tokens from EOA to EOA", async function () {
     const [alice, bob] = await hre.ethers.getSigners();
