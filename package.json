@@ -12,6 +12,7 @@
     "@chainlink/env-enc": "^1.0.5",
     "@chainlink/local": "^0.2.1",
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
-    "hardhat": "^2.22.7"
+    "hardhat": "^2.22.7",
+    "solhint-plugin-chainlink-solidity": "github:smartcontractkit/chainlink-solhint-rules"
   }
 }
