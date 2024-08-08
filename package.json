@@ -1,5 +1,11 @@
 {
   "name": "ccip-starter-kit-hardhat",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "test:fork": "npx hardhat test --grep 'Fork'",
+    "test:no-fork": "npx hardhat test --grep '^(?!.*Fork).*$'"
+  },
   "devDependencies": {
     "@chainlink/contracts": "^1.2.0",
     "@chainlink/contracts-ccip": "^1.4.0",

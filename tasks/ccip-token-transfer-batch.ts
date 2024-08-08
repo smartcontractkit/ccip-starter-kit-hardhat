@@ -5,7 +5,7 @@ import {
   getProviderRpcUrl,
   getRouterConfig,
   getPayFeesIn,
-} from "./utils";
+} from "../helpers/utils";
 import { Wallet, JsonRpcProvider } from "ethers";
 import {
   IRouterClient,
@@ -13,10 +13,10 @@ import {
   IERC20,
   IERC20__factory,
 } from "../typechain-types";
-import { TokenAmounts } from "./constants";
+import { TokenAmounts } from "../helpers/constants";
 import { BasicTokenSender } from "../typechain-types/contracts/BasicTokenSender";
 import { BasicTokenSender__factory } from "../typechain-types/factories/contracts/BasicTokenSender__factory";
-import { Spinner } from "../utils/spinner";
+import { Spinner } from "../helpers/spinner";
 import { getCcipMessageId } from "./helpers";
 
 task(

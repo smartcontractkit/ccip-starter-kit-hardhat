@@ -5,13 +5,13 @@ import {
   getPrivateKey,
   getProviderRpcUrl,
   getRouterConfig,
-} from "./utils";
+} from "../helpers/utils";
 import { Wallet, JsonRpcProvider } from "ethers";
 import {
   BasicMessageSender,
   BasicMessageSender__factory,
 } from "../typechain-types";
-import { Spinner } from "../utils/spinner";
+import { Spinner } from "../helpers/spinner";
 
 task(`send-message`, `Sends basic text messages`)
   .addParam(

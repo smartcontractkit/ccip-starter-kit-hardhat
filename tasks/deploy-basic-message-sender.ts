@@ -1,9 +1,9 @@
 import { task } from "hardhat/config";
 import { HardhatRuntimeEnvironment, TaskArguments } from "hardhat/types";
-import { getPrivateKey, getProviderRpcUrl, getRouterConfig } from "./utils";
+import { getPrivateKey, getProviderRpcUrl, getRouterConfig } from "../helpers/utils";
 import { Wallet, JsonRpcProvider } from "ethers";
-import { Spinner } from "../utils/spinner";
-import { LINK_ADDRESSES } from "./constants";
+import { Spinner } from "../helpers/spinner";
+import { LINK_ADDRESSES } from "../helpers/constants";
 import {
   BasicMessageSender,
   BasicMessageSender__factory,

@@ -5,7 +5,7 @@ import {
   getPrivateKey,
   getProviderRpcUrl,
   getRouterConfig,
-} from "./utils";
+} from "../helpers/utils";
 import { Wallet, JsonRpcProvider } from "ethers";
 import {
   DestinationMinter,
@@ -15,8 +15,8 @@ import {
   SourceMinter,
   SourceMinter__factory,
 } from "../typechain-types";
-import { Spinner } from "../utils/spinner";
-import { LINK_ADDRESSES } from "./constants";
+import { Spinner } from "../helpers/spinner";
+import { LINK_ADDRESSES } from "../helpers/constants";
 import { getCcipMessageId } from "./helpers";
 
 task(

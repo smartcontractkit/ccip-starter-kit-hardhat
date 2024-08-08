@@ -5,7 +5,7 @@ import {
   BasicMessageReceiver,
   BasicMessageSender,
   CCIPLocalSimulator,
-} from "../typechain-types";
+} from "../../typechain-types";
 
 describe("Example 5", function () {
   enum PayFeesIn {

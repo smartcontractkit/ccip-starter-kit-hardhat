@@ -34,13 +34,7 @@ npm install
 2. Compile contracts
 
 ```
-npx hardhat compile
-```
-
-3. Run tests
-
-```
-TS_TRANSPILE_NODE=1 npx hardhat test
+npm run compile
 ```
 
 ## What is Chainlink CCIP?
@@ -106,6 +100,31 @@ If you want to validate your inputs you can always run the next command:
 
 ```shell
 npx env-enc view
+```
+
+### Test
+
+There are two types of tests in this project:
+
+- **./test/no-fork/**: These tests run on your local hardhat node and do not require forking.
+- **./test/fork/**: These tests run on a forked mainnet network and require forking the source and destination blockchains.
+
+#### No Fork
+
+To run the tests that do not require forking, type:
+
+```shell
+npm run test:no-fork
+```
+
+#### Fork
+
+The tests are forking _Arbitrum Sepolia_ as source chain and _Ethereum Sepolia_ as destination chain. Before you begin, make sure to set up the rpc urls in your `.env.enc` file.
+
+To run the tests that require forking, type:
+
+```shell
+npm run test:fork
 ```
 
 ### Faucet

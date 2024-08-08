@@ -3,13 +3,14 @@ import { expect } from "chai";
 import hre from "hardhat";
 import { id, AbiCoder } from "ethers";
 import {
+  BasicMessageReceiver,
   BurnMintERC677Helper,
   CCIPLocalSimulator,
   IRouterClient,
   LinkTokenInterface,
-} from "../typechain-types";
+} from "../../typechain-types";
 
-describe("Example 1", function () {
+describe("Example 2", function () {
   // We define a fixture to reuse the same setup in every test.
   // We use loadFixture to run this setup once, snapshot that state,
   // and reset Hardhat Network to that snapshot in every test.
@@ -20,13 +21,7 @@ describe("Example 1", function () {
     const ccipLocalSimulator: CCIPLocalSimulator =
       await ccipLocalSimualtorFactory.deploy();
 
-    const [alice, bob] = await hre.ethers.getSigners();
-
-    return { ccipLocalSimulator, alice, bob };
-  }
-
-  it("Should transfer CCIP test tokens from EOA to EOA", async function () {
-    const { ccipLocalSimulator, alice, bob } = await loadFixture(deployFixture);
+    const [alice] = await hre.ethers.getSigners();
 
     const config: {
       chainSelector_: bigint;
@@ -38,6 +33,20 @@ describe("Example 1", function () {
       ccipLnM_: string;
     } = await ccipLocalSimulator.configuration();
 
+    const basicMessageReceiverFactory = await hre.ethers.getContractFactory(
+      "BasicMessageReceiver"
+    );
+    const basicMessageReceiver: BasicMessageReceiver =
+      await basicMessageReceiverFactory.deploy(config.destinationRouter_);
+
+    return { alice, basicMessageReceiver, config };
+  }
+
+  it("Should transfer CCIP test tokens from EOA to Smart Contract", async function () {
+    const { alice, basicMessageReceiver, config } = await loadFixture(
+      deployFixture
+    );
+
     const mockCcipRouterFactory = await hre.ethers.getContractFactory(
       "MockCCIPRouter"
     );
@@ -45,6 +54,7 @@ describe("Example 1", function () {
       config.sourceRouter_
     ) as IRouterClient;
     const mockCcipRouterAddress = await mockCcipRouter.getAddress();
+    const basicMessageReceiverAddress = await basicMessageReceiver.getAddress();
 
     const ccipBnMFactory = await hre.ethers.getContractFactory(
       "BurnMintERC677Helper"
@@ -69,15 +79,18 @@ describe("Example 1", function () {
       },
     ];
 
-    const gasLimit = 0;
+    const gasLimit = 200_000;
 
     const functionSelector = id("CCIP EVMExtraArgsV1").slice(0, 10);
     const defaultAbiCoder = AbiCoder.defaultAbiCoder();
-    const extraArgs = defaultAbiCoder.encode(["uint256"], [gasLimit]); // for transfers to EOA gas limit is 0
+    const extraArgs = defaultAbiCoder.encode(["uint256"], [gasLimit]);
     const encodedExtraArgs = `${functionSelector}${extraArgs.slice(2)}`;
 
     const message = {
-      receiver: defaultAbiCoder.encode(["address"], [bob.address]),
+      receiver: defaultAbiCoder.encode(
+        ["address"],
+        [basicMessageReceiverAddress]
+      ),
       data: defaultAbiCoder.encode(["string"], [""]), // no data
       tokenAmounts: tokenAmounts,
       feeToken: config.linkToken_,
@@ -98,6 +111,8 @@ describe("Example 1", function () {
     expect(await ccipBnM.balanceOf(alice.address)).to.deep.equal(
       ONE_ETHER - amountToSend
     );
-    expect(await ccipBnM.balanceOf(bob.address)).to.deep.equal(amountToSend);
+    expect(await ccipBnM.balanceOf(basicMessageReceiverAddress)).to.deep.equal(
+      amountToSend
+    );
   });
 });

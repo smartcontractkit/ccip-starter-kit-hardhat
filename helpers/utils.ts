@@ -1,6 +1,7 @@
 import {
   CCIP_BnM_ADDRESSES,
   CCIP_LnM_ADDRESSES,
+  LINK_ADDRESSES,
   PayFeesIn,
   routerConfig,
 } from "./constants";
@@ -133,4 +134,8 @@ export const getFaucetTokensAddresses = (network: string) => {
     ccipBnM: CCIP_BnM_ADDRESSES[network],
     ccipLnM: CCIP_LnM_ADDRESSES[network],
   };
+};
+
+export const getLINKTokenAddress = (network: string) => {
+  return LINK_ADDRESSES[network];
 };

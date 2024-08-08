@@ -5,8 +5,8 @@ import {
   BurnMintERC677Helper,
   CCIPLocalSimulator,
   ProgrammableTokenTransfers,
-} from "../typechain-types";
-import { ccip } from "../typechain-types/@chainlink/local/src";
+} from "../../typechain-types";
+import { ccip } from "../../typechain-types/@chainlink/local/src";
 
 describe("Example 4", function () {
   // We define a fixture to reuse the same setup in every test.

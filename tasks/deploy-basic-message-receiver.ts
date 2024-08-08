@@ -1,12 +1,12 @@
 import { task } from "hardhat/config";
 import { HardhatRuntimeEnvironment, TaskArguments } from "hardhat/types";
-import { getPrivateKey, getProviderRpcUrl, getRouterConfig } from "./utils";
+import { getPrivateKey, getProviderRpcUrl, getRouterConfig } from "../helpers/utils";
 import { Wallet, JsonRpcProvider } from "ethers";
 import {
   BasicMessageReceiver__factory,
   BasicMessageReceiver,
 } from "../typechain-types";
-import { Spinner } from "../utils/spinner";
+import { Spinner } from "../helpers/spinner";
 
 task(
   `deploy-basic-message-receiver`,

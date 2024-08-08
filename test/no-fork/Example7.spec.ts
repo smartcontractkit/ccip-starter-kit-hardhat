@@ -6,7 +6,7 @@ import {
   DestinationMinter,
   MyNFT,
   SourceMinter,
-} from "../typechain-types";
+} from "../../typechain-types";
 
 describe("Example 7", function () {
   enum PayFeesIn {
