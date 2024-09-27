@@ -20,7 +20,8 @@ export const supportedNetworks = [
     `gnosisChiado`,
     `celoAlfajores`,
     `metisSepolia`,
-    `zksyncSepolia`
+    `zksyncSepolia`,
+    `scrollSepolia`,
 ];
 
 export const LINK_ADDRESSES: AddressMap = {
@@ -36,7 +37,8 @@ export const LINK_ADDRESSES: AddressMap = {
     [`gnosisChiado`]: `0xDCA67FD8324990792C0bfaE95903B8A64097754F`,
     [`celoAlfajores`]: `0x32E08557B14FaD8908025619797221281D439071`,
     [`metisSepolia`]: `0x9870D6a0e05F867EAAe696e106741843F7fD116D`,
-    [`zksyncSepolia`]: `0x23A1aFD896c8c8876AF46aDc38521f4432658d1e`
+    [`zksyncSepolia`]: `0x23A1aFD896c8c8876AF46aDc38521f4432658d1e`,
+    [`scrollSepolia`]: `0x7273ebbB21F8D8AcF2bC12E71a08937712E9E40c`,
 };
 
 export const CCIP_BnM_ADDRESSES: AddressMap = {
@@ -51,7 +53,8 @@ export const CCIP_BnM_ADDRESSES: AddressMap = {
     [`wemixTestnet`]: `0xF4E4057FbBc86915F4b2d63EEFFe641C03294ffc`,
     [`gnosisChiado`]: `0xA189971a2c5AcA0DFC5Ee7a2C44a2Ae27b3CF389`,
     [`celoAlfajores`]: `0x7e503dd1dAF90117A1b79953321043d9E6815C72`,
-    [`metisSepolia`]: `0x20Aa09AAb761e2E600d65c6929A9fd1E59821D3f`
+    [`metisSepolia`]: `0x20Aa09AAb761e2E600d65c6929A9fd1E59821D3f`,
+    [`scrollSepolia`]: `0x231d45b53C905c3d6201318156BDC725c9c3B9B1`,
 }
 
 export const CCIP_LnM_ADDRESSES: AddressMap = {
@@ -73,7 +76,7 @@ export const USDC_ADDRESSES: AddressMap = {
     [`polygonAmoy`]: `0x41E94Eb019C0762f9Bfcf9Fb1E58725BfB0e7582`,
     [`optimismSepolia`]: `0x5fd84259d66Cd46123540766Be93DFE6D43130D7`,
     [`avalancheFuji`]: `0x5425890298aed601595a70AB815c96711a31Bc65`,
-    [`baseSepolia`]: `0x036CbD53842c5426634e7929541eC2318f3dCF7e`
+    [`baseSepolia`]: `0x036CbD53842c5426634e7929541eC2318f3dCF7e`,
 }
 
 export const routerConfig = {
@@ -141,5 +144,10 @@ export const routerConfig = {
         address: `0xA1fdA8aa9A8C4b945C45aD30647b01f07D7A0B16`,
         chainSelector: `6898391096552792247`,
         feeTokens: [LINK_ADDRESSES[`zksyncSepolia`], `0x4317b2eCD41851173175005783322D29E9bAee9E`]
+    },
+    scrollSepolia: {
+        address: `0x6aF501292f2A33C81B9156203C9A66Ba0d8E3D21`,
+        chainSelector: `2279865765895943307`,
+        feeTokens: [LINK_ADDRESSES[`scrollSepolia`], `0x5300000000000000000000000000000000000004`]
     },
 }
