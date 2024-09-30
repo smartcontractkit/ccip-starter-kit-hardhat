@@ -49,6 +49,9 @@ export const getProviderRpcUrl = (network: string) => {
     case "zksyncSepolia":
       rpcUrl = process.env.ZKSYNC_SEPOLIA_RPC_URL;
       break;
+    case "scrollSepolia":
+      rpcUrl = process.env.SCROLL_SEPOLIA_RPC_URL;
+      break;
     default:
       throw new Error("Unknown network: " + network);
   }
@@ -100,6 +103,8 @@ export const getRouterConfig = (network: string) => {
       return routerConfig.metisSepolia;
     case "zksyncSepolia":
       return routerConfig.zksyncSepolia;
+    case "scrollSepolia":
+      return routerConfig.scrollSepolia;
     default:
       throw new Error("Unknown network: " + network);
   }
