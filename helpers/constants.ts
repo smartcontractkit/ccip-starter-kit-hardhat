@@ -22,6 +22,9 @@ export const supportedNetworks = [
     `metisSepolia`,
     `zksyncSepolia`,
     `scrollSepolia`,
+    `zircuitSepolia`,
+    `xlayerSepolia`,
+    `polygonZkevmSepolia`,
 ];
 
 export const LINK_ADDRESSES: AddressMap = {
@@ -39,6 +42,9 @@ export const LINK_ADDRESSES: AddressMap = {
     [`metisSepolia`]: `0x9870D6a0e05F867EAAe696e106741843F7fD116D`,
     [`zksyncSepolia`]: `0x23A1aFD896c8c8876AF46aDc38521f4432658d1e`,
     [`scrollSepolia`]: `0x7273ebbB21F8D8AcF2bC12E71a08937712E9E40c`,
+    [`zircuitSepolia`]: `0xDEE94506570cA186BC1e3516fCf4fd719C312cCD`,
+    [`xlayerSepolia`]: `0x724593f6FCb0De4E6902d4C55D7C74DaA2AF0E55`,
+    [`polygonZkevmSepolia`]: `0x5576815a38A3706f37bf815b261cCc7cCA77e975`,
 };
 
 export const CCIP_BnM_ADDRESSES: AddressMap = {
@@ -149,5 +155,20 @@ export const routerConfig = {
         address: `0x6aF501292f2A33C81B9156203C9A66Ba0d8E3D21`,
         chainSelector: `2279865765895943307`,
         feeTokens: [LINK_ADDRESSES[`scrollSepolia`], `0x5300000000000000000000000000000000000004`]
+    },
+    zircuitSepolia: {
+        address: `0x20bC4Ec73C6aE9Dc71f79Eb8470c542f71441bf5`,
+        chainSelector: `4562743618362911021`,
+        feeTokens: [LINK_ADDRESSES[`scrollSepolia`], `0x4200000000000000000000000000000000000006`]
+    },
+    xlayerSepolia: {
+        address: `0xc5F5330C4793AF46872a9eC15b76a007A96a4152`,
+        chainSelector: `2066098519157881736`,
+        feeTokens: [LINK_ADDRESSES[`scrollSepolia`], `0xa7b9C3a116b20bEDDdBE4d90ff97157f67F0bD97`]
+    },
+    polygonZkevmSepolia: {
+        address: `0x91A7f913EEF5E3058AD1Bf8842C294f7219C7271`,
+        chainSelector: `1654667687261492630`,
+        feeTokens: [LINK_ADDRESSES[`scrollSepolia`], `0x1CE28d5C81B229c77C5651feB49c4C489f8c52C4`]
     },
 }

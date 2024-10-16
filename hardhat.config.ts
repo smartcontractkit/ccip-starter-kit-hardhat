@@ -20,6 +20,9 @@ const CELO_ALFAJORES_RPC_URL = process.env.CELO_ALFAJORES_RPC_URL;
 const METIS_SEPOLIA_RPC_URL = process.env.METIS_SEPOLIA_RPC_URL;
 const ZKSYNC_SEPOLIA_RPC_URL = process.env.ZKSYNC_SEPOLIA_RPC_URL;
 const SCROLL_SEPOLIA_RPC_URL = process.env.SCROLL_SEPOLIA_RPC_URL;
+const ZIRCUIT_SEPOLIA_RPC_URL = process.env.ZIRCUIT_SEPOLIA_RPC_URL;
+const XLAYER_SEPOLIA_RPC_URL = process.env.XLAYER_SEPOLIA_RPC_URL;
+const POLYGON_ZKEVM_SEPOLIA_RPC_URL = process.env.POLYGON_ZKEVM_SEPOLIA_RPC_URL;
 
 const config: HardhatUserConfig = {
   solidity: "0.8.19",
@@ -102,6 +105,21 @@ const config: HardhatUserConfig = {
       url: SCROLL_SEPOLIA_RPC_URL !== undefined ? SCROLL_SEPOLIA_RPC_URL : "",
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       chainId: 534351,
+    },
+    zircuitSepolia: {
+      url: ZIRCUIT_SEPOLIA_RPC_URL !== undefined ? ZIRCUIT_SEPOLIA_RPC_URL : "",
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      chainId: 48899,
+    },
+    xlayerSepolia: {
+      url: XLAYER_SEPOLIA_RPC_URL !== undefined ? XLAYER_SEPOLIA_RPC_URL : "",
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      chainId: 195,
+    },
+    polygonZkevmSepolia: {
+      url: POLYGON_ZKEVM_SEPOLIA_RPC_URL !== undefined ? POLYGON_ZKEVM_SEPOLIA_RPC_URL : "",
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      chainId: 1442,
     },
   },
   paths: {
