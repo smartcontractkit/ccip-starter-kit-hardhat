@@ -25,6 +25,7 @@ export const supportedNetworks = [
     `zircuitSepolia`,
     `xlayerSepolia`,
     `polygonZkevmSepolia`,
+    `polkadotAstarShibuya`,
 ];
 
 export const LINK_ADDRESSES: AddressMap = {
@@ -45,6 +46,7 @@ export const LINK_ADDRESSES: AddressMap = {
     [`zircuitSepolia`]: `0xDEE94506570cA186BC1e3516fCf4fd719C312cCD`,
     [`xlayerSepolia`]: `0x724593f6FCb0De4E6902d4C55D7C74DaA2AF0E55`,
     [`polygonZkevmSepolia`]: `0x5576815a38A3706f37bf815b261cCc7cCA77e975`,
+    [`polkadotAstarShibuya`]: `0xe74037112db8807B3B4B3895F5790e5bc1866a29`,
 };
 
 export const CCIP_BnM_ADDRESSES: AddressMap = {
@@ -61,6 +63,7 @@ export const CCIP_BnM_ADDRESSES: AddressMap = {
     [`celoAlfajores`]: `0x7e503dd1dAF90117A1b79953321043d9E6815C72`,
     [`metisSepolia`]: `0x20Aa09AAb761e2E600d65c6929A9fd1E59821D3f`,
     [`scrollSepolia`]: `0x231d45b53C905c3d6201318156BDC725c9c3B9B1`,
+    [`polkadotAstarShibuya`]: `0xc49ec0eB4beb48B8Da4cceC51AA9A5bD0D0A4c43`,
 }
 
 export const CCIP_LnM_ADDRESSES: AddressMap = {
@@ -76,6 +79,7 @@ export const CCIP_LnM_ADDRESSES: AddressMap = {
     [`gnosisChiado`]: `0x30DeCD269277b8094c00B0bacC3aCaF3fF4Da7fB`,
     [`celoAlfajores`]: `0x7F4e739D40E58BBd59dAD388171d18e37B26326f`,
     [`metisSepolia`]: `0x705b364CadE0e515577F2646529e3A417473a155`,
+    [`polkadotAstarShibuya`]: `0xB9d4e1141E67ECFedC8A8139b5229b7FF2BF16F5`,
 }
 
 export const USDC_ADDRESSES: AddressMap = {
@@ -170,5 +174,10 @@ export const routerConfig = {
         address: `0x91A7f913EEF5E3058AD1Bf8842C294f7219C7271`,
         chainSelector: `1654667687261492630`,
         feeTokens: [LINK_ADDRESSES[`scrollSepolia`], `0x1CE28d5C81B229c77C5651feB49c4C489f8c52C4`]
+    },
+    polkadotAstarShibuya: {
+        address: `0x22aE550d87eBf775E0c1fDc8881121c8A51F5903`,
+        chainSelector: `6955638871347136141`,
+        feeTokens: [LINK_ADDRESSES[`polkadotAstarShibuya`], `0xbd5F3751856E11f3e80dBdA567Ef91Eb7e874791`]
     },
 }

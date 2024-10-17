@@ -90,6 +90,7 @@ SCROLL_SEPOLIA_RPC_URL=""
 ZIRCUIT_SEPOLIA_RPC_URL=""
 XLAYER_SEPOLIA_RPC_URL=""
 POLYGON_ZKEVM_SEPOLIA_RPC_URL=""
+POLKADOT_ASTAR_SHIBUYA_RPC_URL=""
 ```
 
 To set these variables, type the following command and follow the instructions in the terminal:
@@ -185,6 +186,7 @@ Where the list of supported chains consists of (case sensitive):
 - zircuitSepolia
 - xlayerSepolia
 - polygonZkevmSepolia
+- polkadotAstarShibuya
 
 For example, if you want to send 100 units of CCIP-BnM token from Avalanche Fuji to Ethereum Sepolia, and you want to pay for CCIP fees in native coin (Avalanche Fuji AVAX in this case), run:
 

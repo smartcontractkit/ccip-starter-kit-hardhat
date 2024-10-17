@@ -61,6 +61,9 @@ export const getProviderRpcUrl = (network: string) => {
     case "polygonZkevmSepolia":
       rpcUrl = process.env.POLYGON_ZKEVM_SEPOLIA_RPC_URL;
       break;
+    case "polkadotAstarShibuya":
+      rpcUrl = process.env.POLKADOT_ASTAR_SHIBUYA_RPC_URL;
+      break;
     default:
       throw new Error("Unknown network: " + network);
   }
@@ -120,6 +123,8 @@ export const getRouterConfig = (network: string) => {
       return routerConfig.xlayerSepolia;
     case "polygonZkevmSepolia":
       return routerConfig.polygonZkevmSepolia;
+    case "polkadotAstarShibuya":
+      return routerConfig.polkadotAstarShibuya;
     default:
       throw new Error("Unknown network: " + network);
   }

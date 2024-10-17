@@ -23,6 +23,7 @@ const SCROLL_SEPOLIA_RPC_URL = process.env.SCROLL_SEPOLIA_RPC_URL;
 const ZIRCUIT_SEPOLIA_RPC_URL = process.env.ZIRCUIT_SEPOLIA_RPC_URL;
 const XLAYER_SEPOLIA_RPC_URL = process.env.XLAYER_SEPOLIA_RPC_URL;
 const POLYGON_ZKEVM_SEPOLIA_RPC_URL = process.env.POLYGON_ZKEVM_SEPOLIA_RPC_URL;
+const POLKADOT_ASTAR_SHIBUYA_RPC_URL = process.env.POLKADOT_ASTAR_SHIBUYA_RPC_URL;
 
 const config: HardhatUserConfig = {
   solidity: "0.8.19",
@@ -120,6 +121,11 @@ const config: HardhatUserConfig = {
       url: POLYGON_ZKEVM_SEPOLIA_RPC_URL !== undefined ? POLYGON_ZKEVM_SEPOLIA_RPC_URL : "",
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       chainId: 1442,
+    },
+    polkadotAstarShibuya: {
+      url: POLKADOT_ASTAR_SHIBUYA_RPC_URL !== undefined ? POLKADOT_ASTAR_SHIBUYA_RPC_URL : "",
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      chainId: 421614,
     },
   },
   paths: {
