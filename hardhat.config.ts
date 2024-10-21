@@ -120,12 +120,12 @@ const config: HardhatUserConfig = {
     polygonZkevmSepolia: {
       url: POLYGON_ZKEVM_SEPOLIA_RPC_URL !== undefined ? POLYGON_ZKEVM_SEPOLIA_RPC_URL : "",
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
-      chainId: 1442,
+      chainId: 2442,
     },
     polkadotAstarShibuya: {
       url: POLKADOT_ASTAR_SHIBUYA_RPC_URL !== undefined ? POLKADOT_ASTAR_SHIBUYA_RPC_URL : "",
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
-      chainId: 421614,
+      chainId: 81,
     },
   },
   paths: {
