@@ -52,6 +52,18 @@ export const getProviderRpcUrl = (network: string) => {
     case "scrollSepolia":
       rpcUrl = process.env.SCROLL_SEPOLIA_RPC_URL;
       break;
+    case "zircuitSepolia":
+      rpcUrl = process.env.ZIRCUIT_SEPOLIA_RPC_URL;
+      break;
+    case "xlayerSepolia":
+      rpcUrl = process.env.XLAYER_SEPOLIA_RPC_URL;
+      break;
+    case "polygonZkevmSepolia":
+      rpcUrl = process.env.POLYGON_ZKEVM_SEPOLIA_RPC_URL;
+      break;
+    case "polkadotAstarShibuya":
+      rpcUrl = process.env.POLKADOT_ASTAR_SHIBUYA_RPC_URL;
+      break;
     default:
       throw new Error("Unknown network: " + network);
   }
@@ -105,6 +117,14 @@ export const getRouterConfig = (network: string) => {
       return routerConfig.zksyncSepolia;
     case "scrollSepolia":
       return routerConfig.scrollSepolia;
+    case "zircuitSepolia":
+      return routerConfig.zircuitSepolia;
+    case "xlayerSepolia":
+      return routerConfig.xlayerSepolia;
+    case "polygonZkevmSepolia":
+      return routerConfig.polygonZkevmSepolia;
+    case "polkadotAstarShibuya":
+      return routerConfig.polkadotAstarShibuya;
     default:
       throw new Error("Unknown network: " + network);
   }
