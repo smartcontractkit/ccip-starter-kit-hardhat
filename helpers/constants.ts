@@ -27,6 +27,7 @@ export const supportedNetworks = [
     `polygonZkevmSepolia`,
     `polkadotAstarShibuya`,
     `mantleSepolia`,
+    `soneiumMinatoSepolia`,
 ];
 
 export const LINK_ADDRESSES: AddressMap = {
@@ -49,6 +50,7 @@ export const LINK_ADDRESSES: AddressMap = {
     [`polygonZkevmSepolia`]: `0x5576815a38A3706f37bf815b261cCc7cCA77e975`,
     [`polkadotAstarShibuya`]: `0xe74037112db8807B3B4B3895F5790e5bc1866a29`,
     [`mantleSepolia`]: `0x22bdEdEa0beBdD7CfFC95bA53826E55afFE9DE04`,
+    [`soneiumMinatoSepolia`]: `0x7ea13478Ea3961A0e8b538cb05a9DF0477c79Cd2`,
 };
 
 export const CCIP_BnM_ADDRESSES: AddressMap = {
@@ -186,5 +188,10 @@ export const routerConfig = {
         address: `0xFd33fd627017fEf041445FC19a2B6521C9778f86`,
         chainSelector: `8236463271206331221`,
         feeTokens: [LINK_ADDRESSES[`mantleSepolia`], `0x19f5557E23e9914A18239990f6C70D68FDF0deD5`]
+    },
+    soneiumMinatoSepolia: {
+        address: `0x443a1bce545d56E2c3f20ED32eA588395FFce0f4`,
+        chainSelector: `686603546605904534`,
+        feeTokens: [LINK_ADDRESSES[`soneiumMinatoSepolia`], `0x4200000000000000000000000000000000000006`]
     },
 }

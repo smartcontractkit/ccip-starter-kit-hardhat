@@ -67,6 +67,9 @@ export const getProviderRpcUrl = (network: string) => {
     case "mantleSepolia":
       rpcUrl = process.env.MANTLE_SEPOLIA_RPC_URL;
       break;
+    case "soneiumMinatoSepolia":
+      rpcUrl = process.env.SONEIUM_MINATO_SEPOLIA_RPC_URL;
+      break;
     default:
       throw new Error("Unknown network: " + network);
   }
@@ -130,6 +133,8 @@ export const getRouterConfig = (network: string) => {
       return routerConfig.polkadotAstarShibuya;
     case "mantleSepolia":
       return routerConfig.mantleSepolia;
+    case "soneiumMinatoSepolia":
+      return routerConfig.soneiumMinatoSepolia;
     default:
       throw new Error("Unknown network: " + network);
   }
