@@ -343,7 +343,7 @@ npx hardhat deploy-programmable-token-transfers --network ethereumSepolia
 
 2. Open Metamask and fund your contract with Native tokens. For example, if you want to send a message from Ethereum Sepolia to Polygon Amoy, you can send 0.1 Sepolia ETH to your contract.
 
-3. Open Metamask and fund your contract with LINK tokens. For example, if you want to send a message from Ethereum Sepolia to Polygon Amoy, you can send 0.0000000000000001 Sepolia CCIP-BnM to your contract.
+3. Open Metamask and fund your contract with Sepolia CCIP-BnM tokens. For example, if you want to send a message from Ethereum Sepolia to Polygon Amoy, you can send 0.0000000000000001 Sepolia CCIP-BnM to your contract.
 
 4. Deploy the [`ProgrammableTokenTransfers.sol`](./contracts/ProgrammableTokenTransfers.sol) smart contract to the **destination blockchain**:
 
@@ -430,7 +430,7 @@ npx hardhat send-message
 --source-blockchain <sourceBlockchain>
 --sender <addressOfBasicMessageSenderOnSourceBlockchain>
 --destination-blockchain <destinationBlockchain>
---receiver <ddressOfBasicMessageReceiverOnDestinationBlockchain>
+--receiver <addressOfBasicMessageReceiverOnDestinationBlockchain>
 --message <messageToSend>
 --pay-fees-in <Native>
 ```
@@ -493,10 +493,10 @@ npx hardhat deploy-basic-message-sender --network ethereumSepolia
 
 2. Fund the [`BasicMessageSender.sol`](./contracts/BasicMessageSender.sol) smart contract with Testnet LINKs, either manually using your wallet or by using the `fill-sender` task.
 
-For example, if you want to send 0.001 Sepolia LINK, run:
+For example, if you want to send 1 Sepolia LINK, run:
 
 ```shell
-npx hardhat fill-sender --sender-address <BASIC_MESSAGE_SENDER_ADDRESS> --blockchain ethereumSepolia --amount 1000000000000000 --pay-fees-in LINK
+npx hardhat fill-sender --sender-address <BASIC_MESSAGE_SENDER_ADDRESS> --blockchain ethereumSepolia --amount 1000000000000000000 --pay-fees-in LINK
 ```
 
 3. Deploy the [`BasicMessageReceiver.sol`](./contracts/BasicMessageReceiver.sol) smart contract to the **destination blockchain**, using the `deploy-basic-message-receiver` task.
@@ -610,7 +610,7 @@ npx hardhat deploy-source-cross-chain-nft-minter --network avalancheFuji
 
 - If you want to pay for CCIP fees in Native tokens:
 
-  Open Metamask and fund your contract with Native tokens. For example, if you want to mint from Avalanche Fuji to Ethereum Sepolia, you can send 0.1 AVAX to the [`SourceMinter.sol`](./contracts/cross-chain-nft-minter/SourceMinter.sol) smart contract.
+  Open Metamask and fund your contract with Native tokens. For example, if you want to mint from Avalanche Fuji to Ethereum Sepolia, you can send 1 AVAX to the [`SourceMinter.sol`](./contracts/cross-chain-nft-minter/SourceMinter.sol) smart contract.
 
   Or, you can execute the `fill-sender` task, by running:
 
@@ -622,10 +622,10 @@ npx hardhat fill-sender
 --pay-fees-in <Native>
 ```
 
-For example, if you want to fund it with 0.1 Avalanche Fuji AVAX, run:
+For example, if you want to fund it with 1 Avalanche Fuji AVAX, run:
 
 ```shell
-npx hardhat fill-sender --sender-address <SOURCE_MINTER_ADDRESS> --blockchain avalancheFuji --amount 100000000000000000 --pay-fees-in Native
+npx hardhat fill-sender --sender-address <SOURCE_MINTER_ADDRESS> --blockchain avalancheFuji --amount 1000000000000000000 --pay-fees-in Native
 ```
 
 - If you want to pay for CCIP fees in LINK tokens:
@@ -659,7 +659,7 @@ npx hardhat cross-chain-mint
 --pay-fees-in <Native | LINK>
 ```
 
-For example, if you want to mint NFTs on Ethereum Sepolia by sending requests from Avalanche Fuji, run:
+For example, if you want to mint NFTs on Ethereum Sepolia by sending requests from Avalanche Fuji and pay fees in LINK, run:
 
 ```shell
 npx hardhat cross-chain-mint --source-minter <SOURCE_MINTER_ADDRESS> --source-blockchain avalancheFuji --destination-blockchain ethereumSepolia --destination-minter <DESTNATION_MINTER_ADDRESS> --pay-fees-in LINK
