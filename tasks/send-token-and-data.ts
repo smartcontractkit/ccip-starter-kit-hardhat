@@ -75,15 +75,6 @@ task(
       routerAddress,
       signer
     );
-    const supportedTokens = await router.getSupportedTokens(
-      destinationChainSelector
-    );
-
-    if (!supportedTokens.includes(tokenAddress)) {
-      throw Error(
-        `Token address ${tokenAddress} not in the list of supportedTokens ${supportedTokens}`
-      );
-    }
 
     const spinner: Spinner = new Spinner();
 

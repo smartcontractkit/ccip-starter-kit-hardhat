@@ -3,3 +3,5 @@
 /* eslint-disable */
 import type * as v483 from "./v4.8.3";
 export type { v483 };
+import type * as v502 from "./v5.0.2";
+export type { v502 };

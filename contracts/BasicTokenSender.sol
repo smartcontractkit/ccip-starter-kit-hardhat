@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.19;
+pragma solidity 0.8.24;
 
 import {LinkTokenInterface} from "@chainlink/contracts/src/v0.8/shared/interfaces/LinkTokenInterface.sol";
 import {IERC20} from
@@ -34,10 +34,6 @@ contract BasicTokenSender is Withdraw {
     }
 
     receive() external payable {}
-
-    function getSupportedTokens(uint64 chainSelector) external view returns (address[] memory tokens) {
-        tokens = IRouterClient(i_router).getSupportedTokens(chainSelector);
-    }
 
     function send(
         uint64 destinationChainSelector,

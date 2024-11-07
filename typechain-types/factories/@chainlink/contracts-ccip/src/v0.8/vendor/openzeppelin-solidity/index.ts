@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as v483 from "./v4.8.3";
+export * as v502 from "./v5.0.2";

@@ -20,15 +20,25 @@ import type {
 } from "../../../../../../common";
 
 export interface ClientInterface extends Interface {
-  getFunction(nameOrSignature: "EVM_EXTRA_ARGS_V1_TAG"): FunctionFragment;
+  getFunction(
+    nameOrSignature: "EVM_EXTRA_ARGS_V1_TAG" | "EVM_EXTRA_ARGS_V2_TAG"
+  ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "EVM_EXTRA_ARGS_V1_TAG",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "EVM_EXTRA_ARGS_V2_TAG",
+    values?: undefined
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "EVM_EXTRA_ARGS_V1_TAG",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "EVM_EXTRA_ARGS_V2_TAG",
     data: BytesLike
   ): Result;
 }
@@ -78,12 +88,17 @@ export interface Client extends BaseContract {
 
   EVM_EXTRA_ARGS_V1_TAG: TypedContractMethod<[], [string], "view">;
 
+  EVM_EXTRA_ARGS_V2_TAG: TypedContractMethod<[], [string], "view">;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
 
   getFunction(
     nameOrSignature: "EVM_EXTRA_ARGS_V1_TAG"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "EVM_EXTRA_ARGS_V2_TAG"
   ): TypedContractMethod<[], [string], "view">;
 
   filters: {};

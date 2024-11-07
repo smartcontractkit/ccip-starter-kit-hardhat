@@ -91,6 +91,7 @@ export interface MockCCIPRouterInterface extends Interface {
       | "isChainSupported"
       | "isOffRamp"
       | "routeMessage"
+      | "setFee"
   ): FunctionFragment;
 
   getEvent(
@@ -138,6 +139,10 @@ export interface MockCCIPRouterInterface extends Interface {
       AddressLike
     ]
   ): string;
+  encodeFunctionData(
+    functionFragment: "setFee",
+    values: [BigNumberish]
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "DEFAULT_GAS_LIMIT",
@@ -163,6 +168,7 @@ export interface MockCCIPRouterInterface extends Interface {
     functionFragment: "routeMessage",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "setFee", data: BytesLike): Result;
 }
 
 export namespace MessageExecutedEvent {
@@ -260,7 +266,10 @@ export interface MockCCIPRouter extends BaseContract {
   GAS_FOR_CALL_EXACT_CHECK: TypedContractMethod<[], [bigint], "view">;
 
   ccipSend: TypedContractMethod<
-    [arg0: BigNumberish, message: Client.EVM2AnyMessageStruct],
+    [
+      destinationChainSelector: BigNumberish,
+      message: Client.EVM2AnyMessageStruct
+    ],
     [string],
     "payable"
   >;
@@ -308,6 +317,8 @@ export interface MockCCIPRouter extends BaseContract {
     "nonpayable"
   >;
 
+  setFee: TypedContractMethod<[feeAmount: BigNumberish], [void], "nonpayable">;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
@@ -321,7 +332,10 @@ export interface MockCCIPRouter extends BaseContract {
   getFunction(
     nameOrSignature: "ccipSend"
   ): TypedContractMethod<
-    [arg0: BigNumberish, message: Client.EVM2AnyMessageStruct],
+    [
+      destinationChainSelector: BigNumberish,
+      message: Client.EVM2AnyMessageStruct
+    ],
     [string],
     "payable"
   >;
@@ -366,6 +380,9 @@ export interface MockCCIPRouter extends BaseContract {
     ],
     "nonpayable"
   >;
+  getFunction(
+    nameOrSignature: "setFee"
+  ): TypedContractMethod<[feeAmount: BigNumberish], [void], "nonpayable">;
 
   getEvent(
     key: "MessageExecuted"

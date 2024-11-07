@@ -39,7 +39,6 @@ export interface BasicTokenSenderInterface extends Interface {
   getFunction(
     nameOrSignature:
       | "acceptOwnership"
-      | "getSupportedTokens"
       | "owner"
       | "send"
       | "transferOwnership"
@@ -57,10 +56,6 @@ export interface BasicTokenSenderInterface extends Interface {
   encodeFunctionData(
     functionFragment: "acceptOwnership",
     values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getSupportedTokens",
-    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -87,10 +82,6 @@ export interface BasicTokenSenderInterface extends Interface {
 
   decodeFunctionResult(
     functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getSupportedTokens",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
@@ -189,12 +180,6 @@ export interface BasicTokenSender extends BaseContract {
 
   acceptOwnership: TypedContractMethod<[], [void], "nonpayable">;
 
-  getSupportedTokens: TypedContractMethod<
-    [chainSelector: BigNumberish],
-    [string[]],
-    "view"
-  >;
-
   owner: TypedContractMethod<[], [string], "view">;
 
   send: TypedContractMethod<
@@ -233,9 +218,6 @@ export interface BasicTokenSender extends BaseContract {
   getFunction(
     nameOrSignature: "acceptOwnership"
   ): TypedContractMethod<[], [void], "nonpayable">;
-  getFunction(
-    nameOrSignature: "getSupportedTokens"
-  ): TypedContractMethod<[chainSelector: BigNumberish], [string[]], "view">;
   getFunction(
     nameOrSignature: "owner"
   ): TypedContractMethod<[], [string], "view">;

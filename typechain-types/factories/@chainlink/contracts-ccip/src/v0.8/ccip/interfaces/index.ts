@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export { IAny2EVMMessageReceiver__factory } from "./IAny2EVMMessageReceiver__factory";
+export { IGetCCIPAdmin__factory } from "./IGetCCIPAdmin__factory";
+export { IOwner__factory } from "./IOwner__factory";
 export { IRouter__factory } from "./IRouter__factory";
 export { IRouterClient__factory } from "./IRouterClient__factory";

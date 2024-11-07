@@ -12,6 +12,10 @@ export type { CCIPReceiver } from "./@chainlink/contracts-ccip/src/v0.8/ccip/app
 export { CCIPReceiver__factory } from "./factories/@chainlink/contracts-ccip/src/v0.8/ccip/applications/CCIPReceiver__factory";
 export type { IAny2EVMMessageReceiver } from "./@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IAny2EVMMessageReceiver";
 export { IAny2EVMMessageReceiver__factory } from "./factories/@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IAny2EVMMessageReceiver__factory";
+export type { IGetCCIPAdmin } from "./@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IGetCCIPAdmin";
+export { IGetCCIPAdmin__factory } from "./factories/@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IGetCCIPAdmin__factory";
+export type { IOwner } from "./@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IOwner";
+export { IOwner__factory } from "./factories/@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IOwner__factory";
 export type { IRouter } from "./@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IRouter";
 export { IRouter__factory } from "./factories/@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IRouter__factory";
 export type { IRouterClient } from "./@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IRouterClient";

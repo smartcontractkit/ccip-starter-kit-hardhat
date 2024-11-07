@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { IAny2EVMMessageReceiver } from "./IAny2EVMMessageReceiver";
+export type { IGetCCIPAdmin } from "./IGetCCIPAdmin";
+export type { IOwner } from "./IOwner";
 export type { IRouter } from "./IRouter";
 export type { IRouterClient } from "./IRouterClient";
