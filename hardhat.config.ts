@@ -22,7 +22,12 @@ const ZKSYNC_SEPOLIA_RPC_URL = process.env.ZKSYNC_SEPOLIA_RPC_URL;
 const SCROLL_SEPOLIA_RPC_URL = process.env.SCROLL_SEPOLIA_RPC_URL;
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.19",
+  solidity: {
+    version: "0.8.24",
+    settings: {
+      evmVersion: "paris",
+    }
+  },
   networks: {
     hardhat: {
       chainId: 31337,

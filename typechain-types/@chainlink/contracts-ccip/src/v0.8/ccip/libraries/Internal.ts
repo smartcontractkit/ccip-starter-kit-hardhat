@@ -22,12 +22,28 @@ import type {
 export interface InternalInterface extends Interface {
   getFunction(
     nameOrSignature:
+      | "ANY_2_EVM_MESSAGE_FIXED_BYTES"
+      | "ANY_2_EVM_MESSAGE_FIXED_BYTES_PER_TOKEN"
+      | "CHAIN_FAMILY_SELECTOR_EVM"
       | "GAS_PRICE_BITS"
       | "MESSAGE_FIXED_BYTES"
       | "MESSAGE_FIXED_BYTES_PER_TOKEN"
+      | "PRECOMPILE_SPACE"
   ): FunctionFragment;
 
   encodeFunctionData(
+    functionFragment: "ANY_2_EVM_MESSAGE_FIXED_BYTES",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "ANY_2_EVM_MESSAGE_FIXED_BYTES_PER_TOKEN",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "CHAIN_FAMILY_SELECTOR_EVM",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "GAS_PRICE_BITS",
     values?: undefined
   ): string;
@@ -37,10 +53,26 @@ export interface InternalInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "MESSAGE_FIXED_BYTES_PER_TOKEN",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "PRECOMPILE_SPACE",
     values?: undefined
   ): string;
 
   decodeFunctionResult(
+    functionFragment: "ANY_2_EVM_MESSAGE_FIXED_BYTES",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "ANY_2_EVM_MESSAGE_FIXED_BYTES_PER_TOKEN",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "CHAIN_FAMILY_SELECTOR_EVM",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "GAS_PRICE_BITS",
     data: BytesLike
   ): Result;
@@ -50,6 +82,10 @@ export interface InternalInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "MESSAGE_FIXED_BYTES_PER_TOKEN",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "PRECOMPILE_SPACE",
     data: BytesLike
   ): Result;
 }
@@ -97,16 +133,37 @@ export interface Internal extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
+  ANY_2_EVM_MESSAGE_FIXED_BYTES: TypedContractMethod<[], [bigint], "view">;
+
+  ANY_2_EVM_MESSAGE_FIXED_BYTES_PER_TOKEN: TypedContractMethod<
+    [],
+    [bigint],
+    "view"
+  >;
+
+  CHAIN_FAMILY_SELECTOR_EVM: TypedContractMethod<[], [string], "view">;
+
   GAS_PRICE_BITS: TypedContractMethod<[], [bigint], "view">;
 
   MESSAGE_FIXED_BYTES: TypedContractMethod<[], [bigint], "view">;
 
   MESSAGE_FIXED_BYTES_PER_TOKEN: TypedContractMethod<[], [bigint], "view">;
 
+  PRECOMPILE_SPACE: TypedContractMethod<[], [bigint], "view">;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
 
+  getFunction(
+    nameOrSignature: "ANY_2_EVM_MESSAGE_FIXED_BYTES"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "ANY_2_EVM_MESSAGE_FIXED_BYTES_PER_TOKEN"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "CHAIN_FAMILY_SELECTOR_EVM"
+  ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "GAS_PRICE_BITS"
   ): TypedContractMethod<[], [bigint], "view">;
@@ -115,6 +172,9 @@ export interface Internal extends BaseContract {
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "MESSAGE_FIXED_BYTES_PER_TOKEN"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "PRECOMPILE_SPACE"
   ): TypedContractMethod<[], [bigint], "view">;
 
   filters: {};

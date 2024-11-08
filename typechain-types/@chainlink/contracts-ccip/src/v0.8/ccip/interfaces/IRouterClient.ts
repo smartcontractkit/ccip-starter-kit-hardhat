@@ -57,11 +57,7 @@ export declare namespace Client {
 
 export interface IRouterClientInterface extends Interface {
   getFunction(
-    nameOrSignature:
-      | "ccipSend"
-      | "getFee"
-      | "getSupportedTokens"
-      | "isChainSupported"
+    nameOrSignature: "ccipSend" | "getFee" | "isChainSupported"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -73,20 +69,12 @@ export interface IRouterClientInterface extends Interface {
     values: [BigNumberish, Client.EVM2AnyMessageStruct]
   ): string;
   encodeFunctionData(
-    functionFragment: "getSupportedTokens",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
     functionFragment: "isChainSupported",
     values: [BigNumberish]
   ): string;
 
   decodeFunctionResult(functionFragment: "ccipSend", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getFee", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getSupportedTokens",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "isChainSupported",
     data: BytesLike
@@ -154,14 +142,8 @@ export interface IRouterClient extends BaseContract {
     "view"
   >;
 
-  getSupportedTokens: TypedContractMethod<
-    [chainSelector: BigNumberish],
-    [string[]],
-    "view"
-  >;
-
   isChainSupported: TypedContractMethod<
-    [chainSelector: BigNumberish],
+    [destChainSelector: BigNumberish],
     [boolean],
     "view"
   >;
@@ -191,11 +173,8 @@ export interface IRouterClient extends BaseContract {
     "view"
   >;
   getFunction(
-    nameOrSignature: "getSupportedTokens"
-  ): TypedContractMethod<[chainSelector: BigNumberish], [string[]], "view">;
-  getFunction(
     nameOrSignature: "isChainSupported"
-  ): TypedContractMethod<[chainSelector: BigNumberish], [boolean], "view">;
+  ): TypedContractMethod<[destChainSelector: BigNumberish], [boolean], "view">;
 
   filters: {};
 }

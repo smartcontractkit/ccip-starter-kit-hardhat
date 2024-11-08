@@ -78,27 +78,6 @@ task(
       routerAddress,
       signer
     );
-    const supportedTokens = await router.getSupportedTokens(
-      targetChainSelector
-    );
-
-    console.log(
-      `ℹ️  Checking whether the ${tokenAddress} token is supported by Chainlink CCIP on the ${sourceBlockchain} blockchain`
-    );
-    spinner.start();
-
-    if (!supportedTokens.includes(tokenAddress)) {
-      spinner.stop();
-      console.error(
-        `❌ Token address ${tokenAddress} not in the list of supportedTokens ${supportedTokens}`
-      );
-      return 1;
-    }
-
-    spinner.stop();
-    console.log(
-      `✅ Token ${tokenAddress} is supported by Chainlink CCIP on the ${sourceBlockchain} blockchain`
-    );
 
     const tokenToSend: IERC20 = IERC20__factory.connect(tokenAddress, signer);
 

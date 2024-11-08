@@ -70,8 +70,8 @@ export interface BurnMintERC677HelperInterface extends Interface {
       | "MintAccessRevoked"
       | "OwnershipTransferRequested"
       | "OwnershipTransferred"
-      | "Transfer(address,address,uint256)"
       | "Transfer(address,address,uint256,bytes)"
+      | "Transfer(address,address,uint256)"
   ): EventFragment;
 
   encodeFunctionData(
@@ -367,24 +367,6 @@ export namespace OwnershipTransferredEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
-export namespace Transfer_address_address_uint256_Event {
-  export type InputTuple = [
-    from: AddressLike,
-    to: AddressLike,
-    value: BigNumberish
-  ];
-  export type OutputTuple = [from: string, to: string, value: bigint];
-  export interface OutputObject {
-    from: string;
-    to: string;
-    value: bigint;
-  }
-  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-  export type Filter = TypedDeferredTopicFilter<Event>;
-  export type Log = TypedEventLog<Event>;
-  export type LogDescription = TypedLogDescription<Event>;
-}
-
 export namespace Transfer_address_address_uint256_bytes_Event {
   export type InputTuple = [
     from: AddressLike,
@@ -403,6 +385,24 @@ export namespace Transfer_address_address_uint256_bytes_Event {
     to: string;
     value: bigint;
     data: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace Transfer_address_address_uint256_Event {
+  export type InputTuple = [
+    from: AddressLike,
+    to: AddressLike,
+    value: BigNumberish
+  ];
+  export type OutputTuple = [from: string, to: string, value: bigint];
+  export interface OutputObject {
+    from: string;
+    to: string;
+    value: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -801,18 +801,18 @@ export interface BurnMintERC677Helper extends BaseContract {
     OwnershipTransferredEvent.OutputObject
   >;
   getEvent(
-    key: "Transfer(address,address,uint256)"
-  ): TypedContractEvent<
-    Transfer_address_address_uint256_Event.InputTuple,
-    Transfer_address_address_uint256_Event.OutputTuple,
-    Transfer_address_address_uint256_Event.OutputObject
-  >;
-  getEvent(
     key: "Transfer(address,address,uint256,bytes)"
   ): TypedContractEvent<
     Transfer_address_address_uint256_bytes_Event.InputTuple,
     Transfer_address_address_uint256_bytes_Event.OutputTuple,
     Transfer_address_address_uint256_bytes_Event.OutputObject
+  >;
+  getEvent(
+    key: "Transfer(address,address,uint256)"
+  ): TypedContractEvent<
+    Transfer_address_address_uint256_Event.InputTuple,
+    Transfer_address_address_uint256_Event.OutputTuple,
+    Transfer_address_address_uint256_Event.OutputObject
   >;
 
   filters: {
@@ -893,15 +893,15 @@ export interface BurnMintERC677Helper extends BaseContract {
       OwnershipTransferredEvent.OutputObject
     >;
 
-    "Transfer(address,address,uint256)": TypedContractEvent<
-      Transfer_address_address_uint256_Event.InputTuple,
-      Transfer_address_address_uint256_Event.OutputTuple,
-      Transfer_address_address_uint256_Event.OutputObject
-    >;
     "Transfer(address,address,uint256,bytes)": TypedContractEvent<
       Transfer_address_address_uint256_bytes_Event.InputTuple,
       Transfer_address_address_uint256_bytes_Event.OutputTuple,
       Transfer_address_address_uint256_bytes_Event.OutputObject
+    >;
+    "Transfer(address,address,uint256)": TypedContractEvent<
+      Transfer_address_address_uint256_Event.InputTuple,
+      Transfer_address_address_uint256_Event.OutputTuple,
+      Transfer_address_address_uint256_Event.OutputObject
     >;
   };
 }

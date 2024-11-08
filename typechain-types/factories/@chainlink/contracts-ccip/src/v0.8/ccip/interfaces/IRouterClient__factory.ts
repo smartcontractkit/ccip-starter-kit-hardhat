@@ -160,26 +160,7 @@ const _abi = [
     inputs: [
       {
         internalType: "uint64",
-        name: "chainSelector",
-        type: "uint64",
-      },
-    ],
-    name: "getSupportedTokens",
-    outputs: [
-      {
-        internalType: "address[]",
-        name: "tokens",
-        type: "address[]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint64",
-        name: "chainSelector",
+        name: "destChainSelector",
         type: "uint64",
       },
     ],
