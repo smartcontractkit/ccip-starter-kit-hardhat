@@ -215,7 +215,7 @@ export const routerConfig = {
     },
     worldchainSepolia: {
         address: `0x47693fc188b2c30078F142eadc2C009E8D786E8d`,
-        chainSelector: `5535534526963509396`,
+        chainSelector: `5299555114858065850`,
         feeTokens: [LINK_ADDRESSES[`worldchainSepolia`], `0x4200000000000000000000000000000000000006`]
     },
 }
