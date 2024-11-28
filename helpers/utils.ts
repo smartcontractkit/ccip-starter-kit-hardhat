@@ -73,6 +73,9 @@ export const getProviderRpcUrl = (network: string) => {
     case "bsquaredTestnet":
       rpcUrl = process.env.BSQUARED_TESTNET_RPC_URL;
       break;
+    case "bobSepolia":
+      rpcUrl = process.env.BOB_SEPOLIA_RPC_URL;
+      break;
     default:
       throw new Error("Unknown network: " + network);
   }
@@ -140,6 +143,8 @@ export const getRouterConfig = (network: string) => {
       return routerConfig.soneiumMinatoSepolia;
     case "bsquaredTestnet":
       return routerConfig.bsquaredTestnet;
+    case "bobSepolia":
+      return routerConfig.bobSepolia;
     default:
       throw new Error("Unknown network: " + network);
   }
