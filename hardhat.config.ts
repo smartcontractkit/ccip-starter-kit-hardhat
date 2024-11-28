@@ -26,6 +26,7 @@ const POLYGON_ZKEVM_SEPOLIA_RPC_URL = process.env.POLYGON_ZKEVM_SEPOLIA_RPC_URL;
 const POLKADOT_ASTAR_SHIBUYA_RPC_URL = process.env.POLKADOT_ASTAR_SHIBUYA_RPC_URL;
 const MANTLE_SEPOLIA_RPC_URL = process.env.MANTLE_SEPOLIA_RPC_URL;
 const SONEIUM_MINATO_SEPOLIA_RPC_URL = process.env.SONEIUM_MINATO_SEPOLIA_RPC_URL;
+const BSQUARED_TESTNET_RPC_URL = process.env.BSQUARED_TESTNET_RPC_URL;
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -143,6 +144,11 @@ const config: HardhatUserConfig = {
       url: SONEIUM_MINATO_SEPOLIA_RPC_URL !== undefined ? SONEIUM_MINATO_SEPOLIA_RPC_URL : "",
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       chainId: 1946,
+    },
+    bsquaredTestnet: {
+      url: BSQUARED_TESTNET_RPC_URL !== undefined ? BSQUARED_TESTNET_RPC_URL : "",
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      chainId: 1113,
     },
   },
   paths: {

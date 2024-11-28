@@ -28,6 +28,7 @@ export const supportedNetworks = [
     `polkadotAstarShibuya`,
     `mantleSepolia`,
     `soneiumMinatoSepolia`,
+    `bsquaredTestnet`,
 ];
 
 export const LINK_ADDRESSES: AddressMap = {
@@ -51,6 +52,7 @@ export const LINK_ADDRESSES: AddressMap = {
     [`polkadotAstarShibuya`]: `0xe74037112db8807B3B4B3895F5790e5bc1866a29`,
     [`mantleSepolia`]: `0x22bdEdEa0beBdD7CfFC95bA53826E55afFE9DE04`,
     [`soneiumMinatoSepolia`]: `0x7ea13478Ea3961A0e8b538cb05a9DF0477c79Cd2`,
+    [`bsquaredTestnet`]: `0x436a1907D9e6a65E6db73015F08f9C66F6B63E45`,
 };
 
 export const CCIP_BnM_ADDRESSES: AddressMap = {
@@ -68,6 +70,7 @@ export const CCIP_BnM_ADDRESSES: AddressMap = {
     [`metisSepolia`]: `0x20Aa09AAb761e2E600d65c6929A9fd1E59821D3f`,
     [`scrollSepolia`]: `0x231d45b53C905c3d6201318156BDC725c9c3B9B1`,
     [`polkadotAstarShibuya`]: `0xc49ec0eB4beb48B8Da4cceC51AA9A5bD0D0A4c43`,
+    [`bsquaredTestnet`]: `0x0643fD73C261eC4B369C3a8C5c0eC8c57485E32d`,
 }
 
 export const CCIP_LnM_ADDRESSES: AddressMap = {
@@ -193,5 +196,10 @@ export const routerConfig = {
         address: `0x443a1bce545d56E2c3f20ED32eA588395FFce0f4`,
         chainSelector: `686603546605904534`,
         feeTokens: [LINK_ADDRESSES[`soneiumMinatoSepolia`], `0x4200000000000000000000000000000000000006`]
+    },
+    bsquaredTestnet: {
+        address: `0x34A49Eb641daF64d61be00Aa7F759f8225351101`,
+        chainSelector: `1948510578179542068`,
+        feeTokens: [LINK_ADDRESSES[`bsquaredTestnet`], `0x4200000000000000000000000000000000000006`]
     },
 }
