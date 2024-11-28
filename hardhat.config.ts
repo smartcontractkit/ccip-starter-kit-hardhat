@@ -28,6 +28,7 @@ const MANTLE_SEPOLIA_RPC_URL = process.env.MANTLE_SEPOLIA_RPC_URL;
 const SONEIUM_MINATO_SEPOLIA_RPC_URL = process.env.SONEIUM_MINATO_SEPOLIA_RPC_URL;
 const BSQUARED_TESTNET_RPC_URL = process.env.BSQUARED_TESTNET_RPC_URL;
 const BOB_SEPOLIA_RPC_URL = process.env.BOB_SEPOLIA_RPC_URL;
+const WORLDCHAIN_SEPOLIA_RPC_URL = process.env.WORLDCHAIN_SEPOLIA_RPC_URL;
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -155,6 +156,11 @@ const config: HardhatUserConfig = {
       url: BOB_SEPOLIA_RPC_URL !== undefined ? BOB_SEPOLIA_RPC_URL : "",
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       chainId: 808813,
+    },
+    worldchainSepolia: {
+      url: WORLDCHAIN_SEPOLIA_RPC_URL !== undefined ? WORLDCHAIN_SEPOLIA_RPC_URL : "",
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      chainId: 4801,
     },
   },
   paths: {

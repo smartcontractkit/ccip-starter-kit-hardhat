@@ -76,6 +76,9 @@ export const getProviderRpcUrl = (network: string) => {
     case "bobSepolia":
       rpcUrl = process.env.BOB_SEPOLIA_RPC_URL;
       break;
+    case "worldchainSepolia":
+      rpcUrl = process.env.WORLDCHAIN_SEPOLIA_RPC_URL;
+      break;
     default:
       throw new Error("Unknown network: " + network);
   }
@@ -145,6 +148,8 @@ export const getRouterConfig = (network: string) => {
       return routerConfig.bsquaredTestnet;
     case "bobSepolia":
       return routerConfig.bobSepolia;
+    case "worldchainSepolia":
+      return routerConfig.worldchainSepolia;
     default:
       throw new Error("Unknown network: " + network);
   }
