@@ -22,6 +22,12 @@ export const supportedNetworks = [
     `metisSepolia`,
     `zksyncSepolia`,
     `scrollSepolia`,
+    `zircuitSepolia`,
+    `xlayerSepolia`,
+    `polygonZkevmSepolia`,
+    `polkadotAstarShibuya`,
+    `mantleSepolia`,
+    `soneiumMinatoSepolia`,
 ];
 
 export const LINK_ADDRESSES: AddressMap = {
@@ -39,6 +45,12 @@ export const LINK_ADDRESSES: AddressMap = {
     [`metisSepolia`]: `0x9870D6a0e05F867EAAe696e106741843F7fD116D`,
     [`zksyncSepolia`]: `0x23A1aFD896c8c8876AF46aDc38521f4432658d1e`,
     [`scrollSepolia`]: `0x7273ebbB21F8D8AcF2bC12E71a08937712E9E40c`,
+    [`zircuitSepolia`]: `0xDEE94506570cA186BC1e3516fCf4fd719C312cCD`,
+    [`xlayerSepolia`]: `0x724593f6FCb0De4E6902d4C55D7C74DaA2AF0E55`,
+    [`polygonZkevmSepolia`]: `0x5576815a38A3706f37bf815b261cCc7cCA77e975`,
+    [`polkadotAstarShibuya`]: `0xe74037112db8807B3B4B3895F5790e5bc1866a29`,
+    [`mantleSepolia`]: `0x22bdEdEa0beBdD7CfFC95bA53826E55afFE9DE04`,
+    [`soneiumMinatoSepolia`]: `0x7ea13478Ea3961A0e8b538cb05a9DF0477c79Cd2`,
 };
 
 export const CCIP_BnM_ADDRESSES: AddressMap = {
@@ -55,6 +67,7 @@ export const CCIP_BnM_ADDRESSES: AddressMap = {
     [`celoAlfajores`]: `0x7e503dd1dAF90117A1b79953321043d9E6815C72`,
     [`metisSepolia`]: `0x20Aa09AAb761e2E600d65c6929A9fd1E59821D3f`,
     [`scrollSepolia`]: `0x231d45b53C905c3d6201318156BDC725c9c3B9B1`,
+    [`polkadotAstarShibuya`]: `0xc49ec0eB4beb48B8Da4cceC51AA9A5bD0D0A4c43`,
 }
 
 export const CCIP_LnM_ADDRESSES: AddressMap = {
@@ -70,6 +83,7 @@ export const CCIP_LnM_ADDRESSES: AddressMap = {
     [`gnosisChiado`]: `0x30DeCD269277b8094c00B0bacC3aCaF3fF4Da7fB`,
     [`celoAlfajores`]: `0x7F4e739D40E58BBd59dAD388171d18e37B26326f`,
     [`metisSepolia`]: `0x705b364CadE0e515577F2646529e3A417473a155`,
+    [`polkadotAstarShibuya`]: `0xB9d4e1141E67ECFedC8A8139b5229b7FF2BF16F5`,
 }
 
 export const USDC_ADDRESSES: AddressMap = {
@@ -149,5 +163,35 @@ export const routerConfig = {
         address: `0x6aF501292f2A33C81B9156203C9A66Ba0d8E3D21`,
         chainSelector: `2279865765895943307`,
         feeTokens: [LINK_ADDRESSES[`scrollSepolia`], `0x5300000000000000000000000000000000000004`]
+    },
+    zircuitSepolia: {
+        address: `0x20bC4Ec73C6aE9Dc71f79Eb8470c542f71441bf5`,
+        chainSelector: `4562743618362911021`,
+        feeTokens: [LINK_ADDRESSES[`scrollSepolia`], `0x4200000000000000000000000000000000000006`]
+    },
+    xlayerSepolia: {
+        address: `0xc5F5330C4793AF46872a9eC15b76a007A96a4152`,
+        chainSelector: `2066098519157881736`,
+        feeTokens: [LINK_ADDRESSES[`scrollSepolia`], `0xa7b9C3a116b20bEDDdBE4d90ff97157f67F0bD97`]
+    },
+    polygonZkevmSepolia: {
+        address: `0x91A7f913EEF5E3058AD1Bf8842C294f7219C7271`,
+        chainSelector: `1654667687261492630`,
+        feeTokens: [LINK_ADDRESSES[`scrollSepolia`], `0x1CE28d5C81B229c77C5651feB49c4C489f8c52C4`]
+    },
+    polkadotAstarShibuya: {
+        address: `0x22aE550d87eBf775E0c1fDc8881121c8A51F5903`,
+        chainSelector: `6955638871347136141`,
+        feeTokens: [LINK_ADDRESSES[`polkadotAstarShibuya`], `0xbd5F3751856E11f3e80dBdA567Ef91Eb7e874791`]
+    },
+    mantleSepolia: {
+        address: `0xFd33fd627017fEf041445FC19a2B6521C9778f86`,
+        chainSelector: `8236463271206331221`,
+        feeTokens: [LINK_ADDRESSES[`mantleSepolia`], `0x19f5557E23e9914A18239990f6C70D68FDF0deD5`]
+    },
+    soneiumMinatoSepolia: {
+        address: `0x443a1bce545d56E2c3f20ED32eA588395FFce0f4`,
+        chainSelector: `686603546605904534`,
+        feeTokens: [LINK_ADDRESSES[`soneiumMinatoSepolia`], `0x4200000000000000000000000000000000000006`]
     },
 }
