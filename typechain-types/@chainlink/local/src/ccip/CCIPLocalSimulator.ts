@@ -28,6 +28,7 @@ export interface CCIPLocalSimulatorInterface extends Interface {
       | "getSupportedTokens"
       | "isChainSupported"
       | "requestLinkFromFaucet"
+      | "supportNewTokenViaAccessControlDefaultAdmin"
       | "supportNewTokenViaGetCCIPAdmin"
       | "supportNewTokenViaOwner"
   ): FunctionFragment;
@@ -47,6 +48,10 @@ export interface CCIPLocalSimulatorInterface extends Interface {
   encodeFunctionData(
     functionFragment: "requestLinkFromFaucet",
     values: [AddressLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "supportNewTokenViaAccessControlDefaultAdmin",
+    values: [AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "supportNewTokenViaGetCCIPAdmin",
@@ -71,6 +76,10 @@ export interface CCIPLocalSimulatorInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "requestLinkFromFaucet",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "supportNewTokenViaAccessControlDefaultAdmin",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -160,6 +169,12 @@ export interface CCIPLocalSimulator extends BaseContract {
     "nonpayable"
   >;
 
+  supportNewTokenViaAccessControlDefaultAdmin: TypedContractMethod<
+    [tokenAddress: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
   supportNewTokenViaGetCCIPAdmin: TypedContractMethod<
     [tokenAddress: AddressLike],
     [void],
@@ -206,6 +221,9 @@ export interface CCIPLocalSimulator extends BaseContract {
     [boolean],
     "nonpayable"
   >;
+  getFunction(
+    nameOrSignature: "supportNewTokenViaAccessControlDefaultAdmin"
+  ): TypedContractMethod<[tokenAddress: AddressLike], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "supportNewTokenViaGetCCIPAdmin"
   ): TypedContractMethod<[tokenAddress: AddressLike], [void], "nonpayable">;
