@@ -79,6 +79,18 @@ export const getProviderRpcUrl = (network: string) => {
     case "worldchainSepolia":
       rpcUrl = process.env.WORLDCHAIN_SEPOLIA_RPC_URL;
       break;
+    case "shibariumTestnet":
+      rpcUrl = process.env.SHIBARIUM_TESTNET_RPC_URL;
+      break;
+    case "bitlayerTestnet":
+      rpcUrl = process.env.BITLAYER_TESTNET_RPC_URL;
+      break;
+    case "fantomSonicTestnet":
+      rpcUrl = process.env.FANTOM_SONIC_TESTNET_RPC_URL;
+      break;
+    case "cornTestnet":
+      rpcUrl = process.env.CORN_TESTNET_RPC_URL;
+      break;
     default:
       throw new Error("Unknown network: " + network);
   }
@@ -150,6 +162,14 @@ export const getRouterConfig = (network: string) => {
       return routerConfig.bobSepolia;
     case "worldchainSepolia":
       return routerConfig.worldchainSepolia;
+    case "shibariumTestnet":
+      return routerConfig.shibariumTestnet;
+    case "bitlayerTestnet":
+      return routerConfig.bitlayerTestnet;
+    case "fantomSonicTestnet":
+      return routerConfig.fantomSonicTestnet;
+    case "cornTestnet":
+      return routerConfig.cornTestnet;
     default:
       throw new Error("Unknown network: " + network);
   }

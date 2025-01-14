@@ -31,6 +31,10 @@ export const supportedNetworks = [
     `bsquaredTestnet`,
     `bobSepolia`,
     `worldchainSepolia`,
+    `shibariumTestnet`,
+    `bitlayerTestnet`,
+    `fantomSonicTestnet`,
+    `cornTestnet`,
 ];
 
 export const LINK_ADDRESSES: AddressMap = {
@@ -57,6 +61,10 @@ export const LINK_ADDRESSES: AddressMap = {
     [`bsquaredTestnet`]: `0x436a1907D9e6a65E6db73015F08f9C66F6B63E45`,
     [`bobSepolia`]: `0xcd2AfB2933391E35e8682cbaaF75d9CA7339b183`,
     [`worldchainSepolia`]: `0xC82Ea35634BcE95C394B6BC00626f827bB0F4801`,
+    [`shibariumTestnet`]: `0x44637eEfD71A090990f89faEC7022fc74B2969aD`,
+    [`bitlayerTestnet`]: `0x2A5bACb2440BC17D53B7b9Be73512dDf92265e48`,
+    [`fantomSonicTestnet`]: `0x61876F0429726D7777B46f663e1C9ab75d08Fc56`,
+    [`cornTestnet`]: `0x996EfAb6011896Be832969D91E9bc1b3983cfdA1`,
 };
 
 export const CCIP_BnM_ADDRESSES: AddressMap = {
@@ -73,10 +81,12 @@ export const CCIP_BnM_ADDRESSES: AddressMap = {
     [`celoAlfajores`]: `0x7e503dd1dAF90117A1b79953321043d9E6815C72`,
     [`metisSepolia`]: `0x20Aa09AAb761e2E600d65c6929A9fd1E59821D3f`,
     [`scrollSepolia`]: `0x231d45b53C905c3d6201318156BDC725c9c3B9B1`,
+    [`zircuitSepolia`]: `0xB6eC69D477F8FAeDCE1c6d322a7842D1b4D1B08e`,
     [`polkadotAstarShibuya`]: `0xc49ec0eB4beb48B8Da4cceC51AA9A5bD0D0A4c43`,
     [`bsquaredTestnet`]: `0x0643fD73C261eC4B369C3a8C5c0eC8c57485E32d`,
     [`bobSepolia`]: `0x3B7d0d0CeC08eBF8dad58aCCa4719791378b2329`,
     [`worldchainSepolia`]: `0x8fdE0C794fDA5a7A303Ce216f79B9695a7714EcB`,
+    [`fantomSonicTestnet`]: `0x230c46b9a7c8929A80863bDe89082B372a4c7A99`,
 }
 
 export const CCIP_LnM_ADDRESSES: AddressMap = {
@@ -92,6 +102,7 @@ export const CCIP_LnM_ADDRESSES: AddressMap = {
     [`gnosisChiado`]: `0x30DeCD269277b8094c00B0bacC3aCaF3fF4Da7fB`,
     [`celoAlfajores`]: `0x7F4e739D40E58BBd59dAD388171d18e37B26326f`,
     [`metisSepolia`]: `0x705b364CadE0e515577F2646529e3A417473a155`,
+    [`zircuitSepolia`]: `0x3210D3244B29535724e19159288323d86287195c`,
     [`polkadotAstarShibuya`]: `0xB9d4e1141E67ECFedC8A8139b5229b7FF2BF16F5`,
 }
 
@@ -217,5 +228,25 @@ export const routerConfig = {
         address: `0x47693fc188b2c30078F142eadc2C009E8D786E8d`,
         chainSelector: `5299555114858065850`,
         feeTokens: [LINK_ADDRESSES[`worldchainSepolia`], `0x4200000000000000000000000000000000000006`]
+    },
+    shibariumTestnet: {
+        address: `0x449E234FEDF3F907b9E9Dd6BAf1ddc36664097E5`,
+        chainSelector: `17833296867764334567`,
+        feeTokens: [LINK_ADDRESSES[`shibariumTestnet`], `0x41c3F37587EBcD46C0F85eF43E38BcfE1E70Ab56`]
+    },
+    bitlayerTestnet: {
+        address: `0x3dfbe078277609D34c8ef015c61f23A9BeDE61BB`,
+        chainSelector: `3789623672476206327`,
+        feeTokens: [LINK_ADDRESSES[`bitlayerTestnet`], `0x3e57d6946f893314324C975AA9CEBBdF3232967E`]
+    },
+    fantomSonicTestnet: {
+        address: `0x2fBd4659774D468Db5ca5bacE37869905d8EfA34`,
+        chainSelector: `3676871237479449268`,
+        feeTokens: [LINK_ADDRESSES[`fantomSonicTestnet`], `0x917FE4b784d1895187Df169aeCc687C03ba12662`]
+    },
+    cornTestnet: {
+        address: `0x9981250f56d4d0Fa9736343659B4890ebbb94110`,
+        chainSelector: `1467427327723633929`,
+        feeTokens: [LINK_ADDRESSES[`cornTestnet`], `0x1cAa492a1B39D4867253FC27C4fBEE7b0DbAf575`]
     },
 }

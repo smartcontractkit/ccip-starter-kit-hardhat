@@ -29,6 +29,10 @@ const SONEIUM_MINATO_SEPOLIA_RPC_URL = process.env.SONEIUM_MINATO_SEPOLIA_RPC_UR
 const BSQUARED_TESTNET_RPC_URL = process.env.BSQUARED_TESTNET_RPC_URL;
 const BOB_SEPOLIA_RPC_URL = process.env.BOB_SEPOLIA_RPC_URL;
 const WORLDCHAIN_SEPOLIA_RPC_URL = process.env.WORLDCHAIN_SEPOLIA_RPC_URL;
+const SHIBARIUM_TESTNET_RPC_URL = process.env.SHIBARIUM_TESTNET_RPC_URL;
+const BITLAYER_TESTNET_RPC_URL = process.env.BITLAYER_TESTNET_RPC_URL;
+const FANTOM_SONIC_TESTNET_RPC_URL = process.env.FANTOM_SONIC_TESTNET_RPC_URL;
+const CORN_TESTNET_RPC_URL = process.env.CORN_TESTNET_RPC_URL;
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -161,6 +165,26 @@ const config: HardhatUserConfig = {
       url: WORLDCHAIN_SEPOLIA_RPC_URL !== undefined ? WORLDCHAIN_SEPOLIA_RPC_URL : "",
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       chainId: 4801,
+    },
+    shibariumTestnet: {
+      url: SHIBARIUM_TESTNET_RPC_URL !== undefined ? SHIBARIUM_TESTNET_RPC_URL : "",
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      chainId: 719,
+    },
+    bitlayerTestnet: {
+      url: BITLAYER_TESTNET_RPC_URL !== undefined ? BITLAYER_TESTNET_RPC_URL : "",
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      chainId: 200810,
+    },
+    fantomSonicTestnet: {
+      url: FANTOM_SONIC_TESTNET_RPC_URL !== undefined ? FANTOM_SONIC_TESTNET_RPC_URL : "",
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      chainId: 57054,
+    },
+    cornTestnet: {
+      url: CORN_TESTNET_RPC_URL !== undefined ? CORN_TESTNET_RPC_URL : "",
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      chainId: 21000001,
     },
   },
   paths: {
