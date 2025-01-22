@@ -87,6 +87,7 @@ export const CCIP_BnM_ADDRESSES: AddressMap = {
     [`bobSepolia`]: `0x3B7d0d0CeC08eBF8dad58aCCa4719791378b2329`,
     [`worldchainSepolia`]: `0x8fdE0C794fDA5a7A303Ce216f79B9695a7714EcB`,
     [`fantomSonicTestnet`]: `0x230c46b9a7c8929A80863bDe89082B372a4c7A99`,
+    [`cornTestnet`]: `0x36B276309C62F8aeB6A560cba9976fd9e934FB0D`,
 }
 
 export const CCIP_LnM_ADDRESSES: AddressMap = {
