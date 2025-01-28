@@ -34,6 +34,7 @@ const BITLAYER_TESTNET_RPC_URL = process.env.BITLAYER_TESTNET_RPC_URL;
 const FANTOM_SONIC_TESTNET_RPC_URL = process.env.FANTOM_SONIC_TESTNET_RPC_URL;
 const CORN_TESTNET_RPC_URL = process.env.CORN_TESTNET_RPC_URL;
 const HASHKEY_SEPOLIA_RPC_URL = process.env.HASHKEY_SEPOLIA_RPC_URL;
+const INK_SEPOLIA_RPC_URL = process.env.INK_SEPOLIA_RPC_URL;
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -191,6 +192,11 @@ const config: HardhatUserConfig = {
       url: HASHKEY_SEPOLIA_RPC_URL !== undefined ? HASHKEY_SEPOLIA_RPC_URL : "",
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       chainId: 133,
+    },
+    inkSepolia: {
+      url: INK_SEPOLIA_RPC_URL !== undefined ? INK_SEPOLIA_RPC_URL : "",
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      chainId: 763373,
     },
   },
   paths: {

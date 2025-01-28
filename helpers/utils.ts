@@ -94,6 +94,9 @@ export const getProviderRpcUrl = (network: string) => {
     case "hashkeySepolia":
       rpcUrl = process.env.HASHKEY_SEPOLIA_RPC_URL;
       break;
+    case "inkSepolia":
+      rpcUrl = process.env.INK_SEPOLIA_RPC_URL;
+      break;
     default:
       throw new Error("Unknown network: " + network);
   }
@@ -175,6 +178,8 @@ export const getRouterConfig = (network: string) => {
       return routerConfig.cornTestnet;
     case "hashkeySepolia":
       return routerConfig.hashkeySepolia;
+    case "inkSepolia":
+      return routerConfig.inkSepolia;
     default:
       throw new Error("Unknown network: " + network);
   }
