@@ -100,6 +100,7 @@ SHIBARIUM_TESTNET_RPC_URL=""
 BITLAYER_TESTNET_RPC_URL=""
 FANTOM_SONIC_TESTNET_RPC_URL=""
 CORN_TESTNET_RPC_URL=""
+HASHKEY_SEPOLIA_RPC_URL=""
 ```
 
 To set these variables, type the following command and follow the instructions in the terminal:
@@ -205,6 +206,7 @@ Where the list of supported chains consists of (case sensitive):
 - bitlayerTestnet
 - fantomSonicTestnet
 - cornTestnet
+- hashkeySepolia
 
 For example, if you want to send 100 units of CCIP-BnM token from Avalanche Fuji to Ethereum Sepolia, and you want to pay for CCIP fees in native coin (Avalanche Fuji AVAX in this case), run:
 

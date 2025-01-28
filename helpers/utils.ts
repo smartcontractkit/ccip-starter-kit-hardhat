@@ -91,6 +91,9 @@ export const getProviderRpcUrl = (network: string) => {
     case "cornTestnet":
       rpcUrl = process.env.CORN_TESTNET_RPC_URL;
       break;
+    case "hashkeySepolia":
+      rpcUrl = process.env.HASHKEY_SEPOLIA_RPC_URL;
+      break;
     default:
       throw new Error("Unknown network: " + network);
   }
@@ -170,6 +173,8 @@ export const getRouterConfig = (network: string) => {
       return routerConfig.fantomSonicTestnet;
     case "cornTestnet":
       return routerConfig.cornTestnet;
+    case "hashkeySepolia":
+      return routerConfig.hashkeySepolia;
     default:
       throw new Error("Unknown network: " + network);
   }

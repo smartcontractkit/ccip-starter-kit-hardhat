@@ -35,6 +35,7 @@ export const supportedNetworks = [
     `bitlayerTestnet`,
     `fantomSonicTestnet`,
     `cornTestnet`,
+    `hashkeySepolia`,
 ];
 
 export const LINK_ADDRESSES: AddressMap = {
@@ -65,6 +66,7 @@ export const LINK_ADDRESSES: AddressMap = {
     [`bitlayerTestnet`]: `0x2A5bACb2440BC17D53B7b9Be73512dDf92265e48`,
     [`fantomSonicTestnet`]: `0x61876F0429726D7777B46f663e1C9ab75d08Fc56`,
     [`cornTestnet`]: `0x996EfAb6011896Be832969D91E9bc1b3983cfdA1`,
+    [`hashkeySepolia`]: `0x8418c4d7e8e17ab90232DC72150730E6c4b84F57`,
 };
 
 export const CCIP_BnM_ADDRESSES: AddressMap = {
@@ -88,6 +90,7 @@ export const CCIP_BnM_ADDRESSES: AddressMap = {
     [`worldchainSepolia`]: `0x8fdE0C794fDA5a7A303Ce216f79B9695a7714EcB`,
     [`fantomSonicTestnet`]: `0x230c46b9a7c8929A80863bDe89082B372a4c7A99`,
     [`cornTestnet`]: `0x36B276309C62F8aeB6A560cba9976fd9e934FB0D`,
+    [`hashkeySepolia`]: `0xB0F91Ce2ECAa3555D4b1fD4489bD9a207a7844f0`,
 }
 
 export const CCIP_LnM_ADDRESSES: AddressMap = {
@@ -249,5 +252,10 @@ export const routerConfig = {
         address: `0x9981250f56d4d0Fa9736343659B4890ebbb94110`,
         chainSelector: `1467427327723633929`,
         feeTokens: [LINK_ADDRESSES[`cornTestnet`], `0x1cAa492a1B39D4867253FC27C4fBEE7b0DbAf575`]
+    },
+    hashkeySepolia: {
+        address: `0x1360c71dd2458B6d4A5Ad5946d9011BafA0435d7`,
+        chainSelector: `4356164186791070119`,
+        feeTokens: [LINK_ADDRESSES[`hashkeySepolia`], `0x2896e619Fa7c831A7E52b87EffF4d671bEc6B262`]
     },
 }

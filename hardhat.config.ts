@@ -33,6 +33,7 @@ const SHIBARIUM_TESTNET_RPC_URL = process.env.SHIBARIUM_TESTNET_RPC_URL;
 const BITLAYER_TESTNET_RPC_URL = process.env.BITLAYER_TESTNET_RPC_URL;
 const FANTOM_SONIC_TESTNET_RPC_URL = process.env.FANTOM_SONIC_TESTNET_RPC_URL;
 const CORN_TESTNET_RPC_URL = process.env.CORN_TESTNET_RPC_URL;
+const HASHKEY_SEPOLIA_RPC_URL = process.env.HASHKEY_SEPOLIA_RPC_URL;
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -185,6 +186,11 @@ const config: HardhatUserConfig = {
       url: CORN_TESTNET_RPC_URL !== undefined ? CORN_TESTNET_RPC_URL : "",
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       chainId: 21000001,
+    },
+    hashkeySepolia: {
+      url: HASHKEY_SEPOLIA_RPC_URL !== undefined ? HASHKEY_SEPOLIA_RPC_URL : "",
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      chainId: 133,
     },
   },
   paths: {
