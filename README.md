@@ -6,6 +6,29 @@
 
 This project demonstrates a couple of basic Chainlink CCIP use cases.
 
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+  - [Install packages](#install-packages)
+  - [Compile contracts](#compile-contracts)
+- [What is Chainlink CCIP?](#what-is-chainlink-ccip)
+- [Usage](#usage)
+  - [Set a password for encrypting and decrypting the environment variable file](#set-a-password-for-encrypting-and-decrypting-the-environment-variable-file)
+  - [Set environment variables](#set-environment-variables)
+  - [Validate your inputs](#validate-your-inputs)
+- [Tests](#tests)
+  - [No Fork](#no-fork)
+  - [Fork](#fork)
+  - [Faucet](#faucet)
+- [Example 1 - Transfer CCIP Test Tokens from EOA to EOA](#example-1---transfer-ccip-test-tokens-from-eoa-to-eoa)
+- [Example 2 - Transfer Tokens from EOA to Smart Contract](#example-2---transfer-tokens-from-eoa-to-smart-contract)
+- [Example 3 - Transfer Token(s) from Smart Contract to any destination](#example-3---transfer-tokens-from-smart-contract-to-any-destination)
+- [Example 4 - Send & Receive Tokens and Data](#example-4---send--receive-tokens-and-data)
+- [Example 5 - Send & Receive Cross-Chain Messages and Pay with Native Coins](#example-5---send--receive-cross-chain-messages-and-pay-with-native-coins)
+- [Example 6 - Send & Receive Cross-Chain Messages and Pay with LINK Tokens](#example-6---send--receive-cross-chain-messages-and-pay-with-link-tokens)
+- [Example 7 - Execute Received Message as a Function Call](#example-7---execute-received-message-as-a-function-call)
+
 ## Prerequisites
 
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
@@ -118,14 +141,17 @@ If you want to validate your inputs you can always run the next command:
 npx env-enc view
 ```
 
-### Test
+## Tests
 
 There are two types of tests in this project:
 
 - **./test/no-fork/**: These tests run on your local hardhat node and do not require forking.
 - **./test/fork/**: These tests run on a forked mainnet network and require forking the source and destination blockchains.
 
-#### No Fork
+> **Note**  
+> Tests in the test folder have names like Example1.spec.ts, where `Example1` maps to the [#example-1](#example-1---transfer-ccip-test-tokens-from-eoa-to-eoa) scenario below.
+
+### No Fork
 
 To run the tests that do not require forking, type:
 
@@ -133,7 +159,7 @@ To run the tests that do not require forking, type:
 npm run test:no-fork
 ```
 
-#### Fork
+### Fork
 
 The tests are forking _Arbitrum Sepolia_ as source chain and _Ethereum Sepolia_ as destination chain. Before you begin, make sure to set up the rpc urls in your `.env.enc` file.
 
