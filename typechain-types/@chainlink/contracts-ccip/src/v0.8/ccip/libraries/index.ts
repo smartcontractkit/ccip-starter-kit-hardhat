@@ -4,3 +4,5 @@
 export type { Client } from "./Client";
 export type { Internal } from "./Internal";
 export type { MerkleMultiProof } from "./MerkleMultiProof";
+export type { Pool } from "./Pool";
+export type { RateLimiter } from "./RateLimiter";

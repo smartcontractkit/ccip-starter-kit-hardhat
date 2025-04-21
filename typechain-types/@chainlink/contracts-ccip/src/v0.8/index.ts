@@ -3,6 +3,8 @@
 /* eslint-disable */
 import type * as ccip from "./ccip";
 export type { ccip };
+import type * as liquiditymanager from "./liquiditymanager";
+export type { liquiditymanager };
 import type * as shared from "./shared";
 export type { shared };
 import type * as vendor from "./vendor";

@@ -3,4 +3,6 @@
 /* eslint-disable */
 export type { ConfirmedOwner } from "./ConfirmedOwner";
 export type { ConfirmedOwnerWithProposal } from "./ConfirmedOwnerWithProposal";
+export type { Ownable2Step } from "./Ownable2Step";
+export type { Ownable2StepMsgSender } from "./Ownable2StepMsgSender";
 export type { OwnerIsCreator } from "./OwnerIsCreator";

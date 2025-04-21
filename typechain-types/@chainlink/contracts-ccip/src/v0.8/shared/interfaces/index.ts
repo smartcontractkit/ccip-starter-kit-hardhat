@@ -3,3 +3,4 @@
 /* eslint-disable */
 export type { IERC677Receiver } from "./IERC677Receiver";
 export type { IOwnable } from "./IOwnable";
+export type { ITypeAndVersion } from "./ITypeAndVersion";
