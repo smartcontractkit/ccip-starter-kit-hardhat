@@ -2,7 +2,7 @@
 
 > **Note**
 >
-> _This repository represents an example of using a Chainlink product or service. It is provided to help you understand how to interact with Chainlink’s systems so that you can integrate them into your own. This template is provided "AS IS" without warranties of any kind, has not been audited, and may be missing key checks or error handling to make the usage of the product more clear. Take everything in this repository as an example and not something to be copy pasted into a production ready service._
+> _This repository represents an example of using a Chainlink product or service. It is provided to help you understand how to interact with Chainlink's systems so that you can integrate them into your own. This template is provided "AS IS" without warranties of any kind, has not been audited, and may be missing key checks or error handling to make the usage of the product more clear. Take everything in this repository as an example and not something to be copy pasted into a production ready service._
 
 This project demonstrates a couple of basic Chainlink CCIP use cases.
 
@@ -28,6 +28,12 @@ This project demonstrates a couple of basic Chainlink CCIP use cases.
 - [Example 5 - Send & Receive Cross-Chain Messages and Pay with Native Coins](#example-5---send--receive-cross-chain-messages-and-pay-with-native-coins)
 - [Example 6 - Send & Receive Cross-Chain Messages and Pay with LINK Tokens](#example-6---send--receive-cross-chain-messages-and-pay-with-link-tokens)
 - [Example 7 - Execute Received Message as a Function Call](#example-7---execute-received-message-as-a-function-call)
+- [Custom CCIP Token Pool Tasks](#custom-ccip-token-pool-tasks)
+  - [1. `deploy-token`](#1-deploy-token)
+  - [2. `setup-burn-mint-pool`](#2-setup-burn-mint-pool)
+  - [3. `setup-lock-release-pool`](#3-setup-lock-release-pool)
+  - [4. `configure-pool`](#4-configure-pool)
+  - [5. `send-ccip-tokens`](#5-send-ccip-tokens)
 
 ## Prerequisites
 
@@ -765,3 +771,174 @@ npx hardhat withdraw --beneficiary <BENEFICIARY_ADDRESS> --blockchain avalancheF
 ```
 
 depending on whether you filled the [`SourceMinter.sol`](./contracts/cross-chain-nft-minter/SourceMinter.sol) contract with `Native` or `LINK` in step number 3.
+
+## Custom CCIP Token Pool Tasks
+
+This section describes Hardhat tasks for deploying and managing custom CCIP token pools (Burn-Mint or Lock-Release) and associated tokens. These tasks allow for testing custom token integrations with CCIP.
+
+### 1. `deploy-token`
+
+Deploys a `BurnMintERC677` token contract, suitable for use with either pool type. It can optionally mint an initial amount of tokens to a specified recipient right after deployment.
+
+**Usage:**
+
+```shell
+npx hardhat deploy-token --network <networkName> 
+--name <tokenName> 
+--symbol <tokenSymbol> 
+[--decimals <tokenDecimals>]      # Optional, Default: 18
+[--supply <initialSupply>]      # Optional, Default: 1,000,000,000 (in Ether unit)
+[--mint <amountToMint>]         # Optional: Amount to mint post-deployment (in Ether unit)
+[--recipient <recipientAddress>]  # Optional: Address for minted tokens (default: deployer)
+```
+
+**Parameters:**
+
+- `--network`: The target blockchain network (e.g., `ethereumSepolia`).
+- `--name`: Name of the token (e.g., "My Test Token").
+- `--symbol`: Symbol of the token (e.g., "MTT").
+- `--decimals` (Optional): Number of decimals for the token (default: 18).
+- `--supply` (Optional): Initial total supply of the token, specified in Ether unit (e.g., "1000000" for 1 million tokens) (default: 1,000,000,000).
+- `--mint` (Optional): Amount of tokens to mint immediately after deployment (e.g., "1000"). Requires the deployer to have the `MINTER_ROLE` (which it does by default).
+- `--recipient` (Optional): The address to receive the tokens minted using the `--mint` flag. Defaults to the deployer's address if `--mint` is used but `--recipient` is omitted.
+
+**Example (Deploy Only):**
+
+```shell
+npx hardhat deploy-token --network ethereumSepolia --name "My Test Token" --symbol "MTT"
+# Note the deployed token address output
+```
+
+**Example (Deploy and Mint to Deployer):**
+
+```shell
+npx hardhat deploy-token --network ethereumSepolia --name "My Test Token" --symbol "MTT" --mint 1000
+# Deploys MTT and mints 1000 MTT to the deployer's address
+```
+
+**Example (Deploy and Mint to Specific Address):**
+
+```shell
+npx hardhat deploy-token --network ethereumSepolia --name "My Test Token" --symbol "MTT" --mint 500 --recipient 0x123...abc
+# Deploys MTT and mints 500 MTT to 0x123...abc
+```
+
+### 2. `setup-burn-mint-pool`
+
+Deploys a `BurnMintTokenPool` contract for a specific token and grants it the necessary mint and burn roles on that token contract.
+
+**Usage:**
+
+```shell
+npx hardhat setup-burn-mint-pool --network <networkName> 
+--token <tokenAddress>
+```
+
+**Parameters:**
+
+- `--network`: The target blockchain network.
+- `--token`: Address of the previously deployed `BurnMintERC677` token.
+
+**Example:**
+
+```shell
+npx hardhat setup-burn-mint-pool --network ethereumSepolia --token <YOUR_DEPLOYED_TOKEN_ADDRESS>
+# Note the deployed pool address output
+```
+
+### 3. `setup-lock-release-pool`
+
+Deploys a `LockReleaseTokenPool` contract for a specific token. Optionally, it can mint liquidity tokens to the deployer, set the deployer as the pool's rebalancer, and provide initial liquidity.
+
+**Usage:**
+
+```shell
+npx hardhat setup-lock-release-pool --network <networkName> 
+--token <tokenAddress> 
+[--liquidity <liquidityAmount>] # Optional: Amount in Ether unit
+```
+
+**Parameters:**
+
+- `--network`: The target blockchain network.
+- `--token`: Address of the previously deployed ERC20 token (can be `BurnMintERC677`).
+- `--liquidity` (Optional): Amount of the token (in Ether unit) to mint and provide as initial liquidity (e.g., "1000"). If provided, the deployer will be set as the rebalancer.
+
+**Example (with liquidity):**
+
+```shell
+npx hardhat setup-lock-release-pool --network ethereumSepolia --token <YOUR_DEPLOYED_TOKEN_ADDRESS> --liquidity 1000
+# Note the deployed pool address output
+```
+
+### 4. `configure-pool`
+
+Configures a deployed local pool (either Burn-Mint or Lock-Release) to recognize its corresponding remote pool on another network.
+
+**Usage:**
+
+```shell
+npx hardhat configure-pool --network <localNetworkName> 
+--local-pool <localPoolAddress> 
+--remote-network <remoteNetworkName> 
+--remote-pool <remotePoolAddress> 
+--remote-token <remoteTokenAddress> 
+[--pool-type <poolType>] # Optional: LockReleaseTokenPool | BurnMintTokenPool (Default: LockReleaseTokenPool)
+```
+
+**Parameters:**
+
+- `--network`: The network where the *local* pool is deployed.
+- `--local-pool`: Address of the pool contract on the local network.
+- `--remote-network`: Name of the network where the corresponding remote pool is deployed (e.g., `arbitrumSepolia`).
+- `--remote-pool`: Address of the pool contract on the remote network.
+- `--remote-token`: Address of the corresponding token contract on the remote network.
+- `--pool-type`: Specifies the type of the *local* pool being configured.
+
+**Example (configuring a BurnMint pool):**
+
+```shell
+npx hardhat configure-pool --network ethereumSepolia --local-pool <SOURCE_POOL_ADDRESS> --remote-network arbitrumSepolia --remote-pool <DESTINATION_POOL_ADDRESS> --remote-token <DESTINATION_TOKEN_ADDRESS> --pool-type burnMint
+```
+
+### 5. `send-ccip-tokens`
+
+Sends tokens from the source network to a receiver on the destination network via a specified CCIP token pool.
+
+**Usage:**
+
+```shell
+npx hardhat send-ccip-tokens --network <sourceNetworkName> 
+--pool <sourcePoolAddress> 
+--token <sourceTokenAddress> 
+--destination-network <destinationNetworkName> 
+--receiver <receiverAddress> 
+--amount <amountToSend> 
+--pool-type <poolType> # burnMint | lockRelease
+[--fee-token <feeTokenAddress>] # Optional: Address of LINK or 0x0 for Native (Default: 0x0)
+[--gas-limit <gasLimit>] # Optional: Gas limit for destination execution (Default: 200000)
+```
+
+**Parameters:**
+
+- `--network`: The source blockchain network.
+- `--pool`: Address of the source token pool contract (Burn-Mint or Lock-Release).
+- `--token`: Address of the token being sent on the source network.
+- `--destination-network`: Name of the destination network.
+- `--receiver`: Address of the recipient on the destination network.
+- `--amount`: Amount of tokens to send (in Ether unit, e.g., "50.5").
+- `--pool-type`: Type of the source pool. Must be exactly `burnMint` or `lockRelease`.
+- `--fee-token` (Optional): Address of the token to pay CCIP fees. Use the network's LINK token address or `0x0000000000000000000000000000000000000000` (ZeroAddress) to pay with native currency. Defaults to native.
+- `--gas-limit` (Optional): Gas limit for the transaction execution on the destination chain (default: 200000).
+
+**Example (using Lock-Release, paying fees in Native):**
+
+```shell
+npx hardhat send-ccip-tokens --network ethereumSepolia --pool <SOURCE_POOL_ADDRESS> --token <SOURCE_TOKEN_ADDRESS> --destination-network arbitrumSepolia --receiver <RECEIVER_ADDRESS> --amount 10 --pool-type lockRelease
+```
+
+**Example (using Burn-Mint, paying fees in LINK):**
+
+```shell
+npx hardhat send-ccip-tokens --network ethereumSepolia --pool <SOURCE_POOL_ADDRESS> --token <SOURCE_TOKEN_ADDRESS> --destination-network arbitrumSepolia --receiver <RECEIVER_ADDRESS> --amount 25 --pool-type burnMint --fee-token <SEPOLIA_LINK_ADDRESS>
+```
