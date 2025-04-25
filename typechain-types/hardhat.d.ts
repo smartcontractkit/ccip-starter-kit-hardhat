@@ -30,6 +30,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IOwner__factory>;
     getContractFactory(
+      name: "IPoolV1",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IPoolV1__factory>;
+    getContractFactory(
+      name: "IRMN",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IRMN__factory>;
+    getContractFactory(
       name: "IRouter",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IRouter__factory>;
@@ -50,9 +58,37 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MerkleMultiProof__factory>;
     getContractFactory(
+      name: "Pool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Pool__factory>;
+    getContractFactory(
+      name: "RateLimiter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.RateLimiter__factory>;
+    getContractFactory(
+      name: "BurnMintTokenPool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.BurnMintTokenPool__factory>;
+    getContractFactory(
+      name: "BurnMintTokenPoolAbstract",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.BurnMintTokenPoolAbstract__factory>;
+    getContractFactory(
+      name: "LockReleaseTokenPool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.LockReleaseTokenPool__factory>;
+    getContractFactory(
+      name: "TokenPool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TokenPool__factory>;
+    getContractFactory(
       name: "MockCCIPRouter",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MockCCIPRouter__factory>;
+    getContractFactory(
+      name: "ILiquidityContainer",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ILiquidityContainer__factory>;
     getContractFactory(
       name: "ConfirmedOwner",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -61,6 +97,14 @@ declare module "hardhat/types/runtime" {
       name: "ConfirmedOwnerWithProposal",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ConfirmedOwnerWithProposal__factory>;
+    getContractFactory(
+      name: "Ownable2Step",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Ownable2Step__factory>;
+    getContractFactory(
+      name: "Ownable2StepMsgSender",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Ownable2StepMsgSender__factory>;
     getContractFactory(
       name: "OwnerIsCreator",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -77,6 +121,10 @@ declare module "hardhat/types/runtime" {
       name: "IOwnable",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IOwnable__factory>;
+    getContractFactory(
+      name: "ITypeAndVersion",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ITypeAndVersion__factory>;
     getContractFactory(
       name: "IBurnMintERC20",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -243,6 +291,16 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IOwner>;
     getContractAt(
+      name: "IPoolV1",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IPoolV1>;
+    getContractAt(
+      name: "IRMN",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IRMN>;
+    getContractAt(
       name: "IRouter",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
@@ -268,10 +326,45 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.MerkleMultiProof>;
     getContractAt(
+      name: "Pool",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Pool>;
+    getContractAt(
+      name: "RateLimiter",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.RateLimiter>;
+    getContractAt(
+      name: "BurnMintTokenPool",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.BurnMintTokenPool>;
+    getContractAt(
+      name: "BurnMintTokenPoolAbstract",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.BurnMintTokenPoolAbstract>;
+    getContractAt(
+      name: "LockReleaseTokenPool",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.LockReleaseTokenPool>;
+    getContractAt(
+      name: "TokenPool",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.TokenPool>;
+    getContractAt(
       name: "MockCCIPRouter",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
     ): Promise<Contracts.MockCCIPRouter>;
+    getContractAt(
+      name: "ILiquidityContainer",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ILiquidityContainer>;
     getContractAt(
       name: "ConfirmedOwner",
       address: string | ethers.Addressable,
@@ -282,6 +375,16 @@ declare module "hardhat/types/runtime" {
       address: string | ethers.Addressable,
       signer?: ethers.Signer
     ): Promise<Contracts.ConfirmedOwnerWithProposal>;
+    getContractAt(
+      name: "Ownable2Step",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Ownable2Step>;
+    getContractAt(
+      name: "Ownable2StepMsgSender",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Ownable2StepMsgSender>;
     getContractAt(
       name: "OwnerIsCreator",
       address: string | ethers.Addressable,
@@ -302,6 +405,11 @@ declare module "hardhat/types/runtime" {
       address: string | ethers.Addressable,
       signer?: ethers.Signer
     ): Promise<Contracts.IOwnable>;
+    getContractAt(
+      name: "ITypeAndVersion",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ITypeAndVersion>;
     getContractAt(
       name: "IBurnMintERC20",
       address: string | ethers.Addressable,
@@ -500,6 +608,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.IOwner>;
     deployContract(
+      name: "IPoolV1",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IPoolV1>;
+    deployContract(
+      name: "IRMN",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IRMN>;
+    deployContract(
       name: "IRouter",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.IRouter>;
@@ -520,9 +636,37 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.MerkleMultiProof>;
     deployContract(
+      name: "Pool",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Pool>;
+    deployContract(
+      name: "RateLimiter",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.RateLimiter>;
+    deployContract(
+      name: "BurnMintTokenPool",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.BurnMintTokenPool>;
+    deployContract(
+      name: "BurnMintTokenPoolAbstract",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.BurnMintTokenPoolAbstract>;
+    deployContract(
+      name: "LockReleaseTokenPool",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.LockReleaseTokenPool>;
+    deployContract(
+      name: "TokenPool",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.TokenPool>;
+    deployContract(
       name: "MockCCIPRouter",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.MockCCIPRouter>;
+    deployContract(
+      name: "ILiquidityContainer",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ILiquidityContainer>;
     deployContract(
       name: "ConfirmedOwner",
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -531,6 +675,14 @@ declare module "hardhat/types/runtime" {
       name: "ConfirmedOwnerWithProposal",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ConfirmedOwnerWithProposal>;
+    deployContract(
+      name: "Ownable2Step",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Ownable2Step>;
+    deployContract(
+      name: "Ownable2StepMsgSender",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Ownable2StepMsgSender>;
     deployContract(
       name: "OwnerIsCreator",
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -547,6 +699,10 @@ declare module "hardhat/types/runtime" {
       name: "IOwnable",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.IOwnable>;
+    deployContract(
+      name: "ITypeAndVersion",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ITypeAndVersion>;
     deployContract(
       name: "IBurnMintERC20",
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -713,6 +869,16 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.IOwner>;
     deployContract(
+      name: "IPoolV1",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IPoolV1>;
+    deployContract(
+      name: "IRMN",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IRMN>;
+    deployContract(
       name: "IRouter",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -738,10 +904,45 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.MerkleMultiProof>;
     deployContract(
+      name: "Pool",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Pool>;
+    deployContract(
+      name: "RateLimiter",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.RateLimiter>;
+    deployContract(
+      name: "BurnMintTokenPool",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.BurnMintTokenPool>;
+    deployContract(
+      name: "BurnMintTokenPoolAbstract",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.BurnMintTokenPoolAbstract>;
+    deployContract(
+      name: "LockReleaseTokenPool",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.LockReleaseTokenPool>;
+    deployContract(
+      name: "TokenPool",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.TokenPool>;
+    deployContract(
       name: "MockCCIPRouter",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.MockCCIPRouter>;
+    deployContract(
+      name: "ILiquidityContainer",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ILiquidityContainer>;
     deployContract(
       name: "ConfirmedOwner",
       args: any[],
@@ -752,6 +953,16 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ConfirmedOwnerWithProposal>;
+    deployContract(
+      name: "Ownable2Step",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Ownable2Step>;
+    deployContract(
+      name: "Ownable2StepMsgSender",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Ownable2StepMsgSender>;
     deployContract(
       name: "OwnerIsCreator",
       args: any[],
@@ -772,6 +983,11 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.IOwnable>;
+    deployContract(
+      name: "ITypeAndVersion",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ITypeAndVersion>;
     deployContract(
       name: "IBurnMintERC20",
       args: any[],

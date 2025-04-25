@@ -22,9 +22,9 @@ import type {
 export interface InternalInterface extends Interface {
   getFunction(
     nameOrSignature:
-      | "ANY_2_EVM_MESSAGE_FIXED_BYTES"
-      | "ANY_2_EVM_MESSAGE_FIXED_BYTES_PER_TOKEN"
       | "CHAIN_FAMILY_SELECTOR_EVM"
+      | "CHAIN_FAMILY_SELECTOR_SVM"
+      | "GAS_ESTIMATION_SENDER"
       | "GAS_PRICE_BITS"
       | "MESSAGE_FIXED_BYTES"
       | "MESSAGE_FIXED_BYTES_PER_TOKEN"
@@ -32,15 +32,15 @@ export interface InternalInterface extends Interface {
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "ANY_2_EVM_MESSAGE_FIXED_BYTES",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "ANY_2_EVM_MESSAGE_FIXED_BYTES_PER_TOKEN",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "CHAIN_FAMILY_SELECTOR_EVM",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "CHAIN_FAMILY_SELECTOR_SVM",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "GAS_ESTIMATION_SENDER",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -61,15 +61,15 @@ export interface InternalInterface extends Interface {
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "ANY_2_EVM_MESSAGE_FIXED_BYTES",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "ANY_2_EVM_MESSAGE_FIXED_BYTES_PER_TOKEN",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "CHAIN_FAMILY_SELECTOR_EVM",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "CHAIN_FAMILY_SELECTOR_SVM",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "GAS_ESTIMATION_SENDER",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -133,15 +133,11 @@ export interface Internal extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
-  ANY_2_EVM_MESSAGE_FIXED_BYTES: TypedContractMethod<[], [bigint], "view">;
-
-  ANY_2_EVM_MESSAGE_FIXED_BYTES_PER_TOKEN: TypedContractMethod<
-    [],
-    [bigint],
-    "view"
-  >;
-
   CHAIN_FAMILY_SELECTOR_EVM: TypedContractMethod<[], [string], "view">;
+
+  CHAIN_FAMILY_SELECTOR_SVM: TypedContractMethod<[], [string], "view">;
+
+  GAS_ESTIMATION_SENDER: TypedContractMethod<[], [string], "view">;
 
   GAS_PRICE_BITS: TypedContractMethod<[], [bigint], "view">;
 
@@ -156,13 +152,13 @@ export interface Internal extends BaseContract {
   ): T;
 
   getFunction(
-    nameOrSignature: "ANY_2_EVM_MESSAGE_FIXED_BYTES"
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "ANY_2_EVM_MESSAGE_FIXED_BYTES_PER_TOKEN"
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
     nameOrSignature: "CHAIN_FAMILY_SELECTOR_EVM"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "CHAIN_FAMILY_SELECTOR_SVM"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "GAS_ESTIMATION_SENDER"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "GAS_PRICE_BITS"
