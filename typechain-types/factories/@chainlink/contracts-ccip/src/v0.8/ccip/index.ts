@@ -4,4 +4,5 @@
 export * as applications from "./applications";
 export * as interfaces from "./interfaces";
 export * as libraries from "./libraries";
+export * as pools from "./pools";
 export * as test from "./test";

@@ -21,7 +21,11 @@ import type {
 
 export interface ClientInterface extends Interface {
   getFunction(
-    nameOrSignature: "EVM_EXTRA_ARGS_V1_TAG" | "EVM_EXTRA_ARGS_V2_TAG"
+    nameOrSignature:
+      | "EVM_EXTRA_ARGS_V1_TAG"
+      | "EVM_EXTRA_ARGS_V2_TAG"
+      | "SVM_EXTRA_ARGS_MAX_ACCOUNTS"
+      | "SVM_EXTRA_ARGS_V1_TAG"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -32,6 +36,14 @@ export interface ClientInterface extends Interface {
     functionFragment: "EVM_EXTRA_ARGS_V2_TAG",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "SVM_EXTRA_ARGS_MAX_ACCOUNTS",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "SVM_EXTRA_ARGS_V1_TAG",
+    values?: undefined
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "EVM_EXTRA_ARGS_V1_TAG",
@@ -39,6 +51,14 @@ export interface ClientInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "EVM_EXTRA_ARGS_V2_TAG",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "SVM_EXTRA_ARGS_MAX_ACCOUNTS",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "SVM_EXTRA_ARGS_V1_TAG",
     data: BytesLike
   ): Result;
 }
@@ -90,6 +110,10 @@ export interface Client extends BaseContract {
 
   EVM_EXTRA_ARGS_V2_TAG: TypedContractMethod<[], [string], "view">;
 
+  SVM_EXTRA_ARGS_MAX_ACCOUNTS: TypedContractMethod<[], [bigint], "view">;
+
+  SVM_EXTRA_ARGS_V1_TAG: TypedContractMethod<[], [string], "view">;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
@@ -99,6 +123,12 @@ export interface Client extends BaseContract {
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "EVM_EXTRA_ARGS_V2_TAG"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "SVM_EXTRA_ARGS_MAX_ACCOUNTS"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "SVM_EXTRA_ARGS_V1_TAG"
   ): TypedContractMethod<[], [string], "view">;
 
   filters: {};

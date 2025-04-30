@@ -3,3 +3,4 @@
 /* eslint-disable */
 export { IERC677Receiver__factory } from "./IERC677Receiver__factory";
 export { IOwnable__factory } from "./IOwnable__factory";
+export { ITypeAndVersion__factory } from "./ITypeAndVersion__factory";
