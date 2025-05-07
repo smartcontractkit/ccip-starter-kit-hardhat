@@ -87,7 +87,7 @@ CCIP receiver can be:
 
 To use this project, you can consider CCIP as a "black-box" component and be aware of the Router contract only. If you want to dive deep into it, check the [Official Chainlink Documentation](https://docs.chain.link/ccip).
 
-## Usage
+## Usage & Environment Variables
 
 In the next section you can see a couple of basic Chainlink CCIP use case examples. But before that, you need to set up some environment variables.
 
@@ -146,6 +146,10 @@ If you want to validate your inputs you can always run the next command:
 ```shell
 npx env-enc view
 ```
+
+## Chain Configurations
+
+The Hardhat framework typically puts configs in the `./hardhat.config.ts` file. Chain configs are here, in case you need to update or adapt this starter kit for use with other CCIP supported chains.
 
 ## Tests
 
