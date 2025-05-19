@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as shared from "./shared";
+export * as vendor from "./vendor";

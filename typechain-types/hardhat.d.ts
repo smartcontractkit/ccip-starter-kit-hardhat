@@ -26,6 +26,82 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IGetCCIPAdmin__factory>;
     getContractFactory(
+      name: "ILiquidityContainer",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ILiquidityContainer__factory>;
+    getContractFactory(
+      name: "IOwner",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IOwner__factory>;
+    getContractFactory(
+      name: "IPoolV1",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IPoolV1__factory>;
+    getContractFactory(
+      name: "IRMN",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IRMN__factory>;
+    getContractFactory(
+      name: "IRouter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IRouter__factory>;
+    getContractFactory(
+      name: "IRouterClient",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IRouterClient__factory>;
+    getContractFactory(
+      name: "Client",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Client__factory>;
+    getContractFactory(
+      name: "Internal",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Internal__factory>;
+    getContractFactory(
+      name: "MerkleMultiProof",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.MerkleMultiProof__factory>;
+    getContractFactory(
+      name: "Pool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Pool__factory>;
+    getContractFactory(
+      name: "RateLimiter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.RateLimiter__factory>;
+    getContractFactory(
+      name: "BurnMintTokenPool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.BurnMintTokenPool__factory>;
+    getContractFactory(
+      name: "BurnMintTokenPoolAbstract",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.BurnMintTokenPoolAbstract__factory>;
+    getContractFactory(
+      name: "LockReleaseTokenPool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.LockReleaseTokenPool__factory>;
+    getContractFactory(
+      name: "TokenPool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TokenPool__factory>;
+    getContractFactory(
+      name: "MockCCIPRouter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.MockCCIPRouter__factory>;
+    getContractFactory(
+      name: "CCIPReceiver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CCIPReceiver__factory>;
+    getContractFactory(
+      name: "IAny2EVMMessageReceiver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IAny2EVMMessageReceiver__factory>;
+    getContractFactory(
+      name: "IGetCCIPAdmin",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IGetCCIPAdmin__factory>;
+    getContractFactory(
       name: "IOwner",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IOwner__factory>;
@@ -182,9 +258,101 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
+      name: "ConfirmedOwner",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ConfirmedOwner__factory>;
+    getContractFactory(
+      name: "ConfirmedOwnerWithProposal",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ConfirmedOwnerWithProposal__factory>;
+    getContractFactory(
+      name: "Ownable2Step",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Ownable2Step__factory>;
+    getContractFactory(
+      name: "Ownable2StepMsgSender",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Ownable2StepMsgSender__factory>;
+    getContractFactory(
+      name: "OwnerIsCreator",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.OwnerIsCreator__factory>;
+    getContractFactory(
+      name: "CallWithExactGas",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CallWithExactGas__factory>;
+    getContractFactory(
+      name: "IERC677Receiver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC677Receiver__factory>;
+    getContractFactory(
+      name: "IOwnable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IOwnable__factory>;
+    getContractFactory(
+      name: "ITypeAndVersion",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ITypeAndVersion__factory>;
+    getContractFactory(
       name: "LinkTokenInterface",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.LinkTokenInterface__factory>;
+    getContractFactory(
+      name: "IBurnMintERC20",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IBurnMintERC20__factory>;
+    getContractFactory(
+      name: "BurnMintERC677",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.BurnMintERC677__factory>;
+    getContractFactory(
+      name: "ERC677",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC677__factory>;
+    getContractFactory(
+      name: "IERC677",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC677__factory>;
+    getContractFactory(
+      name: "ERC20",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC20__factory>;
+    getContractFactory(
+      name: "IERC20Permit",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC20Permit__factory>;
+    getContractFactory(
+      name: "ERC20Burnable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC20Burnable__factory>;
+    getContractFactory(
+      name: "IERC20Metadata",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC20Metadata__factory>;
+    getContractFactory(
+      name: "IERC20",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC20__factory>;
+    getContractFactory(
+      name: "IERC165",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC165__factory>;
+    getContractFactory(
+      name: "AccessControl",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.AccessControl__factory>;
+    getContractFactory(
+      name: "IAccessControl",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IAccessControl__factory>;
+    getContractFactory(
+      name: "ERC165",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC165__factory>;
+    getContractFactory(
+      name: "IERC165",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
       name: "BurnMintERC677Helper",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -286,6 +454,101 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IGetCCIPAdmin>;
     getContractAt(
+      name: "ILiquidityContainer",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ILiquidityContainer>;
+    getContractAt(
+      name: "IOwner",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IOwner>;
+    getContractAt(
+      name: "IPoolV1",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IPoolV1>;
+    getContractAt(
+      name: "IRMN",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IRMN>;
+    getContractAt(
+      name: "IRouter",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IRouter>;
+    getContractAt(
+      name: "IRouterClient",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IRouterClient>;
+    getContractAt(
+      name: "Client",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Client>;
+    getContractAt(
+      name: "Internal",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Internal>;
+    getContractAt(
+      name: "MerkleMultiProof",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.MerkleMultiProof>;
+    getContractAt(
+      name: "Pool",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Pool>;
+    getContractAt(
+      name: "RateLimiter",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.RateLimiter>;
+    getContractAt(
+      name: "BurnMintTokenPool",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.BurnMintTokenPool>;
+    getContractAt(
+      name: "BurnMintTokenPoolAbstract",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.BurnMintTokenPoolAbstract>;
+    getContractAt(
+      name: "LockReleaseTokenPool",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.LockReleaseTokenPool>;
+    getContractAt(
+      name: "TokenPool",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.TokenPool>;
+    getContractAt(
+      name: "MockCCIPRouter",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.MockCCIPRouter>;
+    getContractAt(
+      name: "CCIPReceiver",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.CCIPReceiver>;
+    getContractAt(
+      name: "IAny2EVMMessageReceiver",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IAny2EVMMessageReceiver>;
+    getContractAt(
+      name: "IGetCCIPAdmin",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IGetCCIPAdmin>;
+    getContractAt(
       name: "IOwner",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
@@ -481,10 +744,125 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IERC165>;
     getContractAt(
+      name: "ConfirmedOwner",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ConfirmedOwner>;
+    getContractAt(
+      name: "ConfirmedOwnerWithProposal",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ConfirmedOwnerWithProposal>;
+    getContractAt(
+      name: "Ownable2Step",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Ownable2Step>;
+    getContractAt(
+      name: "Ownable2StepMsgSender",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Ownable2StepMsgSender>;
+    getContractAt(
+      name: "OwnerIsCreator",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.OwnerIsCreator>;
+    getContractAt(
+      name: "CallWithExactGas",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.CallWithExactGas>;
+    getContractAt(
+      name: "IERC677Receiver",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC677Receiver>;
+    getContractAt(
+      name: "IOwnable",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IOwnable>;
+    getContractAt(
+      name: "ITypeAndVersion",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ITypeAndVersion>;
+    getContractAt(
       name: "LinkTokenInterface",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
     ): Promise<Contracts.LinkTokenInterface>;
+    getContractAt(
+      name: "IBurnMintERC20",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IBurnMintERC20>;
+    getContractAt(
+      name: "BurnMintERC677",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.BurnMintERC677>;
+    getContractAt(
+      name: "ERC677",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC677>;
+    getContractAt(
+      name: "IERC677",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC677>;
+    getContractAt(
+      name: "ERC20",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC20>;
+    getContractAt(
+      name: "IERC20Permit",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC20Permit>;
+    getContractAt(
+      name: "ERC20Burnable",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC20Burnable>;
+    getContractAt(
+      name: "IERC20Metadata",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC20Metadata>;
+    getContractAt(
+      name: "IERC20",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC20>;
+    getContractAt(
+      name: "IERC165",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC165>;
+    getContractAt(
+      name: "AccessControl",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.AccessControl>;
+    getContractAt(
+      name: "IAccessControl",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IAccessControl>;
+    getContractAt(
+      name: "ERC165",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC165>;
+    getContractAt(
+      name: "IERC165",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC165>;
     getContractAt(
       name: "BurnMintERC677Helper",
       address: string | ethers.Addressable,
@@ -591,6 +969,82 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.Withdraw>;
 
+    deployContract(
+      name: "CCIPReceiver",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.CCIPReceiver>;
+    deployContract(
+      name: "IAny2EVMMessageReceiver",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IAny2EVMMessageReceiver>;
+    deployContract(
+      name: "IGetCCIPAdmin",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IGetCCIPAdmin>;
+    deployContract(
+      name: "ILiquidityContainer",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ILiquidityContainer>;
+    deployContract(
+      name: "IOwner",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IOwner>;
+    deployContract(
+      name: "IPoolV1",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IPoolV1>;
+    deployContract(
+      name: "IRMN",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IRMN>;
+    deployContract(
+      name: "IRouter",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IRouter>;
+    deployContract(
+      name: "IRouterClient",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IRouterClient>;
+    deployContract(
+      name: "Client",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Client>;
+    deployContract(
+      name: "Internal",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Internal>;
+    deployContract(
+      name: "MerkleMultiProof",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.MerkleMultiProof>;
+    deployContract(
+      name: "Pool",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Pool>;
+    deployContract(
+      name: "RateLimiter",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.RateLimiter>;
+    deployContract(
+      name: "BurnMintTokenPool",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.BurnMintTokenPool>;
+    deployContract(
+      name: "BurnMintTokenPoolAbstract",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.BurnMintTokenPoolAbstract>;
+    deployContract(
+      name: "LockReleaseTokenPool",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.LockReleaseTokenPool>;
+    deployContract(
+      name: "TokenPool",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.TokenPool>;
+    deployContract(
+      name: "MockCCIPRouter",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.MockCCIPRouter>;
     deployContract(
       name: "CCIPReceiver",
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -760,9 +1214,101 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.IERC165>;
     deployContract(
+      name: "ConfirmedOwner",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ConfirmedOwner>;
+    deployContract(
+      name: "ConfirmedOwnerWithProposal",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ConfirmedOwnerWithProposal>;
+    deployContract(
+      name: "Ownable2Step",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Ownable2Step>;
+    deployContract(
+      name: "Ownable2StepMsgSender",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Ownable2StepMsgSender>;
+    deployContract(
+      name: "OwnerIsCreator",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.OwnerIsCreator>;
+    deployContract(
+      name: "CallWithExactGas",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.CallWithExactGas>;
+    deployContract(
+      name: "IERC677Receiver",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC677Receiver>;
+    deployContract(
+      name: "IOwnable",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IOwnable>;
+    deployContract(
+      name: "ITypeAndVersion",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ITypeAndVersion>;
+    deployContract(
       name: "LinkTokenInterface",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.LinkTokenInterface>;
+    deployContract(
+      name: "IBurnMintERC20",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IBurnMintERC20>;
+    deployContract(
+      name: "BurnMintERC677",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.BurnMintERC677>;
+    deployContract(
+      name: "ERC677",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERC677>;
+    deployContract(
+      name: "IERC677",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC677>;
+    deployContract(
+      name: "ERC20",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERC20>;
+    deployContract(
+      name: "IERC20Permit",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC20Permit>;
+    deployContract(
+      name: "ERC20Burnable",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERC20Burnable>;
+    deployContract(
+      name: "IERC20Metadata",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC20Metadata>;
+    deployContract(
+      name: "IERC20",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC20>;
+    deployContract(
+      name: "IERC165",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC165>;
+    deployContract(
+      name: "AccessControl",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.AccessControl>;
+    deployContract(
+      name: "IAccessControl",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IAccessControl>;
+    deployContract(
+      name: "ERC165",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERC165>;
+    deployContract(
+      name: "IERC165",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC165>;
     deployContract(
       name: "BurnMintERC677Helper",
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -848,6 +1394,101 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Withdraw>;
 
+    deployContract(
+      name: "CCIPReceiver",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.CCIPReceiver>;
+    deployContract(
+      name: "IAny2EVMMessageReceiver",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IAny2EVMMessageReceiver>;
+    deployContract(
+      name: "IGetCCIPAdmin",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IGetCCIPAdmin>;
+    deployContract(
+      name: "ILiquidityContainer",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ILiquidityContainer>;
+    deployContract(
+      name: "IOwner",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IOwner>;
+    deployContract(
+      name: "IPoolV1",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IPoolV1>;
+    deployContract(
+      name: "IRMN",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IRMN>;
+    deployContract(
+      name: "IRouter",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IRouter>;
+    deployContract(
+      name: "IRouterClient",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IRouterClient>;
+    deployContract(
+      name: "Client",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Client>;
+    deployContract(
+      name: "Internal",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Internal>;
+    deployContract(
+      name: "MerkleMultiProof",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.MerkleMultiProof>;
+    deployContract(
+      name: "Pool",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Pool>;
+    deployContract(
+      name: "RateLimiter",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.RateLimiter>;
+    deployContract(
+      name: "BurnMintTokenPool",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.BurnMintTokenPool>;
+    deployContract(
+      name: "BurnMintTokenPoolAbstract",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.BurnMintTokenPoolAbstract>;
+    deployContract(
+      name: "LockReleaseTokenPool",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.LockReleaseTokenPool>;
+    deployContract(
+      name: "TokenPool",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.TokenPool>;
+    deployContract(
+      name: "MockCCIPRouter",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.MockCCIPRouter>;
     deployContract(
       name: "CCIPReceiver",
       args: any[],
@@ -1059,10 +1700,125 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.IERC165>;
     deployContract(
+      name: "ConfirmedOwner",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ConfirmedOwner>;
+    deployContract(
+      name: "ConfirmedOwnerWithProposal",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ConfirmedOwnerWithProposal>;
+    deployContract(
+      name: "Ownable2Step",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Ownable2Step>;
+    deployContract(
+      name: "Ownable2StepMsgSender",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Ownable2StepMsgSender>;
+    deployContract(
+      name: "OwnerIsCreator",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.OwnerIsCreator>;
+    deployContract(
+      name: "CallWithExactGas",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.CallWithExactGas>;
+    deployContract(
+      name: "IERC677Receiver",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC677Receiver>;
+    deployContract(
+      name: "IOwnable",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IOwnable>;
+    deployContract(
+      name: "ITypeAndVersion",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ITypeAndVersion>;
+    deployContract(
       name: "LinkTokenInterface",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.LinkTokenInterface>;
+    deployContract(
+      name: "IBurnMintERC20",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IBurnMintERC20>;
+    deployContract(
+      name: "BurnMintERC677",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.BurnMintERC677>;
+    deployContract(
+      name: "ERC677",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERC677>;
+    deployContract(
+      name: "IERC677",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC677>;
+    deployContract(
+      name: "ERC20",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERC20>;
+    deployContract(
+      name: "IERC20Permit",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC20Permit>;
+    deployContract(
+      name: "ERC20Burnable",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERC20Burnable>;
+    deployContract(
+      name: "IERC20Metadata",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC20Metadata>;
+    deployContract(
+      name: "IERC20",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC20>;
+    deployContract(
+      name: "IERC165",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC165>;
+    deployContract(
+      name: "AccessControl",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.AccessControl>;
+    deployContract(
+      name: "IAccessControl",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IAccessControl>;
+    deployContract(
+      name: "ERC165",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERC165>;
+    deployContract(
+      name: "IERC165",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC165>;
     deployContract(
       name: "BurnMintERC677Helper",
       args: any[],
