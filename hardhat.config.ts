@@ -4,7 +4,6 @@ dotenvenc.config();
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import "./tasks";
-import "./tasks/ccip-1_5-tasks";
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const ETHEREUM_SEPOLIA_RPC_URL = process.env.ETHEREUM_SEPOLIA_RPC_URL;
@@ -42,15 +41,14 @@ const config: HardhatUserConfig = {
     version: "0.8.24",
     settings: {
       evmVersion: "paris",
-    }
+    },
   },
   networks: {
     hardhat: {
       chainId: 31337,
     },
     ethereumSepolia: {
-      url:
-        ETHEREUM_SEPOLIA_RPC_URL !== undefined ? ETHEREUM_SEPOLIA_RPC_URL : "",
+      url: ETHEREUM_SEPOLIA_RPC_URL !== undefined ? ETHEREUM_SEPOLIA_RPC_URL : "",
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       chainId: 11155111,
     },
@@ -60,14 +58,12 @@ const config: HardhatUserConfig = {
       chainId: 80002,
     },
     optimismSepolia: {
-      url:
-        OPTIMISM_SEPOLIA_RPC_URL !== undefined ? OPTIMISM_SEPOLIA_RPC_URL : "",
+      url: OPTIMISM_SEPOLIA_RPC_URL !== undefined ? OPTIMISM_SEPOLIA_RPC_URL : "",
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       chainId: 11155420,
     },
     arbitrumSepolia: {
-      url:
-        ARBITRUM_SEPOLIA_RPC_URL !== undefined ? ARBITRUM_SEPOLIA_RPC_URL : "",
+      url: ARBITRUM_SEPOLIA_RPC_URL !== undefined ? ARBITRUM_SEPOLIA_RPC_URL : "",
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       chainId: 421614,
     },
@@ -77,10 +73,7 @@ const config: HardhatUserConfig = {
       chainId: 43113,
     },
     bnbChainTestnet: {
-      url:
-        BNB_CHAIN_TESTNET_RPC_URL !== undefined
-          ? BNB_CHAIN_TESTNET_RPC_URL
-          : "",
+      url: BNB_CHAIN_TESTNET_RPC_URL !== undefined ? BNB_CHAIN_TESTNET_RPC_URL : "",
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       chainId: 97,
     },
