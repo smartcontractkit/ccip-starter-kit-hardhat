@@ -4,7 +4,6 @@
 export * as iPoolSol from "./IPool.sol";
 export { IAny2EVMMessageReceiver__factory } from "./IAny2EVMMessageReceiver__factory";
 export { IGetCCIPAdmin__factory } from "./IGetCCIPAdmin__factory";
-export { ILiquidityContainer__factory } from "./ILiquidityContainer__factory";
 export { IOwner__factory } from "./IOwner__factory";
 export { IRMN__factory } from "./IRMN__factory";
 export { IRouter__factory } from "./IRouter__factory";

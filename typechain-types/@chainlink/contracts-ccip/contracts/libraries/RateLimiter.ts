@@ -34,9 +34,7 @@ export declare namespace RateLimiter {
 }
 
 export interface RateLimiterInterface extends Interface {
-  getEvent(
-    nameOrSignatureOrTopic: "ConfigChanged" | "TokensConsumed"
-  ): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ConfigChanged"): EventFragment;
 }
 
 export namespace ConfigChangedEvent {
@@ -44,18 +42,6 @@ export namespace ConfigChangedEvent {
   export type OutputTuple = [config: RateLimiter.ConfigStructOutput];
   export interface OutputObject {
     config: RateLimiter.ConfigStructOutput;
-  }
-  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-  export type Filter = TypedDeferredTopicFilter<Event>;
-  export type Log = TypedEventLog<Event>;
-  export type LogDescription = TypedLogDescription<Event>;
-}
-
-export namespace TokensConsumedEvent {
-  export type InputTuple = [tokens: BigNumberish];
-  export type OutputTuple = [tokens: bigint];
-  export interface OutputObject {
-    tokens: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -117,13 +103,6 @@ export interface RateLimiter extends BaseContract {
     ConfigChangedEvent.OutputTuple,
     ConfigChangedEvent.OutputObject
   >;
-  getEvent(
-    key: "TokensConsumed"
-  ): TypedContractEvent<
-    TokensConsumedEvent.InputTuple,
-    TokensConsumedEvent.OutputTuple,
-    TokensConsumedEvent.OutputObject
-  >;
 
   filters: {
     "ConfigChanged(tuple)": TypedContractEvent<
@@ -135,17 +114,6 @@ export interface RateLimiter extends BaseContract {
       ConfigChangedEvent.InputTuple,
       ConfigChangedEvent.OutputTuple,
       ConfigChangedEvent.OutputObject
-    >;
-
-    "TokensConsumed(uint256)": TypedContractEvent<
-      TokensConsumedEvent.InputTuple,
-      TokensConsumedEvent.OutputTuple,
-      TokensConsumedEvent.OutputObject
-    >;
-    TokensConsumed: TypedContractEvent<
-      TokensConsumedEvent.InputTuple,
-      TokensConsumedEvent.OutputTuple,
-      TokensConsumedEvent.OutputObject
     >;
   };
 }

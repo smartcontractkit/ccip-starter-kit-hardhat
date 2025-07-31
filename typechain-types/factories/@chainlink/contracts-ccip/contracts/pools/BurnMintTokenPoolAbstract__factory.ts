@@ -10,38 +10,6 @@ import type {
 
 const _abi = [
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "capacity",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "requested",
-        type: "uint256",
-      },
-    ],
-    name: "AggregateValueMaxCapacityExceeded",
-    type: "error",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "minWaitInSeconds",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "available",
-        type: "uint256",
-      },
-    ],
-    name: "AggregateValueRateLimitReached",
-    type: "error",
-  },
-  {
     inputs: [],
     name: "AllowListNotEnabled",
     type: "error",
@@ -284,11 +252,6 @@ const _abi = [
     type: "error",
   },
   {
-    inputs: [],
-    name: "RateLimitMustBeDisabled",
-    type: "error",
-  },
-  {
     inputs: [
       {
         internalType: "address",
@@ -381,25 +344,6 @@ const _abi = [
       },
     ],
     name: "AllowListRemove",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "sender",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-    ],
-    name: "Burned",
     type: "event",
   },
   {
@@ -574,8 +518,14 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: "uint64",
+        name: "remoteChainSelector",
+        type: "uint64",
+      },
+      {
+        indexed: false,
         internalType: "address",
-        name: "sender",
+        name: "token",
         type: "address",
       },
       {
@@ -585,7 +535,7 @@ const _abi = [
         type: "uint256",
       },
     ],
-    name: "Locked",
+    name: "InboundRateLimitConsumed",
     type: "event",
   },
   {
@@ -593,14 +543,20 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: "uint64",
+        name: "remoteChainSelector",
+        type: "uint64",
+      },
+      {
+        indexed: false,
         internalType: "address",
-        name: "sender",
+        name: "token",
         type: "address",
       },
       {
-        indexed: true,
+        indexed: false,
         internalType: "address",
-        name: "recipient",
+        name: "sender",
         type: "address",
       },
       {
@@ -610,7 +566,32 @@ const _abi = [
         type: "uint256",
       },
     ],
-    name: "Minted",
+    name: "LockedOrBurned",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint64",
+        name: "remoteChainSelector",
+        type: "uint64",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "token",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "OutboundRateLimitConsumed",
     type: "event",
   },
   {
@@ -669,12 +650,24 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: "uint64",
+        name: "remoteChainSelector",
+        type: "uint64",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "token",
+        type: "address",
+      },
+      {
+        indexed: false,
         internalType: "address",
         name: "sender",
         type: "address",
       },
       {
-        indexed: true,
+        indexed: false,
         internalType: "address",
         name: "recipient",
         type: "address",
@@ -686,7 +679,7 @@ const _abi = [
         type: "uint256",
       },
     ],
-    name: "Released",
+    name: "ReleasedOrMinted",
     type: "event",
   },
   {
@@ -744,19 +737,6 @@ const _abi = [
       },
     ],
     name: "RouterUpdated",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "tokens",
-        type: "uint256",
-      },
-    ],
-    name: "TokensConsumed",
     type: "event",
   },
   {
@@ -1269,7 +1249,7 @@ const _abi = [
           },
           {
             internalType: "uint256",
-            name: "amount",
+            name: "sourceDenominatedAmount",
             type: "uint256",
           },
           {

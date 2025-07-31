@@ -58,7 +58,7 @@ export declare namespace Pool {
     originalSender: BytesLike;
     remoteChainSelector: BigNumberish;
     receiver: AddressLike;
-    amount: BigNumberish;
+    sourceDenominatedAmount: BigNumberish;
     localToken: AddressLike;
     sourcePoolAddress: BytesLike;
     sourcePoolData: BytesLike;
@@ -69,7 +69,7 @@ export declare namespace Pool {
     originalSender: string,
     remoteChainSelector: bigint,
     receiver: string,
-    amount: bigint,
+    sourceDenominatedAmount: bigint,
     localToken: string,
     sourcePoolAddress: string,
     sourcePoolData: string,
@@ -78,7 +78,7 @@ export declare namespace Pool {
     originalSender: string;
     remoteChainSelector: bigint;
     receiver: string;
-    amount: bigint;
+    sourceDenominatedAmount: bigint;
     localToken: string;
     sourcePoolAddress: string;
     sourcePoolData: string;

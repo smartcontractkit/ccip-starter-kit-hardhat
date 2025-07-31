@@ -16,38 +16,6 @@ import type {
 
 const _abi = [
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "capacity",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "requested",
-        type: "uint256",
-      },
-    ],
-    name: "AggregateValueMaxCapacityExceeded",
-    type: "error",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "minWaitInSeconds",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "available",
-        type: "uint256",
-      },
-    ],
-    name: "AggregateValueRateLimitReached",
-    type: "error",
-  },
-  {
     inputs: [],
     name: "BucketOverfilled",
     type: "error",
@@ -106,16 +74,6 @@ const _abi = [
       },
     ],
     name: "InvalidRateLimitRate",
-    type: "error",
-  },
-  {
-    inputs: [],
-    name: "OnlyCallableByAdminOrOwner",
-    type: "error",
-  },
-  {
-    inputs: [],
-    name: "RateLimitMustBeDisabled",
     type: "error",
   },
   {
@@ -190,23 +148,10 @@ const _abi = [
     name: "ConfigChanged",
     type: "event",
   },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "tokens",
-        type: "uint256",
-      },
-    ],
-    name: "TokensConsumed",
-    type: "event",
-  },
 ] as const;
 
 const _bytecode =
-  "0x60566050600b82828239805160001a6073146043577f4e487b7100000000000000000000000000000000000000000000000000000000600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220f1a901979fb2b0b9474ec27ada4e58feae6a637e3d8f8d9ef53196043321bcdb64736f6c63430008180033";
+  "0x60566050600b82828239805160001a6073146043577f4e487b7100000000000000000000000000000000000000000000000000000000600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220fa321a189cfdef3ee44d3d77ae041dfea11666c1954975baa99ab2d9a8a1f9f864736f6c63430008180033";
 
 type RateLimiterConstructorParams =
   | [signer?: Signer]

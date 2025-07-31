@@ -5,7 +5,6 @@ import type * as iPoolSol from "./IPool.sol";
 export type { iPoolSol };
 export type { IAny2EVMMessageReceiver } from "./IAny2EVMMessageReceiver";
 export type { IGetCCIPAdmin } from "./IGetCCIPAdmin";
-export type { ILiquidityContainer } from "./ILiquidityContainer";
 export type { IOwner } from "./IOwner";
 export type { IRMN } from "./IRMN";
 export type { IRouter } from "./IRouter";

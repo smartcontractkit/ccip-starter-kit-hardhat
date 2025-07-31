@@ -2,4 +2,3 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as contracts from "./contracts";
-export * as src from "./src";

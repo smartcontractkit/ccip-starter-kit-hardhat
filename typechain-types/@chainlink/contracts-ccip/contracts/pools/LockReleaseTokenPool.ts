@@ -120,7 +120,7 @@ export declare namespace Pool {
     originalSender: BytesLike;
     remoteChainSelector: BigNumberish;
     receiver: AddressLike;
-    amount: BigNumberish;
+    sourceDenominatedAmount: BigNumberish;
     localToken: AddressLike;
     sourcePoolAddress: BytesLike;
     sourcePoolData: BytesLike;
@@ -131,7 +131,7 @@ export declare namespace Pool {
     originalSender: string,
     remoteChainSelector: bigint,
     receiver: string,
-    amount: bigint,
+    sourceDenominatedAmount: bigint,
     localToken: string,
     sourcePoolAddress: string,
     sourcePoolData: string,
@@ -140,7 +140,7 @@ export declare namespace Pool {
     originalSender: string;
     remoteChainSelector: bigint;
     receiver: string;
-    amount: bigint;
+    sourceDenominatedAmount: bigint;
     localToken: string;
     sourcePoolAddress: string;
     sourcePoolData: string;
@@ -161,7 +161,6 @@ export interface LockReleaseTokenPoolInterface extends Interface {
       | "addRemotePool"
       | "applyAllowListUpdates"
       | "applyChainUpdates"
-      | "canAcceptLiquidity"
       | "getAllowList"
       | "getAllowListEnabled"
       | "getCurrentInboundRateLimiterState"
@@ -199,24 +198,24 @@ export interface LockReleaseTokenPoolInterface extends Interface {
     nameOrSignatureOrTopic:
       | "AllowListAdd"
       | "AllowListRemove"
-      | "Burned"
       | "ChainAdded"
       | "ChainConfigured"
       | "ChainRemoved"
       | "ConfigChanged"
+      | "InboundRateLimitConsumed"
       | "LiquidityAdded"
       | "LiquidityRemoved"
       | "LiquidityTransferred"
-      | "Locked"
-      | "Minted"
+      | "LockedOrBurned"
+      | "OutboundRateLimitConsumed"
       | "OwnershipTransferRequested"
       | "OwnershipTransferred"
       | "RateLimitAdminSet"
-      | "Released"
+      | "RebalancerSet"
+      | "ReleasedOrMinted"
       | "RemotePoolAdded"
       | "RemotePoolRemoved"
       | "RouterUpdated"
-      | "TokensConsumed"
   ): EventFragment;
 
   encodeFunctionData(
@@ -234,10 +233,6 @@ export interface LockReleaseTokenPoolInterface extends Interface {
   encodeFunctionData(
     functionFragment: "applyChainUpdates",
     values: [BigNumberish[], TokenPool.ChainUpdateStruct[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "canAcceptLiquidity",
-    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "getAllowList",
@@ -376,10 +371,6 @@ export interface LockReleaseTokenPoolInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "canAcceptLiquidity",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "getAllowList",
     data: BytesLike
   ): Result;
@@ -514,19 +505,6 @@ export namespace AllowListRemoveEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
-export namespace BurnedEvent {
-  export type InputTuple = [sender: AddressLike, amount: BigNumberish];
-  export type OutputTuple = [sender: string, amount: bigint];
-  export interface OutputObject {
-    sender: string;
-    amount: bigint;
-  }
-  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-  export type Filter = TypedDeferredTopicFilter<Event>;
-  export type Log = TypedEventLog<Event>;
-  export type LogDescription = TypedLogDescription<Event>;
-}
-
 export namespace ChainAddedEvent {
   export type InputTuple = [
     remoteChainSelector: BigNumberish,
@@ -598,6 +576,28 @@ export namespace ConfigChangedEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
+export namespace InboundRateLimitConsumedEvent {
+  export type InputTuple = [
+    remoteChainSelector: BigNumberish,
+    token: AddressLike,
+    amount: BigNumberish
+  ];
+  export type OutputTuple = [
+    remoteChainSelector: bigint,
+    token: string,
+    amount: bigint
+  ];
+  export interface OutputObject {
+    remoteChainSelector: bigint;
+    token: string;
+    amount: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
 export namespace LiquidityAddedEvent {
   export type InputTuple = [provider: AddressLike, amount: BigNumberish];
   export type OutputTuple = [provider: string, amount: bigint];
@@ -637,10 +637,22 @@ export namespace LiquidityTransferredEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
-export namespace LockedEvent {
-  export type InputTuple = [sender: AddressLike, amount: BigNumberish];
-  export type OutputTuple = [sender: string, amount: bigint];
+export namespace LockedOrBurnedEvent {
+  export type InputTuple = [
+    remoteChainSelector: BigNumberish,
+    token: AddressLike,
+    sender: AddressLike,
+    amount: BigNumberish
+  ];
+  export type OutputTuple = [
+    remoteChainSelector: bigint,
+    token: string,
+    sender: string,
+    amount: bigint
+  ];
   export interface OutputObject {
+    remoteChainSelector: bigint;
+    token: string;
     sender: string;
     amount: bigint;
   }
@@ -650,16 +662,20 @@ export namespace LockedEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
-export namespace MintedEvent {
+export namespace OutboundRateLimitConsumedEvent {
   export type InputTuple = [
-    sender: AddressLike,
-    recipient: AddressLike,
+    remoteChainSelector: BigNumberish,
+    token: AddressLike,
     amount: BigNumberish
   ];
-  export type OutputTuple = [sender: string, recipient: string, amount: bigint];
+  export type OutputTuple = [
+    remoteChainSelector: bigint,
+    token: string,
+    amount: bigint
+  ];
   export interface OutputObject {
-    sender: string;
-    recipient: string;
+    remoteChainSelector: bigint;
+    token: string;
     amount: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
@@ -706,14 +722,40 @@ export namespace RateLimitAdminSetEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
-export namespace ReleasedEvent {
+export namespace RebalancerSetEvent {
   export type InputTuple = [
+    oldRebalancer: AddressLike,
+    newRebalancer: AddressLike
+  ];
+  export type OutputTuple = [oldRebalancer: string, newRebalancer: string];
+  export interface OutputObject {
+    oldRebalancer: string;
+    newRebalancer: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace ReleasedOrMintedEvent {
+  export type InputTuple = [
+    remoteChainSelector: BigNumberish,
+    token: AddressLike,
     sender: AddressLike,
     recipient: AddressLike,
     amount: BigNumberish
   ];
-  export type OutputTuple = [sender: string, recipient: string, amount: bigint];
+  export type OutputTuple = [
+    remoteChainSelector: bigint,
+    token: string,
+    sender: string,
+    recipient: string,
+    amount: bigint
+  ];
   export interface OutputObject {
+    remoteChainSelector: bigint;
+    token: string;
     sender: string;
     recipient: string;
     amount: bigint;
@@ -768,18 +810,6 @@ export namespace RouterUpdatedEvent {
   export interface OutputObject {
     oldRouter: string;
     newRouter: string;
-  }
-  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-  export type Filter = TypedDeferredTopicFilter<Event>;
-  export type Log = TypedEventLog<Event>;
-  export type LogDescription = TypedLogDescription<Event>;
-}
-
-export namespace TokensConsumedEvent {
-  export type InputTuple = [tokens: BigNumberish];
-  export type OutputTuple = [tokens: bigint];
-  export interface OutputObject {
-    tokens: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -852,8 +882,6 @@ export interface LockReleaseTokenPool extends BaseContract {
     [void],
     "nonpayable"
   >;
-
-  canAcceptLiquidity: TypedContractMethod<[], [boolean], "view">;
 
   getAllowList: TypedContractMethod<[], [string[]], "view">;
 
@@ -1037,9 +1065,6 @@ export interface LockReleaseTokenPool extends BaseContract {
     "nonpayable"
   >;
   getFunction(
-    nameOrSignature: "canAcceptLiquidity"
-  ): TypedContractMethod<[], [boolean], "view">;
-  getFunction(
     nameOrSignature: "getAllowList"
   ): TypedContractMethod<[], [string[]], "view">;
   getFunction(
@@ -1200,13 +1225,6 @@ export interface LockReleaseTokenPool extends BaseContract {
     AllowListRemoveEvent.OutputObject
   >;
   getEvent(
-    key: "Burned"
-  ): TypedContractEvent<
-    BurnedEvent.InputTuple,
-    BurnedEvent.OutputTuple,
-    BurnedEvent.OutputObject
-  >;
-  getEvent(
     key: "ChainAdded"
   ): TypedContractEvent<
     ChainAddedEvent.InputTuple,
@@ -1235,6 +1253,13 @@ export interface LockReleaseTokenPool extends BaseContract {
     ConfigChangedEvent.OutputObject
   >;
   getEvent(
+    key: "InboundRateLimitConsumed"
+  ): TypedContractEvent<
+    InboundRateLimitConsumedEvent.InputTuple,
+    InboundRateLimitConsumedEvent.OutputTuple,
+    InboundRateLimitConsumedEvent.OutputObject
+  >;
+  getEvent(
     key: "LiquidityAdded"
   ): TypedContractEvent<
     LiquidityAddedEvent.InputTuple,
@@ -1256,18 +1281,18 @@ export interface LockReleaseTokenPool extends BaseContract {
     LiquidityTransferredEvent.OutputObject
   >;
   getEvent(
-    key: "Locked"
+    key: "LockedOrBurned"
   ): TypedContractEvent<
-    LockedEvent.InputTuple,
-    LockedEvent.OutputTuple,
-    LockedEvent.OutputObject
+    LockedOrBurnedEvent.InputTuple,
+    LockedOrBurnedEvent.OutputTuple,
+    LockedOrBurnedEvent.OutputObject
   >;
   getEvent(
-    key: "Minted"
+    key: "OutboundRateLimitConsumed"
   ): TypedContractEvent<
-    MintedEvent.InputTuple,
-    MintedEvent.OutputTuple,
-    MintedEvent.OutputObject
+    OutboundRateLimitConsumedEvent.InputTuple,
+    OutboundRateLimitConsumedEvent.OutputTuple,
+    OutboundRateLimitConsumedEvent.OutputObject
   >;
   getEvent(
     key: "OwnershipTransferRequested"
@@ -1291,11 +1316,18 @@ export interface LockReleaseTokenPool extends BaseContract {
     RateLimitAdminSetEvent.OutputObject
   >;
   getEvent(
-    key: "Released"
+    key: "RebalancerSet"
   ): TypedContractEvent<
-    ReleasedEvent.InputTuple,
-    ReleasedEvent.OutputTuple,
-    ReleasedEvent.OutputObject
+    RebalancerSetEvent.InputTuple,
+    RebalancerSetEvent.OutputTuple,
+    RebalancerSetEvent.OutputObject
+  >;
+  getEvent(
+    key: "ReleasedOrMinted"
+  ): TypedContractEvent<
+    ReleasedOrMintedEvent.InputTuple,
+    ReleasedOrMintedEvent.OutputTuple,
+    ReleasedOrMintedEvent.OutputObject
   >;
   getEvent(
     key: "RemotePoolAdded"
@@ -1317,13 +1349,6 @@ export interface LockReleaseTokenPool extends BaseContract {
     RouterUpdatedEvent.InputTuple,
     RouterUpdatedEvent.OutputTuple,
     RouterUpdatedEvent.OutputObject
-  >;
-  getEvent(
-    key: "TokensConsumed"
-  ): TypedContractEvent<
-    TokensConsumedEvent.InputTuple,
-    TokensConsumedEvent.OutputTuple,
-    TokensConsumedEvent.OutputObject
   >;
 
   filters: {
@@ -1347,17 +1372,6 @@ export interface LockReleaseTokenPool extends BaseContract {
       AllowListRemoveEvent.InputTuple,
       AllowListRemoveEvent.OutputTuple,
       AllowListRemoveEvent.OutputObject
-    >;
-
-    "Burned(address,uint256)": TypedContractEvent<
-      BurnedEvent.InputTuple,
-      BurnedEvent.OutputTuple,
-      BurnedEvent.OutputObject
-    >;
-    Burned: TypedContractEvent<
-      BurnedEvent.InputTuple,
-      BurnedEvent.OutputTuple,
-      BurnedEvent.OutputObject
     >;
 
     "ChainAdded(uint64,bytes,tuple,tuple)": TypedContractEvent<
@@ -1404,6 +1418,17 @@ export interface LockReleaseTokenPool extends BaseContract {
       ConfigChangedEvent.OutputObject
     >;
 
+    "InboundRateLimitConsumed(uint64,address,uint256)": TypedContractEvent<
+      InboundRateLimitConsumedEvent.InputTuple,
+      InboundRateLimitConsumedEvent.OutputTuple,
+      InboundRateLimitConsumedEvent.OutputObject
+    >;
+    InboundRateLimitConsumed: TypedContractEvent<
+      InboundRateLimitConsumedEvent.InputTuple,
+      InboundRateLimitConsumedEvent.OutputTuple,
+      InboundRateLimitConsumedEvent.OutputObject
+    >;
+
     "LiquidityAdded(address,uint256)": TypedContractEvent<
       LiquidityAddedEvent.InputTuple,
       LiquidityAddedEvent.OutputTuple,
@@ -1437,26 +1462,26 @@ export interface LockReleaseTokenPool extends BaseContract {
       LiquidityTransferredEvent.OutputObject
     >;
 
-    "Locked(address,uint256)": TypedContractEvent<
-      LockedEvent.InputTuple,
-      LockedEvent.OutputTuple,
-      LockedEvent.OutputObject
+    "LockedOrBurned(uint64,address,address,uint256)": TypedContractEvent<
+      LockedOrBurnedEvent.InputTuple,
+      LockedOrBurnedEvent.OutputTuple,
+      LockedOrBurnedEvent.OutputObject
     >;
-    Locked: TypedContractEvent<
-      LockedEvent.InputTuple,
-      LockedEvent.OutputTuple,
-      LockedEvent.OutputObject
+    LockedOrBurned: TypedContractEvent<
+      LockedOrBurnedEvent.InputTuple,
+      LockedOrBurnedEvent.OutputTuple,
+      LockedOrBurnedEvent.OutputObject
     >;
 
-    "Minted(address,address,uint256)": TypedContractEvent<
-      MintedEvent.InputTuple,
-      MintedEvent.OutputTuple,
-      MintedEvent.OutputObject
+    "OutboundRateLimitConsumed(uint64,address,uint256)": TypedContractEvent<
+      OutboundRateLimitConsumedEvent.InputTuple,
+      OutboundRateLimitConsumedEvent.OutputTuple,
+      OutboundRateLimitConsumedEvent.OutputObject
     >;
-    Minted: TypedContractEvent<
-      MintedEvent.InputTuple,
-      MintedEvent.OutputTuple,
-      MintedEvent.OutputObject
+    OutboundRateLimitConsumed: TypedContractEvent<
+      OutboundRateLimitConsumedEvent.InputTuple,
+      OutboundRateLimitConsumedEvent.OutputTuple,
+      OutboundRateLimitConsumedEvent.OutputObject
     >;
 
     "OwnershipTransferRequested(address,address)": TypedContractEvent<
@@ -1492,15 +1517,26 @@ export interface LockReleaseTokenPool extends BaseContract {
       RateLimitAdminSetEvent.OutputObject
     >;
 
-    "Released(address,address,uint256)": TypedContractEvent<
-      ReleasedEvent.InputTuple,
-      ReleasedEvent.OutputTuple,
-      ReleasedEvent.OutputObject
+    "RebalancerSet(address,address)": TypedContractEvent<
+      RebalancerSetEvent.InputTuple,
+      RebalancerSetEvent.OutputTuple,
+      RebalancerSetEvent.OutputObject
     >;
-    Released: TypedContractEvent<
-      ReleasedEvent.InputTuple,
-      ReleasedEvent.OutputTuple,
-      ReleasedEvent.OutputObject
+    RebalancerSet: TypedContractEvent<
+      RebalancerSetEvent.InputTuple,
+      RebalancerSetEvent.OutputTuple,
+      RebalancerSetEvent.OutputObject
+    >;
+
+    "ReleasedOrMinted(uint64,address,address,address,uint256)": TypedContractEvent<
+      ReleasedOrMintedEvent.InputTuple,
+      ReleasedOrMintedEvent.OutputTuple,
+      ReleasedOrMintedEvent.OutputObject
+    >;
+    ReleasedOrMinted: TypedContractEvent<
+      ReleasedOrMintedEvent.InputTuple,
+      ReleasedOrMintedEvent.OutputTuple,
+      ReleasedOrMintedEvent.OutputObject
     >;
 
     "RemotePoolAdded(uint64,bytes)": TypedContractEvent<
@@ -1534,17 +1570,6 @@ export interface LockReleaseTokenPool extends BaseContract {
       RouterUpdatedEvent.InputTuple,
       RouterUpdatedEvent.OutputTuple,
       RouterUpdatedEvent.OutputObject
-    >;
-
-    "TokensConsumed(uint256)": TypedContractEvent<
-      TokensConsumedEvent.InputTuple,
-      TokensConsumedEvent.OutputTuple,
-      TokensConsumedEvent.OutputObject
-    >;
-    TokensConsumed: TypedContractEvent<
-      TokensConsumedEvent.InputTuple,
-      TokensConsumedEvent.OutputTuple,
-      TokensConsumedEvent.OutputObject
     >;
   };
 }
