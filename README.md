@@ -776,7 +776,11 @@ npx hardhat withdraw --beneficiary <BENEFICIARY_ADDRESS> --blockchain avalancheF
 
 depending on whether you filled the [`SourceMinter.sol`](./contracts/cross-chain-nft-minter/SourceMinter.sol) contract with `Native` or `LINK` in step number 3.
 
-## CCIP 1.5 Token Pool Tasks
+## CCT Standard
+
+The [Cross-Chain Token (CCT)](https://docs.chain.link/ccip/concepts/cross-chain-token/overview) standard provides a standard for transferring tokens between different blockchains using Chainlink’s Cross-Chain Interoperability Protocol (CCIP).
+
+By implementing the CCT standard, you can enable seamless cross-chain transfers for your own "custom" ERC20 tokens through CCIP.
 
 This section describes Hardhat tasks for deploying and managing custom CCIP token pools (Burn-Mint or Lock-Release) and associated tokens. These tasks allow for testing custom token integrations with CCIP.
 
@@ -787,9 +791,9 @@ Deploys a `BurnMintERC677` token contract, suitable for use with either pool typ
 **Usage:**
 
 ```shell
-npx hardhat deploy-token --network <networkName> 
---name <tokenName> 
---symbol <tokenSymbol> 
+npx hardhat deploy-token --network <networkName>
+--name <tokenName>
+--symbol <tokenSymbol>
 [--decimals <tokenDecimals>]      # Optional, Default: 18
 [--supply <initialSupply>]      # Optional, Default: 1,000,000,000 (in Ether unit)
 [--mint <amountToMint>]         # Optional: Amount to mint post-deployment (in Ether unit)
@@ -834,7 +838,7 @@ Deploys a `BurnMintTokenPool` contract for a specific token and grants it the ne
 **Usage:**
 
 ```shell
-npx hardhat setup-burn-mint-pool --network <networkName> 
+npx hardhat setup-burn-mint-pool --network <networkName>
 --token <tokenAddress>
 ```
 
@@ -857,8 +861,8 @@ Deploys a `LockReleaseTokenPool` contract for a specific token. Optionally, it c
 **Usage:**
 
 ```shell
-npx hardhat setup-lock-release-pool --network <networkName> 
---token <tokenAddress> 
+npx hardhat setup-lock-release-pool --network <networkName>
+--token <tokenAddress>
 [--liquidity <liquidityAmount>] # Optional: Amount in Ether unit
 ```
 
@@ -882,22 +886,22 @@ Configures a deployed local pool (either Burn-Mint or Lock-Release) to recognize
 **Usage:**
 
 ```shell
-npx hardhat configure-pool --network <localNetworkName> 
---local-pool <localPoolAddress> 
---remote-network <remoteNetworkName> 
---remote-pool <remotePoolAddress> 
---remote-token <remoteTokenAddress> 
+npx hardhat configure-pool --network <localNetworkName>
+--local-pool <localPoolAddress>
+--remote-network <remoteNetworkName>
+--remote-pool <remotePoolAddress>
+--remote-token <remoteTokenAddress>
 [--pool-type <poolType>] # Optional: LockReleaseTokenPool | BurnMintTokenPool (Default: LockReleaseTokenPool)
 ```
 
 **Parameters:**
 
-- `--network`: The network where the *local* pool is deployed.
+- `--network`: The network where the _local_ pool is deployed.
 - `--local-pool`: Address of the pool contract on the local network.
 - `--remote-network`: Name of the network where the corresponding remote pool is deployed (e.g., `arbitrumSepolia`).
 - `--remote-pool`: Address of the pool contract on the remote network.
 - `--remote-token`: Address of the corresponding token contract on the remote network.
-- `--pool-type`: Specifies the type of the *local* pool being configured.
+- `--pool-type`: Specifies the type of the _local_ pool being configured.
 
 **Example (configuring a BurnMint pool):**
 
@@ -912,12 +916,12 @@ Sends tokens from the source network to a receiver on the destination network vi
 **Usage:**
 
 ```shell
-npx hardhat send-ccip-tokens --network <sourceNetworkName> 
---pool <sourcePoolAddress> 
---token <sourceTokenAddress> 
---destination-network <destinationNetworkName> 
---receiver <receiverAddress> 
---amount <amountToSend> 
+npx hardhat send-ccip-tokens --network <sourceNetworkName>
+--pool <sourcePoolAddress>
+--token <sourceTokenAddress>
+--destination-network <destinationNetworkName>
+--receiver <receiverAddress>
+--amount <amountToSend>
 --pool-type <poolType> # burnMint | lockRelease
 [--fee-token <feeTokenAddress>] # Optional: Address of LINK or 0x0 for Native (Default: 0x0)
 [--gas-limit <gasLimit>] # Optional: Gas limit for destination execution (Default: 200000)

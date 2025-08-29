@@ -11,3 +11,4 @@ import './send-message';
 import './get-message';
 import './fill-sender';
 import './cross-chain-nft-minter';
+import './cct-tasks';
