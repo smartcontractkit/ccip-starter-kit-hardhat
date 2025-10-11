@@ -5,3 +5,5 @@ import type * as ccip from "./ccip";
 export type { ccip };
 import type * as shared from "./shared";
 export type { shared };
+import type * as vendor from "./vendor";
+export type { vendor };

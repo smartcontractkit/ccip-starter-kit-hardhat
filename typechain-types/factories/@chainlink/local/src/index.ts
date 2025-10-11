@@ -3,3 +3,4 @@
 /* eslint-disable */
 export * as ccip from "./ccip";
 export * as shared from "./shared";
+export * as vendor from "./vendor";

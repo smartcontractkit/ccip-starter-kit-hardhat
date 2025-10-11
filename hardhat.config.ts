@@ -1,3 +1,5 @@
+import 'hardhat-preprocessor';
+import {remapImportPaths} from "./remappings-helper";
 import * as dotenvenc from "@chainlink/env-enc";
 dotenvenc.config();
 
@@ -38,6 +40,7 @@ const HASHKEY_SEPOLIA_RPC_URL = process.env.HASHKEY_SEPOLIA_RPC_URL;
 const INK_SEPOLIA_RPC_URL = process.env.INK_SEPOLIA_RPC_URL;
 
 const config: HardhatUserConfig = {
+  preprocess: remapImportPaths(),
   solidity: {
     version: "0.8.24",
     settings: {

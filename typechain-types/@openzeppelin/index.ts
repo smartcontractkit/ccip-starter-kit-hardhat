@@ -3,3 +3,7 @@
 /* eslint-disable */
 import type * as contracts from "./contracts";
 export type { contracts };
+import type * as contracts483 from "./contracts-4.8.3";
+export type { contracts483 };
+import type * as contracts502 from "./contracts-5.0.2";
+export type { contracts502 };

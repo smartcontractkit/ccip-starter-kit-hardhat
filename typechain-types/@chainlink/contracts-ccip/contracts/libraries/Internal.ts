@@ -27,6 +27,7 @@ export interface InternalInterface extends Interface {
       | "CHAIN_FAMILY_SELECTOR_EVM"
       | "CHAIN_FAMILY_SELECTOR_SUI"
       | "CHAIN_FAMILY_SELECTOR_SVM"
+      | "CHAIN_FAMILY_SELECTOR_TVM"
       | "EVM_PRECOMPILE_SPACE"
       | "GAS_ESTIMATION_SENDER"
       | "GAS_PRICE_BITS"
@@ -52,6 +53,10 @@ export interface InternalInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "CHAIN_FAMILY_SELECTOR_SVM",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "CHAIN_FAMILY_SELECTOR_TVM",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -93,6 +98,10 @@ export interface InternalInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "CHAIN_FAMILY_SELECTOR_SVM",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "CHAIN_FAMILY_SELECTOR_TVM",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -170,6 +179,8 @@ export interface Internal extends BaseContract {
 
   CHAIN_FAMILY_SELECTOR_SVM: TypedContractMethod<[], [string], "view">;
 
+  CHAIN_FAMILY_SELECTOR_TVM: TypedContractMethod<[], [string], "view">;
+
   EVM_PRECOMPILE_SPACE: TypedContractMethod<[], [bigint], "view">;
 
   GAS_ESTIMATION_SENDER: TypedContractMethod<[], [string], "view">;
@@ -198,6 +209,9 @@ export interface Internal extends BaseContract {
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "CHAIN_FAMILY_SELECTOR_SVM"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "CHAIN_FAMILY_SELECTOR_TVM"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "EVM_PRECOMPILE_SPACE"

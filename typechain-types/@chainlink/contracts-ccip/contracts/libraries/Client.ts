@@ -24,6 +24,12 @@ export interface ClientInterface extends Interface {
     nameOrSignature:
       | "EVM_EXTRA_ARGS_V1_TAG"
       | "GENERIC_EXTRA_ARGS_V2_TAG"
+      | "GENERIC_EXTRA_ARGS_V3_TAG"
+      | "SUI_ACCOUNT_BYTE_SIZE"
+      | "SUI_EXTRA_ARGS_MAX_RECEIVER_OBJECT_IDS"
+      | "SUI_EXTRA_ARGS_V1_TAG"
+      | "SUI_MESSAGING_ACCOUNTS_OVERHEAD"
+      | "SUI_TOKEN_TRANSFER_DATA_OVERHEAD"
       | "SVM_ACCOUNT_BYTE_SIZE"
       | "SVM_EXTRA_ARGS_MAX_ACCOUNTS"
       | "SVM_EXTRA_ARGS_V1_TAG"
@@ -37,6 +43,30 @@ export interface ClientInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "GENERIC_EXTRA_ARGS_V2_TAG",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "GENERIC_EXTRA_ARGS_V3_TAG",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "SUI_ACCOUNT_BYTE_SIZE",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "SUI_EXTRA_ARGS_MAX_RECEIVER_OBJECT_IDS",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "SUI_EXTRA_ARGS_V1_TAG",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "SUI_MESSAGING_ACCOUNTS_OVERHEAD",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "SUI_TOKEN_TRANSFER_DATA_OVERHEAD",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -66,6 +96,30 @@ export interface ClientInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "GENERIC_EXTRA_ARGS_V2_TAG",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "GENERIC_EXTRA_ARGS_V3_TAG",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "SUI_ACCOUNT_BYTE_SIZE",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "SUI_EXTRA_ARGS_MAX_RECEIVER_OBJECT_IDS",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "SUI_EXTRA_ARGS_V1_TAG",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "SUI_MESSAGING_ACCOUNTS_OVERHEAD",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "SUI_TOKEN_TRANSFER_DATA_OVERHEAD",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -137,6 +191,22 @@ export interface Client extends BaseContract {
 
   GENERIC_EXTRA_ARGS_V2_TAG: TypedContractMethod<[], [string], "view">;
 
+  GENERIC_EXTRA_ARGS_V3_TAG: TypedContractMethod<[], [string], "view">;
+
+  SUI_ACCOUNT_BYTE_SIZE: TypedContractMethod<[], [bigint], "view">;
+
+  SUI_EXTRA_ARGS_MAX_RECEIVER_OBJECT_IDS: TypedContractMethod<
+    [],
+    [bigint],
+    "view"
+  >;
+
+  SUI_EXTRA_ARGS_V1_TAG: TypedContractMethod<[], [string], "view">;
+
+  SUI_MESSAGING_ACCOUNTS_OVERHEAD: TypedContractMethod<[], [bigint], "view">;
+
+  SUI_TOKEN_TRANSFER_DATA_OVERHEAD: TypedContractMethod<[], [bigint], "view">;
+
   SVM_ACCOUNT_BYTE_SIZE: TypedContractMethod<[], [bigint], "view">;
 
   SVM_EXTRA_ARGS_MAX_ACCOUNTS: TypedContractMethod<[], [bigint], "view">;
@@ -157,6 +227,24 @@ export interface Client extends BaseContract {
   getFunction(
     nameOrSignature: "GENERIC_EXTRA_ARGS_V2_TAG"
   ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "GENERIC_EXTRA_ARGS_V3_TAG"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "SUI_ACCOUNT_BYTE_SIZE"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "SUI_EXTRA_ARGS_MAX_RECEIVER_OBJECT_IDS"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "SUI_EXTRA_ARGS_V1_TAG"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "SUI_MESSAGING_ACCOUNTS_OVERHEAD"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "SUI_TOKEN_TRANSFER_DATA_OVERHEAD"
+  ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "SVM_ACCOUNT_BYTE_SIZE"
   ): TypedContractMethod<[], [bigint], "view">;
