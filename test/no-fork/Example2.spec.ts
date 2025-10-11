@@ -48,7 +48,7 @@ describe("Example 2", function () {
     );
 
     const mockCcipRouterFactory = await hre.ethers.getContractFactory(
-      "MockCCIPRouter"
+      "@chainlink/contracts-ccip/contracts/test/mocks/MockRouter.sol:MockCCIPRouter"
     );
     const mockCcipRouter = mockCcipRouterFactory.attach(
       config.sourceRouter_
