@@ -12,9 +12,7 @@
     "@chainlink/env-enc": "^1.0.5",
     "@chainlink/local": "0.2.7-beta.0",
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
-    "hardhat": "^2.22.7"
-  },
-  "dependencies": {
+    "hardhat": "^2.22.7",
     "@openzeppelin/contracts": "^4.7.3",
     "hardhat-preprocessor": "^0.1.5"
   }
