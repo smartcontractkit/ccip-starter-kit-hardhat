@@ -7,7 +7,7 @@ import "./tasks";
 import "./tasks/ccip-1_5-tasks";
 
 import 'hardhat-preprocessor';
-import {remapImportPaths} from "./remappings-helper";
+import {remapImportPaths} from "./helpers/remappings/remappings-helper";
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const ETHEREUM_SEPOLIA_RPC_URL = process.env.ETHEREUM_SEPOLIA_RPC_URL;
