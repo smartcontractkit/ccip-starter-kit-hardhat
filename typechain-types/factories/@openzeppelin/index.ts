@@ -2,3 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as contracts from "./contracts";
+export * as contracts483 from "./contracts-4.8.3";
+export * as contracts502 from "./contracts-5.0.2";

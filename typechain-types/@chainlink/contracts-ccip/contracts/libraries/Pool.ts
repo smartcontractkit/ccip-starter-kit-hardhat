@@ -25,6 +25,7 @@ export interface PoolInterface extends Interface {
       | "CCIP_LOCK_OR_BURN_V1_RET_BYTES"
       | "CCIP_POOL_V1"
       | "CCIP_POOL_V1_RET_BYTES"
+      | "CCIP_POOL_V2"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -39,6 +40,10 @@ export interface PoolInterface extends Interface {
     functionFragment: "CCIP_POOL_V1_RET_BYTES",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "CCIP_POOL_V2",
+    values?: undefined
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "CCIP_LOCK_OR_BURN_V1_RET_BYTES",
@@ -50,6 +55,10 @@ export interface PoolInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "CCIP_POOL_V1_RET_BYTES",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "CCIP_POOL_V2",
     data: BytesLike
   ): Result;
 }
@@ -103,6 +112,8 @@ export interface Pool extends BaseContract {
 
   CCIP_POOL_V1_RET_BYTES: TypedContractMethod<[], [bigint], "view">;
 
+  CCIP_POOL_V2: TypedContractMethod<[], [string], "view">;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
@@ -116,6 +127,9 @@ export interface Pool extends BaseContract {
   getFunction(
     nameOrSignature: "CCIP_POOL_V1_RET_BYTES"
   ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "CCIP_POOL_V2"
+  ): TypedContractMethod<[], [string], "view">;
 
   filters: {};
 }

@@ -126,7 +126,7 @@ const _abi = [
           },
           {
             internalType: "uint256",
-            name: "amount",
+            name: "sourceDenominatedAmount",
             type: "uint256",
           },
           {

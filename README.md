@@ -1,7 +1,9 @@
 ## CCIP Starter Kit
 
-> **Note**
->
+> [!IMPORTANT]
+> This branch contains the Hardhat 2 starter kit. For Hardhat 3, see the [hardhat-3 branch](https://github.com/smartcontractkit/ccip-starter-kit-hardhat/tree/hardhat-3). This branch uses Solidity [Remapping](#import-remapping) and the [hardhat-preprocessor](https://www.npmjs.com/package/hardhat-preprocessor) plugin to resolve imports correctly. <b>If you have errors when compiling dependencies please consult the [Remapping](#import-remapping) section of this README.  </b>
+
+> [!NOTE]
 > _This repository represents an example of using a Chainlink product or service. It is provided to help you understand how to interact with Chainlink’s systems so that you can integrate them into your own. This template is provided "AS IS" without warranties of any kind, has not been audited, and may be missing key checks or error handling to make the usage of the product more clear. Take everything in this repository as an example and not something to be copy pasted into a production ready service._
 
 This project demonstrates a couple of basic Chainlink CCIP use cases.
@@ -13,7 +15,7 @@ This project demonstrates a couple of basic Chainlink CCIP use cases.
   - [Install packages](#install-packages)
   - [Compile contracts](#compile-contracts)
 - [What is Chainlink CCIP?](#what-is-chainlink-ccip)
-- [Usage](#usage)
+- [Usage](#usage--environment-variables)
   - [Set a password for encrypting and decrypting the environment variable file](#set-a-password-for-encrypting-and-decrypting-the-environment-variable-file)
   - [Set environment variables](#set-environment-variables)
   - [Validate your inputs](#validate-your-inputs)
@@ -28,12 +30,13 @@ This project demonstrates a couple of basic Chainlink CCIP use cases.
 - [Example 5 - Send & Receive Cross-Chain Messages and Pay with Native Coins](#example-5---send--receive-cross-chain-messages-and-pay-with-native-coins)
 - [Example 6 - Send & Receive Cross-Chain Messages and Pay with LINK Tokens](#example-6---send--receive-cross-chain-messages-and-pay-with-link-tokens)
 - [Example 7 - Execute Received Message as a Function Call](#example-7---execute-received-message-as-a-function-call)
-- [Custom CCIP Token Pool Tasks](#custom-ccip-token-pool-tasks)
+- [Custom CCIP Token Pool Tasks](#ccip-15-token-pool-tasks)
   - [1. `deploy-token`](#1-deploy-token)
   - [2. `setup-burn-mint-pool`](#2-setup-burn-mint-pool)
   - [3. `setup-lock-release-pool`](#3-setup-lock-release-pool)
   - [4. `configure-pool`](#4-configure-pool)
   - [5. `send-ccip-tokens`](#5-send-ccip-tokens)
+- [Import Remapping](#import-remapping)
 
 ## Prerequisites
 
@@ -946,3 +949,22 @@ npx hardhat send-ccip-tokens --network ethereumSepolia --pool <SOURCE_POOL_ADDRE
 ```shell
 npx hardhat send-ccip-tokens --network ethereumSepolia --pool <SOURCE_POOL_ADDRESS> --token <SOURCE_TOKEN_ADDRESS> --destination-network arbitrumSepolia --receiver <RECEIVER_ADDRESS> --amount 25 --pool-type burnMint --fee-token <SEPOLIA_LINK_ADDRESS>
 ```
+
+
+## Import Remapping
+
+In Solidity, [remapping](https://docs.soliditylang.org/en/latest/path-resolution.html#import-remapping) is a way to define shorthand import paths so that developers can avoid writing long relative paths when importing contracts. For example, instead of writing `import "../../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";`, you could define a remapping such as `@openzeppelin/=node_modules/@openzeppelin/` and simply use `import "@openzeppelin/contracts/token/ERC20/ERC20.sol";`. This makes contract imports cleaner, easier to maintain, and more consistent across different projects. Remappings are commonly used in development environments like [Foundry](https://getfoundry.sh/guides/project-setup/dependencies/#remapping-dependencies) or [Hardhat 3](https://hardhat.org/docs/), but Hardhat 2 does not support them natively.
+
+To work around this limitation, you can use the [hardhat-preprocessor](https://www.npmjs.com/package/hardhat-preprocessor) plugin, which preprocesses Solidity files before compilation and rewrites the imports according to your remapping rules. This plugin works by extending the available configuration options of the expected [`HardhatUserConfig`](https://v2.hardhat.org/hardhat-runner/docs/config) object to include a preprocess property. 
+
+This starter kit contains example code of this workaround in action within the [`remappings-helper.ts`](./helpers/remappings/remappings-helper.ts) file, and uses the remappings located within [`remappings.txt`](./remappings.txt). 
+
+> [!WARNING]
+> The [hardhat-preprocessor](https://www.npmjs.com/package/hardhat-preprocessor) plugin is a third-party plugin. 
+> Use it at your own discretion and review its source before adopting it in any production environments. 
+
+### Adding your own remappings
+
+As your project expands, you may find the need for more dependencies. This may result in the requirement of additional remappings. To include more remappings, simply add your remapping to the `remappings.txt` file.
+
+The expected syntax is: `<prefix>=<resolved-path>`

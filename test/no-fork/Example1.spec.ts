@@ -39,7 +39,7 @@ describe("Example 1", function () {
     } = await ccipLocalSimulator.configuration();
 
     const mockCcipRouterFactory = await hre.ethers.getContractFactory(
-      "MockCCIPRouter"
+      "@chainlink/contracts-ccip/contracts/test/mocks/MockRouter.sol:MockCCIPRouter"
     );
     const mockCcipRouter = mockCcipRouterFactory.attach(
       config.sourceRouter_

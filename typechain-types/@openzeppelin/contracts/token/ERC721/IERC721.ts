@@ -253,7 +253,7 @@ export interface IERC721 extends BaseContract {
   >;
 
   setApprovalForAll: TypedContractMethod<
-    [operator: AddressLike, approved: boolean],
+    [operator: AddressLike, _approved: boolean],
     [void],
     "nonpayable"
   >;
@@ -319,7 +319,7 @@ export interface IERC721 extends BaseContract {
   getFunction(
     nameOrSignature: "setApprovalForAll"
   ): TypedContractMethod<
-    [operator: AddressLike, approved: boolean],
+    [operator: AddressLike, _approved: boolean],
     [void],
     "nonpayable"
   >;

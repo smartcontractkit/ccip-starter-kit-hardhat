@@ -6,6 +6,9 @@ import "@nomicfoundation/hardhat-toolbox";
 import "./tasks";
 import "./tasks/ccip-1_5-tasks";
 
+import 'hardhat-preprocessor';
+import {remapImportPaths} from "./helpers/remappings/remappings-helper";
+
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const ETHEREUM_SEPOLIA_RPC_URL = process.env.ETHEREUM_SEPOLIA_RPC_URL;
 const OPTIMISM_SEPOLIA_RPC_URL = process.env.OPTIMISM_SEPOLIA_RPC_URL;
@@ -38,6 +41,7 @@ const HASHKEY_SEPOLIA_RPC_URL = process.env.HASHKEY_SEPOLIA_RPC_URL;
 const INK_SEPOLIA_RPC_URL = process.env.INK_SEPOLIA_RPC_URL;
 
 const config: HardhatUserConfig = {
+  preprocess: remapImportPaths(),
   solidity: {
     version: "0.8.24",
     settings: {
