@@ -1,5 +1,4 @@
-require("hardhat-preprocessor");
-const fs = require("fs");
+import * as fs from "fs";
 
 /**
  * Loads Solidity import remappings from a `remappings.txt` file.
@@ -18,7 +17,7 @@ const fs = require("fs");
  */
 function loadRemappings() {
     const lines = fs.readFileSync("./remappings.txt", "utf-8").split(/\r?\n|\r/);
-    const map = {};
+    const map: Record<string, string> = {};
     for (const line of lines) {
         const [from, to] = line.split("=");
         map[from] = to;
@@ -54,7 +53,7 @@ function remapImportPaths(){
     const remap = loadRemappings();
     return {
         eachLine: () => ({
-            transform: (line) => {
+            transform: (line: string) => {
                 const text = line.trim();
                 if (text.startsWith("import ")) {
                     for (const [from, to] of Object.entries(remap)) {
@@ -70,4 +69,4 @@ function remapImportPaths(){
     };
 }
 
-module.exports={remapImportPaths}
+export { remapImportPaths };
