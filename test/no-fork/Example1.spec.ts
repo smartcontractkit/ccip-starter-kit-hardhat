@@ -14,11 +14,11 @@ describe("Example 1", function () {
   // We use loadFixture to run this setup once, snapshot that state,
   // and reset Hardhat Network to that snapshot in every test.
   async function deployFixture() {
-    const ccipLocalSimualtorFactory = await hre.ethers.getContractFactory(
+    const ccipLocalSimulatorFactory = await hre.ethers.getContractFactory(
       "CCIPLocalSimulator"
     );
     const ccipLocalSimulator: CCIPLocalSimulator =
-      await ccipLocalSimualtorFactory.deploy();
+      await ccipLocalSimulatorFactory.deploy();
 
     const [alice, bob] = await hre.ethers.getSigners();
 
