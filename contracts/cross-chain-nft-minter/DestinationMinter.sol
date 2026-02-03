@@ -13,7 +13,7 @@ import {MyNFT} from "./MyNFT.sol";
 contract DestinationMinter is CCIPReceiver {
     MyNFT nft;
 
-    event MintCallSuccessfull();
+    event MintCallSuccessful();
 
     constructor(address router, address nftAddress) CCIPReceiver(router) {
         nft = MyNFT(nftAddress);
@@ -24,6 +24,6 @@ contract DestinationMinter is CCIPReceiver {
     ) internal override {
         (bool success, ) = address(nft).call(message.data);
         require(success);
-        emit MintCallSuccessfull();
+        emit MintCallSuccessful();
     }
 }

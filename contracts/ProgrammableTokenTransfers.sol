@@ -86,7 +86,7 @@ contract ProgrammableTokenTransfers is CCIPReceiver, OwnerIsCreator {
         address token,
         uint256 amount
     ) external returns (bytes32 messageId) {
-        // set the tokent amounts
+        // set the token amounts
         Client.EVMTokenAmount[] memory tokenAmounts = new Client.EVMTokenAmount[](1);
         Client.EVMTokenAmount memory tokenAmount = Client.EVMTokenAmount({token: token, amount: amount});
         tokenAmounts[0] = tokenAmount;
@@ -96,7 +96,7 @@ contract ProgrammableTokenTransfers is CCIPReceiver, OwnerIsCreator {
             data: abi.encode(message), // ABI-encoded string message
             tokenAmounts: tokenAmounts, // Tokens amounts
             extraArgs: Client._argsToBytes(
-                Client.EVMExtraArgsV1({gasLimit: 200_000}) // Additional arguments, setting gas limit and non-strict sequency mode
+                Client.EVMExtraArgsV1({gasLimit: 200_000}) // Additional arguments, setting gas limit and non-strict sequencing mode
             ),
             feeToken: address(0) // Setting feeToken to zero address, indicating native asset will be used for fees
         });
@@ -126,8 +126,8 @@ contract ProgrammableTokenTransfers is CCIPReceiver, OwnerIsCreator {
         uint64 sourceChainSelector = any2EvmMessage.sourceChainSelector; // fetch the source chain identifier (aka selector)
         address sender = abi.decode(any2EvmMessage.sender, (address)); // abi-decoding of the sender address
         Client.EVMTokenAmount[] memory tokenAmounts = any2EvmMessage.destTokenAmounts;
-        address token = tokenAmounts[0].token; // we expect one token to be transfered at once but of course, you can transfer several tokens.
-        uint256 amount = tokenAmounts[0].amount; // we expect one token to be transfered at once but of course, you can transfer several tokens.
+        address token = tokenAmounts[0].token; // we expect one token to be transferred at once but of course, you can transfer several tokens.
+        uint256 amount = tokenAmounts[0].amount; // we expect one token to be transferred at once but of course, you can transfer several tokens.
         string memory message = abi.decode(any2EvmMessage.data, (string)); // abi-decoding of the sent string message
         receivedMessages.push(messageId);
         Message memory detail = Message(sourceChainSelector, sender, message, token, amount);
