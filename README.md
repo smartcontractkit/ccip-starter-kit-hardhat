@@ -431,7 +431,7 @@ npx hardhat send-token-and-data
 --source-blockchain <sourceBlockchain>
 --sender <addressOfProgrammableTokenTransfersOnSourceBlockchain>
 --destination-blockchain <destinationBlockchain>
---receiver <ddressOfProgrammableTokenTransfersOnDestinationBlockchain>
+--receiver <addressOfProgrammableTokenTransfersOnDestinationBlockchain>
 --message <messageToSend>
 --token-address <tokenToSendAddressOnSourceBlockchain>
 --amount <amountToSend>
@@ -583,7 +583,7 @@ npx hardhat send-message
 --source-blockchain <sourceBlockchain>
 --sender <addressOfBasicMessageSenderOnSourceBlockchain>
 --destination-blockchain <destinationBlockchain>
---receiver <ddressOfBasicMessageReceiverOnDestinationBlockchain>
+--receiver <addressOfBasicMessageReceiverOnDestinationBlockchain>
 --message <messageToSend>
 --pay-fees-in <LINK>
 ```
@@ -731,7 +731,7 @@ npx hardhat cross-chain-mint
 For example, if you want to mint NFTs on Ethereum Sepolia by sending requests from Avalanche Fuji and pay fees in LINK, run:
 
 ```shell
-npx hardhat cross-chain-mint --source-minter <SOURCE_MINTER_ADDRESS> --source-blockchain avalancheFuji --destination-blockchain ethereumSepolia --destination-minter <DESTNATION_MINTER_ADDRESS> --pay-fees-in LINK
+npx hardhat cross-chain-mint --source-minter <SOURCE_MINTER_ADDRESS> --source-blockchain avalancheFuji --destination-blockchain ethereumSepolia --destination-minter <DESTINATION_MINTER_ADDRESS> --pay-fees-in LINK
 ```
 
 5. Once the CCIP message is finalized on the destination blockchain, you can query the MyNFTs balance of your account, using the `cross-chain-mint-balance-of` task:
