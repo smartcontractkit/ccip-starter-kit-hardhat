@@ -1,0 +1,9 @@
+{
+    "$global": {
+        "routerAddress": "<ROUTER_ADDRESS>",
+        "armProxy": "<ARM_PROXY_ADDRESS>",
+        "registryModuleOwnerCustom": "<REGISTRY_MODULE_OWNER_CUSTOM_ADDRESS>",
+        "tokenAdminRegistry": "<TOKEN_ADMIN_REGISTRY_ADDRESS>",
+        "thresholdAmountForAdditionalCCVs": "1"
+    }
+}
