@@ -7,7 +7,7 @@ Task: `example01` (implementation: `tasks/example01.ts`).
 ## What You Will Do
 
 1. Mint 1 CCIP-BnM token to your EOA with the `faucet` task.
-2. (Optional) Check the executor minimum block confirmations with the `executor-min-block-confirmations` task.
+2. (Optional) Check the executor allowed finality config with the `executor-allowed-finality-config` task.
 3. Send that token from source chain to destination chain with the `example01` task.
 
 ## Before You Start
@@ -32,20 +32,20 @@ Use the faucet task on the source chain. Pass the CCIP-BnM token address for tha
 npx hardhat faucet --network <NETWORK_NAME> --ccip-bnm <CCIP_BNM_TOKEN_ADDRESS>
 ```
 
-## Step 2: (Optional) Check Executor Minimum Block Confirmations
+## Step 2: (Optional) Check Executor Allowed Finality
 
-Before picking a block depth for Faster Than Finality, you can read the executor minimum with the Hardhat task:
+Before picking a block depth for Faster Than Finality, you can read the executor’s allowed finality (`FinalityCodec` `bytes4`) with:
 
 ```bash
-npx hardhat executor-min-block-confirmations --network <NETWORK_NAME> --executor <EXECUTOR_ADDRESS>
+npx hardhat executor-allowed-finality-config --network <NETWORK_NAME> --executor <EXECUTOR_ADDRESS>
 ```
 
-The task prints: `Min block confirmations <uint16>`.
+The task prints: `Allowed finality config (bytes4) 0x…`.
 
 Why this matters:
 
-- If your requested `blockConfirmations` is below the executor minimum, the send can revert.
-- If your requested `blockConfirmations` is greater than chain finality, default finality is used.
+- Your requested finality in `ExtraArgsV3` must be **allowed** by the executor and destination policy (`FinalityCodec`); mismatches can revert.
+- If your requested mode is stricter than needed, behavior follows CCIP / pool rules (see chain-specific docs).
 
 ## Step 3: Send Token With Faster Than Finality
 

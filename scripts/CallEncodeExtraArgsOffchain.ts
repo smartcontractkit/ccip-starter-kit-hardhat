@@ -50,8 +50,14 @@ const DEFAULT_ENCODE_V3 = {
 };
 
 export async function encodeV3Basic(params: EncodeV3Params) {
-  const v3Bytes = await encodeV3(params);
-  return v3Bytes;
+  const { publicClient, encoder } = await extraArgsContract();
+  const { gasLimit, blockConfirmations } = params;
+  return publicClient.readContract({
+    address: encoder.address,
+    abi: encoder.abi,
+    functionName: "encodeV3Basic",
+    args: [gasLimit, blockConfirmations],
+  });
 }
 
 export async function encodeV3(params: EncodeV3Params) {

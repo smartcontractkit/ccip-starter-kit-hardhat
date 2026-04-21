@@ -205,9 +205,9 @@ const faucetTask = task(
   .setAction(() => import("./helpers/Faucet.js"))
   .build();
 
-const executorMinBlockConfirmationsTask = task(
-  "executor-min-block-confirmations",
-  "Read Executor.getMinBlockConfirmations() (uint16). Use before picking block depth for Faster Than Finality."
+const executorAllowedFinalityConfigTask = task(
+  "executor-allowed-finality-config",
+  "Read Executor.getAllowedFinalityConfig() (bytes4, FinalityCodec). Use when aligning FTF with executor policy."
 )
   .addOption({
     name: "executor",
@@ -215,7 +215,7 @@ const executorMinBlockConfirmationsTask = task(
     type: ArgumentType.STRING,
     defaultValue: "",
   })
-  .setAction(() => import("./helpers/ExecutorMinBlockConfirmations.js"))
+  .setAction(() => import("./helpers/ExecutorAllowedFinalityConfig.js"))
   .build();
 
 const setBasicMessageReceiverWithCCVsMinBlockDepthTask = task(
@@ -352,7 +352,7 @@ const legacy02Task = task("legacy02", "Legacy02: ExtraArgs V2 token transfer.")
 /** All Hardhat tasks. Import this array in hardhat.config.ts. */
 export const tasks = [
   faucetTask,
-  executorMinBlockConfirmationsTask,
+  executorAllowedFinalityConfigTask,
   setBasicMessageReceiverWithCCVsMinBlockDepthTask,
   basicMessageReceiverLatestMessageTask,
   basicMessageReceiverLatestSenderTask,

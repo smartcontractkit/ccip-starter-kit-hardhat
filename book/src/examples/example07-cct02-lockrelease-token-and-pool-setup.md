@@ -35,7 +35,7 @@ Modules and tasks used:
 
 The LockAndReleaseTokenPool Ignition module deploys:
 
-- **Token:** `TestToken` (`TEST`), 18 decimals, 1_000_000 × 10¹⁸ premint, 100_000_000 × 10¹⁸ max supply.
+- **Token:** **CrossChainToken** with the same defaults and `registerAdminViaGetCCIPAdmin` flow as Example 06: `TestToken` (`TEST`), 18 decimals, 1_000_000 × 10¹⁸ premint, 100_000_000 × 10¹⁸ max supply.
 - **Lock box:** ERC20LockBox bound to the token.
 - **Pool:** LockReleaseTokenPool with no advanced pool hook (CCT 02).
 
@@ -49,7 +49,7 @@ npx hardhat ignition deploy ignition/modules/LockAndReleaseTokenPool.ts --networ
 
 Save from the deployment output:
 
-- `<FUJI_TOKEN_ADDRESS>` (FactoryBurnMintERC20 / token)
+- `<FUJI_TOKEN_ADDRESS>` (CrossChainToken; same defaults as Example 06)
 - `<FUJI_LOCKBOX_ADDRESS>` (ERC20LockBox)
 - `<FUJI_POOL_ADDRESS>` (LockReleaseTokenPool)
 

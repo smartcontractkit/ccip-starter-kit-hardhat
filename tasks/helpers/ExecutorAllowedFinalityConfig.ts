@@ -1,13 +1,13 @@
 /**
- * Read Executor.getMinBlockConfirmations() (uint16). Use before picking block depth for Faster Than Finality.
+ * Read Executor.getAllowedFinalityConfig() (bytes4, FinalityCodec). Use when tuning Faster Than Finality vs default finality.
  *
  * Command to run:
- *   npx hardhat executor-min-block-confirmations --network <NETWORK_NAME> --executor <EXECUTOR_ADDRESS>
+ *   npx hardhat executor-allowed-finality-config --network <NETWORK_NAME> --executor <EXECUTOR_ADDRESS>
  */
 
 import type { HardhatRuntimeEnvironment } from "hardhat/types/hre";
 
-export interface ExecutorMinBlockConfirmationsTaskArguments {
+export interface ExecutorAllowedFinalityConfigTaskArguments {
   executor: string;
 }
 
@@ -17,8 +17,8 @@ function toAddress(s: string): `0x${string}` {
 
 const ZERO = "0x0000000000000000000000000000000000000000" as `0x${string}`;
 
-export default async function executorMinBlockConfirmationsAction(
-  taskArguments: ExecutorMinBlockConfirmationsTaskArguments,
+export default async function executorAllowedFinalityConfigAction(
+  taskArguments: ExecutorAllowedFinalityConfigTaskArguments,
   hre: HardhatRuntimeEnvironment
 ): Promise<void> {
   const { executor: executorStr } = taskArguments;
@@ -33,11 +33,11 @@ export default async function executorMinBlockConfirmationsAction(
   const publicClient = await connection.viem.getPublicClient();
   if (!publicClient) throw new Error("No public client");
 
-  const minBlockConfirmations = (await publicClient.readContract({
+  const allowedFinalityConfig = (await publicClient.readContract({
     address: executor,
     abi: artifact.abi,
-    functionName: "getMinBlockConfirmations",
-  })) as number;
+    functionName: "getAllowedFinalityConfig",
+  })) as `0x${string}`;
 
-  console.log("Min block confirmations", minBlockConfirmations);
+  console.log("Allowed finality config (bytes4)", allowedFinalityConfig);
 }

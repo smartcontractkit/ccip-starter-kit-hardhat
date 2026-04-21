@@ -18,34 +18,37 @@ const TOKEN_MAX_SUPPLY = 100_000_000n * 10n ** 18n;
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 // Use a distinct name so Ignition deploys a new token for Lock Release instead of reusing
-// the token from BurnMintTokenPoolModule (which would cause AlreadyRegistered on registerAdminViaOwner).
-const FactoryBurnMintERC20LockReleaseModule = buildModule("FactoryBurnMintERC20LockReleaseModule", (m) => {
-  const newOwner = m.getAccount(0);
+// the token from BurnMintTokenPoolModule (which would cause AlreadyRegistered on registerAdminViaGetCCIPAdmin).
+const CrossChainTokenLockReleaseModule = buildModule("CrossChainTokenLockReleaseModule", (m) => {
+  const broadcaster = m.getAccount(0);
 
-  const factoryBurnMintERC20 = m.contract("FactoryBurnMintERC20", [
+  const tokenParams = [
     TOKEN_NAME,
     TOKEN_SYMBOL,
-    TOKEN_DECIMALS,
     TOKEN_MAX_SUPPLY,
     TOKEN_PREMINT,
-    newOwner,
-  ]);
+    broadcaster,
+    TOKEN_DECIMALS,
+    broadcaster,
+  ] as const;
 
-  return { factoryBurnMintERC20 };
+  const crossChainToken = m.contract("CrossChainToken", [tokenParams, broadcaster, broadcaster]);
+
+  return { crossChainToken };
 });
 
 const LockAndReleaseTokenPoolModule = buildModule("LockAndReleaseTokenPoolModule", (m) => {
-  const { factoryBurnMintERC20 } = m.useModule(FactoryBurnMintERC20LockReleaseModule);
+  const { crossChainToken } = m.useModule(CrossChainTokenLockReleaseModule);
 
   const router = m.getParameter("routerAddress");
   const armProxy = m.getParameter("armProxy");
   const registryModuleOwnerCustomAddress = m.getParameter("registryModuleOwnerCustom");
   const tokenAdminRegistryAddress = m.getParameter("tokenAdminRegistry");
 
-  const erc20LockBox = m.contract("ERC20LockBox", [factoryBurnMintERC20]);
+  const erc20LockBox = m.contract("ERC20LockBox", [crossChainToken]);
 
   const lockReleaseTokenPool = m.contract("LockReleaseTokenPool", [
-    factoryBurnMintERC20,
+    crossChainToken,
     TOKEN_DECIMALS,
     ZERO_ADDRESS, // No advanced pool hook in CCT 02
     armProxy,
@@ -59,19 +62,19 @@ const LockAndReleaseTokenPoolModule = buildModule("LockAndReleaseTokenPoolModule
 
   const registryModuleOwnerCustom = m.contractAt("RegistryModuleOwnerCustom", registryModuleOwnerCustomAddress);
 
-  const registerAdminCall = m.call(registryModuleOwnerCustom, "registerAdminViaOwner", [factoryBurnMintERC20]);
+  const registerAdminCall = m.call(registryModuleOwnerCustom, "registerAdminViaGetCCIPAdmin", [crossChainToken]);
 
   const tokenAdminRegistry = m.contractAt("ITokenAdminRegistry", tokenAdminRegistryAddress);
 
-  const acceptAdminRoleCall = m.call(tokenAdminRegistry, "acceptAdminRole", [factoryBurnMintERC20], {
+  const acceptAdminRoleCall = m.call(tokenAdminRegistry, "acceptAdminRole", [crossChainToken], {
     after: [registerAdminCall],
   });
 
-  m.call(tokenAdminRegistry, "setPool", [factoryBurnMintERC20, lockReleaseTokenPool], {
+  m.call(tokenAdminRegistry, "setPool", [crossChainToken, lockReleaseTokenPool], {
     after: [acceptAdminRoleCall],
   });
 
-  return { factoryBurnMintERC20, erc20LockBox, lockReleaseTokenPool };
+  return { crossChainToken, erc20LockBox, lockReleaseTokenPool };
 });
 
 export default LockAndReleaseTokenPoolModule;

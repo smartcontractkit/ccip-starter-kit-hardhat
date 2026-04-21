@@ -53,7 +53,7 @@ As a convenience, applications generally inherited `CCIPReceiver.sol` and implem
 
 ### CCIP v2.0
 
-In v2.0, receivers expose Cross Chain Verifiers and finality requirements via `getCCVsAndMinBlockDepth`:
+In v2.0, receivers expose Cross Chain Verifiers and finality requirements via `getCCVsAndFinalityConfig` (encoded with `FinalityCodec` as `bytes4 allowedFinalityConfig`):
 
 ```ts
 // SPDX-License-Identifier: MIT
@@ -66,7 +66,7 @@ interface IAny2EVMMessageReceiverV2 {
     Client.Any2EVMMessage calldata message
   ) external;
 
- function getCCVsAndMinBlockDepth(
+  function getCCVsAndFinalityConfig(
     uint64 sourceChainSelector,
     bytes calldata sender
   )
@@ -76,7 +76,7 @@ interface IAny2EVMMessageReceiverV2 {
       address[] memory requiredCCVs,
       address[] memory optionalCCVs,
       uint8 optionalThreshold,
-      uint16 minBlockDepth
+      bytes4 allowedFinalityConfig
     );
 }
 ```
@@ -84,15 +84,11 @@ interface IAny2EVMMessageReceiverV2 {
 The receiver controls two independent dimensions:
 
 - `requiredCCVs` and `optionalCCVs` define additional verifiers required for acceptance.
-- `minBlockDepth` defines minimum block depth for Faster Than Finality execution.
-- `minBlockDepth = 0` means default finality is required.
+- `allowedFinalityConfig` defines which requested finality modes are accepted (see `FinalityCodec` in chainlink-ccip). A zero value (`WAIT_FOR_FINALITY_FLAG`) means only fully finalized messages are accepted.
 
-You can combine these independently:
+You can combine these independently (for example, add verifiers while requiring full finality, or allow faster-than-finality modes when policy allows).
 
-- Add additional verifiers while keeping `minBlockDepth = 0`.
-- Use default verifiers only, while setting `minBlockDepth > 0`.
-
-In this starter kit, `contracts/BasicMessageReceiverWithCCVs.sol` adds configurable verifier sets and configurable minimum block depth.
+In this starter kit, `contracts/BasicMessageReceiverWithCCVs.sol` adds configurable verifier sets and stores a per-chain minimum block depth, which it exposes via `FinalityCodec._encodeBlockDepth` in `getCCVsAndFinalityConfig`.
 
 ## Step 1: Deploy `BasicMessageReceiverWithCCVs` on Destination Chain
 
