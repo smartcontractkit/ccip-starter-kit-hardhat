@@ -6,7 +6,7 @@ Task: `example05` (implementation: `tasks/Example05.ts`).
 
 ## What You Will Do
 
-1. Ensure destination `BasicMessageReceiver` exists (deploy via Ignition if needed; see Example 02).
+1. Ensure a compatible destination receiver exists (default finality or Faster Than Finality based on your `blockConfirmations`).
 2. Send a CCIP data message with `ExtraArgsV3` no-execution-tag using the `example05` task.
 3. Observe pending execution in CCIP Explorer and execute manually.
 
@@ -26,15 +26,32 @@ Task: `example05` (implementation: `tasks/Example05.ts`).
 
 > **If you do not have a receiver deployed yet**
 >
-> Deploy `BasicMessageReceiver` on the destination chain with Ignition (see Example 02):
+> Choose deployment based on your `blockConfirmations`:
 >
 > ```bash
 > npx hardhat ignition deploy ignition/modules/BasicMessageReceiver.ts --network <NETWORK_NAME> --parameters <PARAMETERS_FILE>
 > ```
 >
-> `--parameters` is the path to the chain's Ignition parameters JSON; it supplies router and other addresses to the module.
+> Use this for default finality (`blockConfirmations = 0`). Save this as `<BASIC_MESSAGE_RECEIVER_ADDRESS>`.
 >
-> Save the deployed receiver address for use as `--receiver` below.
+> ```bash
+> npx hardhat ignition deploy ignition/modules/BasicMessageReceiverWithCCVs.ts --network <NETWORK_NAME> --parameters <PARAMETERS_FILE>
+> ```
+>
+> If you use Faster Than Finality (`blockConfirmations > 0`), configure min block depth for your source chain:
+>
+> ```bash
+> npx hardhat set-basic-message-receiver-with-ccvs-min-block-depth --network <NETWORK_NAME> \
+>   --receiver <BASIC_MESSAGE_RECEIVER_WITH_CCVS_ADDRESS> \
+>   --source-chain-selector <SOURCE_CHAIN_SELECTOR> \
+>   --min-block-depth <MIN_BLOCK_DEPTH>
+> ```
+>
+> Use `<MIN_BLOCK_DEPTH> > 0` for Faster Than Finality.
+>
+> Use this for Faster Than Finality (`blockConfirmations > 0`). Save this as `<BASIC_MESSAGE_RECEIVER_WITH_CCVS_ADDRESS>`.
+>
+> `--parameters` is the path to the chain's Ignition parameters JSON; it supplies router and other addresses to the module.
 
 ## Understanding ExtraArgsV3
 
@@ -77,7 +94,7 @@ Run the `example05` task. It sends a data-only message with executor set to `NO_
 npx hardhat example05 --network <NETWORK_NAME> \
   --source-router <SOURCE_ROUTER> \
   --destination-chain-selector <DESTINATION_CHAIN_SELECTOR> \
-  --receiver <DEPLOYED_BASIC_MESSAGE_RECEIVER_ADDRESS> \
+  --receiver <BASIC_MESSAGE_RECEIVER_ADDRESS_OR_BASIC_MESSAGE_RECEIVER_WITH_CCVS_ADDRESS> \
   --message-text "Hello, World" \
   --gas-limit <GAS_LIMIT> \
   --block-confirmations <BLOCK_CONFIRMATIONS> \
@@ -88,6 +105,8 @@ Parameter notes:
 
 - `--gas-limit` must be `> 0` because the receiver callback needs gas (e.g. `200000`).
 - `--block-confirmations` can be `0` (default finality) or `> 0`.
+- If `<BLOCK_CONFIRMATIONS> > 0`, destination receiver must accept Faster Than Finality (`minBlockDepth > 0`) for this source chain.
+- If `<BLOCK_CONFIRMATIONS> = 0`, a default-finality receiver is sufficient.
 - `--fee-token-address`: LINK token address on the source chain to pay fees in LINK, or `0x0000000000000000000000000000000000000000` to pay in native coin.
 - This example sets executor to `NO_EXECUTION_ADDRESS`, so execution is not automatic; the message remains in a pending/manual execution state.
 

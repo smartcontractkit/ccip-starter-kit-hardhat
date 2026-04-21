@@ -218,6 +218,31 @@ const executorMinBlockConfirmationsTask = task(
   .setAction(() => import("./helpers/ExecutorMinBlockConfirmations.js"))
   .build();
 
+const setBasicMessageReceiverWithCCVsMinBlockDepthTask = task(
+  "set-basic-message-receiver-with-ccvs-min-block-depth",
+  "Set BasicMessageReceiverWithCCVs.setMinBlockDepth for a source chain (run on destination network)."
+)
+  .addOption({
+    name: "receiver",
+    description: "Deployed BasicMessageReceiverWithCCVs address",
+    type: ArgumentType.STRING,
+    defaultValue: "",
+  })
+  .addOption({
+    name: "sourceChainSelector",
+    description: "Source chain selector (uint64)",
+    type: ArgumentType.BIGINT,
+    defaultValue: 0n,
+  })
+  .addOption({
+    name: "minBlockDepth",
+    description: "Minimum block depth (uint16); 0 = default finality only for that source",
+    type: ArgumentType.INT,
+    defaultValue: 0,
+  })
+  .setAction(() => import("./helpers/SetBasicMessageReceiverWithCCVsMinBlockDepth.js"))
+  .build();
+
 const basicMessageReceiverLatestMessageTask = task(
   "basic-message-receiver-latest-message",
   "Read BasicMessageReceiver.latestMessage() (bytes). Decodes to string when possible."
@@ -328,6 +353,7 @@ const legacy02Task = task("legacy02", "Legacy02: ExtraArgs V2 token transfer.")
 export const tasks = [
   faucetTask,
   executorMinBlockConfirmationsTask,
+  setBasicMessageReceiverWithCCVsMinBlockDepthTask,
   basicMessageReceiverLatestMessageTask,
   basicMessageReceiverLatestSenderTask,
   basicMessageReceiverLatestSourceChainSelectorTask,

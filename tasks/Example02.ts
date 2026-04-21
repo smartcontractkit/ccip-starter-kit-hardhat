@@ -1,6 +1,9 @@
 /**
  * Message-only CCIP send (no tokens).
  *
+ * For `BasicMessageReceiverWithCCVs`, deploy with Ignition and configure min block depth on the destination chain
+ * (`set-basic-message-receiver-with-ccvs-min-block-depth`) before sending with `--block-confirmations > 0`.
+ *
  * Command to run:
  *   npx hardhat example02 --network <NETWORK_NAME> --source-router <SOURCE_ROUTER> --destination-chain-selector <DESTINATION_CHAIN_SELECTOR> --receiver <RECEIVER> --message-text <MESSAGE_TEXT> [--gas-limit 200000] [--block-confirmations 1] [--fee-token-address <FEE_TOKEN_ADDRESS>]
  */
@@ -78,6 +81,9 @@ export default async function example02Step2Action(
 
   const chainId = publicClient.chain?.id ?? 0n;
   console.log("[INFO] Example02: Hello World data message + Faster Than Finality (EOA sender)");
+  console.log(
+    "[INFO] If the receiver is BasicMessageReceiverWithCCVs, default min block depth is 0 (finality-only) until you configure it per source chain (set-basic-message-receiver-with-ccvs-min-block-depth)."
+  );
   console.log("[INFO] Source chain ID:", chainId.toString());
   console.log("[INFO] Source router:", sourceRouter);
   console.log("[INFO] Destination selector:", destinationChainSelector.toString());
@@ -87,6 +93,11 @@ export default async function example02Step2Action(
   console.log("[INFO] Fee token:", feeTokenAddress);
   console.log("[WARN] Executor may enforce a minimum block confirmation value and revert if too low.");
   console.log("[WARN] If requested confirmations exceed chain finality, default finality is used.");
+  if (blockConfirmations > 0) {
+    console.log(
+      "[INFO] --block-confirmations should be >= the receiver's minBlockDepth for that source chain (BasicMessageReceiverWithCCVs)."
+    );
+  }
 
   const params: EncodeV3Params = { gasLimit, blockConfirmations };
   const extraArgs = await encodeV3Basic(params);
