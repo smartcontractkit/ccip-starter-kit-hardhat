@@ -55,6 +55,8 @@ This chapter uses Faster Than Finality (`blockConfirmations > 0`), so the destin
 >
 > For this chapter (which sends Faster Than Finality), use `<MIN_BLOCK_DEPTH> > 0`.
 >
+> The user-facing input for this example is `--min-block-depth <MIN_BLOCK_DEPTH>` (a `uint16` passed to `BasicMessageReceiverWithCCVs.setMinBlockDepth`). On-chain, the receiver does not return that integer directly to CCIP: `getCCVsAndFinalityConfig` sets `allowedFinalityConfig` to `FinalityCodec._encodeBlockDepth(minBlockDepth)` — the same `bytes4` finality encoding CCIP 2.0 uses elsewhere for allowed finality (depth `0` means wait for full/default finality).
+>
 > `--parameters` is the path to the chain's Ignition parameters JSON (e.g. `ignition/paramsEthSepolia.json`); it supplies router and other addresses to the module.
 >
 > Save the deployed receiver address and use it as `--receiver` in Step 2.
@@ -89,8 +91,7 @@ Parameter notes:
 - `--amount`: token amount in wei (e.g. `1000000000000000000` for 1 token with 18 decimals).
 - `--gas-limit` must be `> 0` because the receiver contract callback handles data (e.g. `200000`).
 - `--block-confirmations` must be `> 0` for Faster Than Finality.
-- If `<BLOCK_CONFIRMATIONS> > 0`, the destination receiver must accept Faster Than Finality (`minBlockDepth > 0`) for this source chain.
-- If `<BLOCK_CONFIRMATIONS> = 0`, a default-finality receiver is sufficient.
+- `--block-confirmations` should be greater than or equal to `<MIN_BLOCK_DEPTH>` (the depth you stored on the receiver; CCIP compares it against your message’s `requestedFinalityConfig` after both sides use `FinalityCodec` encoding).
 - Executor may enforce a minimum block confirmation value and revert if too low.
 - If requested confirmations exceed chain finality, default finality is used.
 - `--fee-token-address`: LINK token address on the source chain to pay fees in LINK, or `0x0000000000000000000000000000000000000000` to pay in native coin.
