@@ -82,6 +82,7 @@ struct GenericExtraArgsV3 {
 Related helpers in `scripts/CallEncodeExtraArgsOffchain.ts`:
 
 - `encodeV3Basic(gasLimit, blockConfirmations)` for a minimal V3 payload.
+- `encodeAllowedFinalityBlockDepthAndSafeFlag(blockDepth)` calls `EncodeExtraArgsOffchain.encodeAllowedFinalityBlockDepthAndSafeFlag`, which wraps `FinalityCodec._encodeBlockDepthAndSafeFlag` — for **allowed** finality (`bytes4`) on pools/receivers/policy, **not** for sender ExtraArgs `requestedFinalityConfig`.
 - `getNoExecutionAddress()` returns `Client.NO_EXECUTION_ADDRESS` for the manual execution path.
 
 The `example05` task uses these to build ExtraArgsV3 with the no-execution tag.

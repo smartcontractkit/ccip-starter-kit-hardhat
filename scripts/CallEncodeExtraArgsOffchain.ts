@@ -18,6 +18,7 @@
         Ideally, any new versions can be added by modifying  contracts/utils/EncodeExtraArgsOffchain.sol only
 */
 
+import type { Abi } from "viem";
 import { network } from "hardhat";
 
 export async function extraArgsContract() {
@@ -57,6 +58,17 @@ export async function encodeV3Basic(params: EncodeV3Params) {
     abi: encoder.abi,
     functionName: "encodeV3Basic",
     args: [gasLimit, blockConfirmations],
+  });
+}
+
+/** Allowed-finality helper: `FinalityCodec._encodeBlockDepthAndSafeFlag` — for pools/receivers, not sender ExtraArgs requestedFinality. */
+export async function encodeAllowedFinalityBlockDepthAndSafeFlag(blockDepth: number) {
+  const { publicClient, encoder } = await extraArgsContract();
+  return publicClient.readContract({
+    address: encoder.address,
+    abi: encoder.abi as Abi,
+    functionName: "encodeAllowedFinalityBlockDepthAndSafeFlag",
+    args: [BigInt(blockDepth)],
   });
 }
 
