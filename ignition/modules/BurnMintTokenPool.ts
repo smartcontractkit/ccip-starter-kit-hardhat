@@ -17,15 +17,15 @@ const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 const CrossChainTokenModule = buildModule("CrossChainTokenModule", (m) => {
   const broadcaster = m.getAccount(0);
 
-  const tokenParams = [
-    TOKEN_NAME,
-    TOKEN_SYMBOL,
-    TOKEN_MAX_SUPPLY,
-    TOKEN_PREMINT,
-    broadcaster,
-    TOKEN_DECIMALS,
-    broadcaster,
-  ] as const;
+  const tokenParams = {
+    name: TOKEN_NAME,
+    symbol: TOKEN_SYMBOL,
+    maxSupply: TOKEN_MAX_SUPPLY,
+    preMint: TOKEN_PREMINT,
+    preMintRecipient: broadcaster,
+    decimals: TOKEN_DECIMALS,
+    ccipAdmin: broadcaster,
+  };
 
   const crossChainToken = m.contract("CrossChainToken", [tokenParams, broadcaster, broadcaster]);
 
