@@ -3,6 +3,7 @@ pragma solidity 0.8.26;
 
 import {BasicMessageReceiver} from "./BasicMessageReceiver.sol";
 
+import {FinalityCodec} from "@chainlink/contracts-ccip/contracts/libraries/FinalityCodec.sol";
 import {Ownable, Ownable2Step} from "@openzeppelin/contracts@5.3.0/access/Ownable2Step.sol";
 
 /**
@@ -18,7 +19,6 @@ contract BasicMessageReceiverWithCCVs is BasicMessageReceiver, Ownable2Step {
         address[] requiredCCVs;
         address[] optionalCCVs;
         uint8 optionalThreshold;
-        bool requireFinality;
     }
 
     /// @notice Arguments required to add a CCV configuration for a source chain.
@@ -27,7 +27,6 @@ contract BasicMessageReceiverWithCCVs is BasicMessageReceiver, Ownable2Step {
         address[] optionalCCVs;
         uint64 sourceChainSelector;
         uint8 optionalThreshold;
-        bool requireFinality;
     }
 
     error DuplicateCCV(uint64 sourceChainSelector, address ccv);
@@ -35,19 +34,27 @@ contract BasicMessageReceiverWithCCVs is BasicMessageReceiver, Ownable2Step {
     error ZeroAddressNotAllowedAsOptional();
 
     event CCVConfigSet(
-        uint64 indexed sourceChainSelector,
-        address[] requiredCCVs,
-        address[] optionalCCVs,
-        uint8 optionalThreshold,
-        bool requireFinality
+        uint64 indexed sourceChainSelector, address[] requiredCCVs, address[] optionalCCVs, uint8 optionalThreshold
     );
+    event MinBlockDepthSet(uint64 indexed sourceChainSelector, uint16 minBlockDepth);
 
     mapping(uint64 sourceChainSelector => CCVConfig ccvConfig) internal s_ccvConfigs;
+    mapping(uint64 sourceChainSelector => uint16 minBlockDepth) internal s_minBlockDepths;
 
     constructor(address router) BasicMessageReceiver(router) Ownable(msg.sender) {}
 
-    /// @dev Override getCCVs
-    function getCCVsAndMinBlockDepth(
+    /// @notice Set minimum accepted block depth for a source chain.
+    /// @dev 0 means Default Finality is required for that source chain.
+    ///      Non-zero values allow Faster Than Finality with a minimum required depth - WARNING only use Faster Than Finality
+    ///      when you use a trusted sender on the source chain that manages the finality risk when sending messages.
+    function setMinBlockDepth(uint64 sourceChainSelector, uint16 minBlockDepth) external onlyOwner {
+        s_minBlockDepths[sourceChainSelector] = minBlockDepth;
+        emit MinBlockDepthSet(sourceChainSelector, minBlockDepth);
+    }
+
+    /// @notice Returns CCV config and allowed finality for a source chain (see `CCIPReceiver.getCCVsAndFinalityConfig`).
+    /// @dev Maps stored min block depth to `FinalityCodec` encoding (0 depth => wait for full finality).
+    function getCCVsAndFinalityConfig(
         uint64 sourceChainSelector,
         bytes calldata /*sender*/
     )
@@ -58,15 +65,13 @@ contract BasicMessageReceiverWithCCVs is BasicMessageReceiver, Ownable2Step {
             address[] memory requiredCCVs,
             address[] memory optionalCCVs,
             uint8 optionalThreshold,
-            uint16 minBlockDepth
+            bytes4 allowedFinalityConfig
         )
     {
         CCVConfig memory config = s_ccvConfigs[sourceChainSelector];
-        // If requireFinality is true, minBlockDepth = 0 (require finality).
-        // If requireFinality is false, minBlockDepth = 1 (allow any FTF level) - WARNING only use a finality of 1 when
-        // you use a trusted sender on the source chain that manages the finality risk when sending messages.
-        minBlockDepth = config.requireFinality ? 0 : 1;
-        return (config.requiredCCVs, config.optionalCCVs, config.optionalThreshold, minBlockDepth);
+        uint16 minBlockDepth = s_minBlockDepths[sourceChainSelector];
+        allowedFinalityConfig = FinalityCodec._encodeBlockDepth(minBlockDepth);
+        return (config.requiredCCVs, config.optionalCCVs, config.optionalThreshold, allowedFinalityConfig);
     }
 
     /// @notice Set CCV configurations for source chains.
@@ -109,16 +114,9 @@ contract BasicMessageReceiverWithCCVs is BasicMessageReceiver, Ownable2Step {
             s_ccvConfigs[args.sourceChainSelector] = CCVConfig({
                 requiredCCVs: args.requiredCCVs,
                 optionalCCVs: args.optionalCCVs,
-                optionalThreshold: args.optionalThreshold,
-                requireFinality: args.requireFinality
+                optionalThreshold: args.optionalThreshold
             });
-            emit CCVConfigSet(
-                args.sourceChainSelector,
-                args.requiredCCVs,
-                args.optionalCCVs,
-                args.optionalThreshold,
-                args.requireFinality
-            );
+            emit CCVConfigSet(args.sourceChainSelector, args.requiredCCVs, args.optionalCCVs, args.optionalThreshold);
         }
     }
 }

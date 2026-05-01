@@ -11,7 +11,7 @@ export default defineConfig({
       "@chainlink/contracts-ccip/contracts/Router.sol",
       "@chainlink/contracts-ccip/contracts/onRamp/OnRamp.sol",
       "@openzeppelin/contracts-5.3.0/token/ERC20/ERC20.sol",
-      "@chainlink/contracts-ccip/contracts/tokenAdminRegistry/TokenPoolFactory/FactoryBurnMintERC20.sol",
+      "@chainlink/contracts-ccip/contracts/tokens/CrossChainToken.sol",
       "@chainlink/contracts-ccip/contracts/pools/BurnMintTokenPool.sol",
       "@chainlink/contracts-ccip/contracts/pools/AdvancedPoolHooks.sol",
       "@chainlink/contracts-ccip/contracts/tokenAdminRegistry/RegistryModuleOwnerCustom.sol",

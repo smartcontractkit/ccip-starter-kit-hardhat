@@ -205,9 +205,9 @@ const faucetTask = task(
   .setAction(() => import("./helpers/Faucet.js"))
   .build();
 
-const executorMinBlockConfirmationsTask = task(
-  "executor-min-block-confirmations",
-  "Read Executor.getMinBlockConfirmations() (uint16). Use before picking block depth for Faster Than Finality."
+const executorAllowedFinalityConfigTask = task(
+  "executor-allowed-finality-config",
+  "Read Executor.getAllowedFinalityConfig() (bytes4, FinalityCodec). Use when aligning FTF with executor policy."
 )
   .addOption({
     name: "executor",
@@ -215,7 +215,32 @@ const executorMinBlockConfirmationsTask = task(
     type: ArgumentType.STRING,
     defaultValue: "",
   })
-  .setAction(() => import("./helpers/ExecutorMinBlockConfirmations.js"))
+  .setAction(() => import("./helpers/ExecutorAllowedFinalityConfig.js"))
+  .build();
+
+const setBasicMessageReceiverWithCCVsMinBlockDepthTask = task(
+  "set-basic-message-receiver-with-ccvs-min-block-depth",
+  "Set BasicMessageReceiverWithCCVs.setMinBlockDepth for a source chain (run on destination network)."
+)
+  .addOption({
+    name: "receiver",
+    description: "Deployed BasicMessageReceiverWithCCVs address",
+    type: ArgumentType.STRING,
+    defaultValue: "",
+  })
+  .addOption({
+    name: "sourceChainSelector",
+    description: "Source chain selector (uint64)",
+    type: ArgumentType.BIGINT,
+    defaultValue: 0n,
+  })
+  .addOption({
+    name: "minBlockDepth",
+    description: "Minimum block depth (uint16); 0 = default finality only for that source",
+    type: ArgumentType.INT,
+    defaultValue: 0,
+  })
+  .setAction(() => import("./helpers/SetBasicMessageReceiverWithCCVsMinBlockDepth.js"))
   .build();
 
 const basicMessageReceiverLatestMessageTask = task(
@@ -327,7 +352,8 @@ const legacy02Task = task("legacy02", "Legacy02: ExtraArgs V2 token transfer.")
 /** All Hardhat tasks. Import this array in hardhat.config.ts. */
 export const tasks = [
   faucetTask,
-  executorMinBlockConfirmationsTask,
+  executorAllowedFinalityConfigTask,
+  setBasicMessageReceiverWithCCVsMinBlockDepthTask,
   basicMessageReceiverLatestMessageTask,
   basicMessageReceiverLatestSenderTask,
   basicMessageReceiverLatestSourceChainSelectorTask,

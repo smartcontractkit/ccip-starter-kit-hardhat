@@ -2,7 +2,7 @@
 
 This example covers the full BurnMint CCT flow on Fuji → Sepolia:
 
-1. Deploy BurnMint token + BurnMint pool on both chains (Hardhat Ignition).
+1. Deploy [`CrossChainToken`](https://github.com/smartcontractkit/chainlink-ccip/blob/develop/chains/evm/contracts/tokens/CrossChainToken.sol) + BurnMint pool on both chains (Hardhat Ignition).
 2. Configure pools to trust each other (`example06-step1`).
 3. Send a token transfer across the lane (`example06-step2`).
 4. Verify BurnMint behavior (burn on source, mint on destination) with helper tasks.
@@ -33,7 +33,7 @@ Modules and tasks used:
 
 The BurnMintTokenPool Ignition module deploys:
 
-- **Token:** `TestToken` (`TEST`), 18 decimals, 1_000_000 × 10¹⁸ premint, 100_000_000 × 10¹⁸ max supply.
+- **Token:** **CrossChainToken** via `BaseERC20.ConstructorParams`: `TestToken` (`TEST`), 18 decimals, 1_000_000 × 10¹⁸ premint, 100_000_000 × 10¹⁸ max supply. The deployer EOA is pre-mint recipient, CCIP admin, burn/mint admin, and default admin. Registration uses `RegistryModuleOwnerCustom.registerAdminViaGetCCIPAdmin`.
 - **Pool:** BurnMintTokenPool with no advanced pool hook (CCT 01).
 
 ## Step 1: Deploy Token + Pool on Fuji
@@ -46,7 +46,7 @@ npx hardhat ignition deploy ignition/modules/BurnMintTokenPool.ts --network <NET
 
 Save from the deployment output:
 
-- `<FUJI_TOKEN_ADDRESS>` (FactoryBurnMintERC20 / token)
+- `<FUJI_TOKEN_ADDRESS>` (CrossChainToken)
 - `<FUJI_POOL_ADDRESS>` (BurnMintTokenPool)
 
 ## Step 2: Deploy Token + Pool on Sepolia

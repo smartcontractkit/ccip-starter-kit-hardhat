@@ -14,23 +14,26 @@ const TOKEN_PREMINT = 1_000_000n * 10n ** 18n;
 const TOKEN_MAX_SUPPLY = 100_000_000n * 10n ** 18n;
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
-const FactoryBurnMintERC20Module = buildModule("FactoryBurnMintERC20Module", (m) => {
-  const newOwner = m.getAccount(0);
+const CrossChainTokenModule = buildModule("CrossChainTokenModule", (m) => {
+  const broadcaster = m.getAccount(0);
 
-  const factoryBurnMintERC20 = m.contract("FactoryBurnMintERC20", [
-    TOKEN_NAME,
-    TOKEN_SYMBOL,
-    TOKEN_DECIMALS,
-    TOKEN_MAX_SUPPLY,
-    TOKEN_PREMINT,
-    newOwner,
-  ]);
+  const tokenParams = {
+    name: TOKEN_NAME,
+    symbol: TOKEN_SYMBOL,
+    maxSupply: TOKEN_MAX_SUPPLY,
+    preMint: TOKEN_PREMINT,
+    preMintRecipient: broadcaster,
+    decimals: TOKEN_DECIMALS,
+    ccipAdmin: broadcaster,
+  };
 
-  return { factoryBurnMintERC20 };
+  const crossChainToken = m.contract("CrossChainToken", [tokenParams, broadcaster, broadcaster]);
+
+  return { crossChainToken };
 });
 
 const BurnMintTokenPoolModule = buildModule("BurnMintTokenPoolModule", (m) => {
-  const { factoryBurnMintERC20 } = m.useModule(FactoryBurnMintERC20Module);
+  const { crossChainToken } = m.useModule(CrossChainTokenModule);
 
   const router = m.getParameter("routerAddress");
   const armProxy = m.getParameter("armProxy");
@@ -38,31 +41,30 @@ const BurnMintTokenPoolModule = buildModule("BurnMintTokenPoolModule", (m) => {
   const tokenAdminRegistryAddress = m.getParameter("tokenAdminRegistry");
 
   const burnMintTokenPool = m.contract("BurnMintTokenPool", [
-    factoryBurnMintERC20,
+    crossChainToken,
     TOKEN_DECIMALS,
-    ZERO_ADDRESS, // No advanced pool hook in CCT 02
+    ZERO_ADDRESS, // No advanced pool hook in CCT 01
     armProxy,
     router,
   ]);
 
-  m.call(factoryBurnMintERC20, "grantMintAndBurnRoles", [burnMintTokenPool]);
+  m.call(crossChainToken, "grantMintAndBurnRoles", [burnMintTokenPool]);
 
   const registryModuleOwnerCustom = m.contractAt("RegistryModuleOwnerCustom", registryModuleOwnerCustomAddress);
 
-  const registerAdminCall = m.call(registryModuleOwnerCustom, "registerAdminViaOwner", [factoryBurnMintERC20]);
+  const registerAdminCall = m.call(registryModuleOwnerCustom, "registerAdminViaGetCCIPAdmin", [crossChainToken]);
 
   const tokenAdminRegistry = m.contractAt("ITokenAdminRegistry", tokenAdminRegistryAddress);
 
-  const acceptAdminRoleCall = m.call(tokenAdminRegistry, "acceptAdminRole", [factoryBurnMintERC20], {
+  const acceptAdminRoleCall = m.call(tokenAdminRegistry, "acceptAdminRole", [crossChainToken], {
     after: [registerAdminCall],
   });
-  
-  m.call(tokenAdminRegistry, "setPool", [factoryBurnMintERC20, burnMintTokenPool], {
+
+  m.call(tokenAdminRegistry, "setPool", [crossChainToken, burnMintTokenPool], {
     after: [acceptAdminRoleCall],
   });
 
-
-  return { factoryBurnMintERC20, burnMintTokenPool };
+  return { crossChainToken, burnMintTokenPool };
 });
 
 export default BurnMintTokenPoolModule;

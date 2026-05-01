@@ -1,7 +1,7 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
 /*
- * Example08 (CCT 03): Deploy BurnMint token + AdvancedPoolHooks + BurnMint pool.
+ * Example08 (CCT 03): Deploy CrossChainToken + AdvancedPoolHooks + BurnMint pool.
  * Params: routerAddress, armProxy, registryModuleOwnerCustom, tokenAdminRegistry, thresholdAmountForAdditionalCCVs.
  *
  * Deploy (Sepolia):
@@ -18,23 +18,26 @@ const TOKEN_MAX_SUPPLY = 100_000_000n * 10n ** 18n;
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 // Distinct token module so we deploy a new token (avoids AlreadyRegistered).
-const FactoryBurnMintERC20AdvancedHookModule = buildModule("FactoryBurnMintERC20AdvancedHookModule", (m) => {
-  const newOwner = m.getAccount(0);
+const CrossChainTokenAdvancedHookModule = buildModule("CrossChainTokenAdvancedHookModule", (m) => {
+  const broadcaster = m.getAccount(0);
 
-  const factoryBurnMintERC20 = m.contract("FactoryBurnMintERC20", [
-    TOKEN_NAME,
-    TOKEN_SYMBOL,
-    TOKEN_DECIMALS,
-    TOKEN_MAX_SUPPLY,
-    TOKEN_PREMINT,
-    newOwner,
-  ]);
+  const tokenParams = {
+    name: TOKEN_NAME,
+    symbol: TOKEN_SYMBOL,
+    maxSupply: TOKEN_MAX_SUPPLY,
+    preMint: TOKEN_PREMINT,
+    preMintRecipient: broadcaster,
+    decimals: TOKEN_DECIMALS,
+    ccipAdmin: broadcaster,
+  };
 
-  return { factoryBurnMintERC20 };
+  const crossChainToken = m.contract("CrossChainToken", [tokenParams, broadcaster, broadcaster]);
+
+  return { crossChainToken };
 });
 
 const BurnMintTokenPoolAdvancedPoolHookModule = buildModule("BurnMintTokenPoolAdvancedPoolHookModule", (m) => {
-  const { factoryBurnMintERC20 } = m.useModule(FactoryBurnMintERC20AdvancedHookModule);
+  const { crossChainToken } = m.useModule(CrossChainTokenAdvancedHookModule);
   const broadcaster = m.getAccount(0);
 
   const router = m.getParameter("routerAddress");
@@ -53,7 +56,7 @@ const BurnMintTokenPoolAdvancedPoolHookModule = buildModule("BurnMintTokenPoolAd
   ]);
 
   const burnMintTokenPool = m.contract("BurnMintTokenPool", [
-    factoryBurnMintERC20,
+    crossChainToken,
     TOKEN_DECIMALS,
     advancedPoolHooks,
     armProxy,
@@ -64,23 +67,23 @@ const BurnMintTokenPoolAdvancedPoolHookModule = buildModule("BurnMintTokenPoolAd
     { addedCallers: [burnMintTokenPool], removedCallers: [] },
   ]);
 
-  m.call(factoryBurnMintERC20, "grantMintAndBurnRoles", [burnMintTokenPool]);
+  m.call(crossChainToken, "grantMintAndBurnRoles", [burnMintTokenPool]);
 
   const registryModuleOwnerCustom = m.contractAt("RegistryModuleOwnerCustom", registryModuleOwnerCustomAddress);
 
-  const registerAdminCall = m.call(registryModuleOwnerCustom, "registerAdminViaOwner", [factoryBurnMintERC20]);
+  const registerAdminCall = m.call(registryModuleOwnerCustom, "registerAdminViaGetCCIPAdmin", [crossChainToken]);
 
   const tokenAdminRegistry = m.contractAt("ITokenAdminRegistry", tokenAdminRegistryAddress);
 
-  const acceptAdminRoleCall = m.call(tokenAdminRegistry, "acceptAdminRole", [factoryBurnMintERC20], {
+  const acceptAdminRoleCall = m.call(tokenAdminRegistry, "acceptAdminRole", [crossChainToken], {
     after: [registerAdminCall],
   });
 
-  m.call(tokenAdminRegistry, "setPool", [factoryBurnMintERC20, burnMintTokenPool], {
+  m.call(tokenAdminRegistry, "setPool", [crossChainToken, burnMintTokenPool], {
     after: [acceptAdminRoleCall],
   });
 
-  return { factoryBurnMintERC20, advancedPoolHooks, burnMintTokenPool };
+  return { crossChainToken, advancedPoolHooks, burnMintTokenPool };
 });
 
 export default BurnMintTokenPoolAdvancedPoolHookModule;

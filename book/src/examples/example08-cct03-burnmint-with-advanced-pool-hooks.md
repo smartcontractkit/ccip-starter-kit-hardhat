@@ -27,7 +27,7 @@ This flow still demonstrates the correct hook wiring pattern for ACE-enabled set
 
 ## What This Example Covers
 
-1. Deploy BurnMint token + `AdvancedPoolHooks` + BurnMint pool on both chains (Hardhat Ignition).
+1. Deploy CrossChainToken + `AdvancedPoolHooks` + BurnMint pool on both chains (Hardhat Ignition).
 2. Configure pools to trust each other (`example08-step1`).
 3. Send token transfer with ExtraArgsV3 default-finality sender (`example08-step2`).
 4. (Optional) Update hook allowlist (`example08-step3`).
@@ -60,7 +60,7 @@ Modules and tasks used:
 
 The BurnMintTokenPoolAdvancedPoolHook Ignition module deploys:
 
-- **Token:** `TestToken` (`TEST`), 18 decimals, 1_000_000 × 10¹⁸ premint, 100_000_000 × 10¹⁸ max supply.
+- **Token:** **CrossChainToken** (same defaults and `registerAdminViaGetCCIPAdmin` flow as Example 06): `TestToken` (`TEST`), 18 decimals, 1_000_000 × 10¹⁸ premint, 100_000_000 × 10¹⁸ max supply.
 - **Hook:** AdvancedPoolHooks with allowlist seeded with deployer EOA, `thresholdAmountForAdditionalCCVs` from params, policy engine disabled, pool authorized as caller.
 - **Pool:** BurnMintTokenPool with the hook attached.
 

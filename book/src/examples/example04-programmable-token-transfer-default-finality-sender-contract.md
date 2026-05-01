@@ -6,10 +6,13 @@ This example sends a programmable token transfer from Avalanche Fuji to Ethereum
 - Tokens: `CCIP-BnM`
 - Finality mode: default finality (`blockConfirmations = 0`)
 
+Because this chapter uses default finality, the baseline `BasicMessageReceiver` is sufficient on destination.
+If you want the Faster Than Finality variant (`blockConfirmations > 0`), use Example 03 with `BasicMessageReceiverWithCCVs`.
+
 Tasks and modules used:
 
 - **Deploy sender:** Hardhat Ignition module `ignition/modules/BasicMessageSender.ts` (deploy on source chain; requires `routerAddress` and `linkAddress` in params).
-- **Deploy receiver (if needed):** Hardhat Ignition module `ignition/modules/BasicMessageReceiver.ts` (see Example 02).
+- **Deploy receiver (if needed):** Hardhat Ignition module `ignition/modules/BasicMessageReceiver.ts` (this example; default finality).
 - **Mint token:** Hardhat task `faucet`.
 - **Send message:** Hardhat task `example04` (implementation: `tasks/Example04.ts`).
 - **Verify receiver:** Hardhat tasks `basic-message-receiver-latest-message`, `basic-message-receiver-latest-sender`, `basic-message-receiver-latest-source-chain-selector`.
@@ -17,7 +20,7 @@ Tasks and modules used:
 ## What You Will Do
 
 1. Deploy `BasicMessageSender` on the source chain (Fuji) using Ignition.
-2. Ensure destination `BasicMessageReceiver` exists on Sepolia (deploy via Ignition if needed; see Example 02).
+2. Ensure destination `BasicMessageReceiver` exists on Sepolia (deploy via Ignition if needed; see below).
 3. Mint 1 `CCIP-BnM` on Fuji using the `faucet` task.
 4. Run the `example04` task: it quotes the fee, funds the sender contract with that amount (when paying in native), then sends data + token.
 
@@ -37,7 +40,7 @@ Tasks and modules used:
 
 > **If you do not have a receiver deployed yet**
 >
-> Deploy `BasicMessageReceiver` on Sepolia with Ignition (see Example 02):
+> Deploy `BasicMessageReceiver` on Sepolia with Ignition:
 >
 > ```bash
 > npx hardhat ignition deploy ignition/modules/BasicMessageReceiver.ts --network <NETWORK_NAME> --parameters <PARAMETERS_FILE>
