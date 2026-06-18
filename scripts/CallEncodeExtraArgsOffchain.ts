@@ -61,17 +61,6 @@ export async function encodeV3Basic(params: EncodeV3Params) {
   });
 }
 
-/** Allowed-finality helper: `FinalityCodec._encodeBlockDepthAndSafeFlag` — for pools/receivers, not sender ExtraArgs requestedFinality. */
-export async function encodeAllowedFinalityBlockDepthAndSafeFlag(blockDepth: number) {
-  const { publicClient, encoder } = await extraArgsContract();
-  return publicClient.readContract({
-    address: encoder.address,
-    abi: encoder.abi as Abi,
-    functionName: "encodeAllowedFinalityBlockDepthAndSafeFlag",
-    args: [BigInt(blockDepth)],
-  });
-}
-
 export async function encodeV3(params: EncodeV3Params) {
   const { publicClient, encoder } = await extraArgsContract();
 
