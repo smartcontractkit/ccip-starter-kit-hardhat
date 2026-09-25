@@ -113,6 +113,20 @@ const example06Step1Task = task("example06-step1", "Example06 (CCT 01): Configur
   .setAction(() => import("./Example06-Step1.js"))
   .build();
 
+const example06SetPoolFinalityTask = task("example06-set-pool-finality", "Set a CCT pool's minimum FTF block depth (0 disables FTF).")
+  .addOption({ name: "localPool", type: ArgumentType.STRING, defaultValue: "" })
+  .addOption({ name: "minBlockDepth", type: ArgumentType.INT, defaultValue: 1 })
+  .setAction(() => import("./Example06-SetPoolFinality.js"))
+  .build();
+
+const example06CheckFinalityGatesTask = task("example06-check-finality-gates", "Read-only check of source pool, executor, CCVs, and sample FTF fees.")
+  .addOption({ name: "sourceRouter", type: ArgumentType.STRING, defaultValue: "" })
+  .addOption({ name: "destinationChainSelector", type: ArgumentType.BIGINT, defaultValue: 0n })
+  .addOption({ name: "tokenToSend", type: ArgumentType.STRING, defaultValue: "" })
+  .addOption({ name: "blockConfirmations", type: ArgumentType.INT, defaultValue: 1 })
+  .setAction(() => import("./Example06-CheckFinalityGates.js"))
+  .build();
+
 const example06Step2Task = task("example06-step2", "CCIP token transfer (Example06-Step2).")
   .addOption({ name: "sourceRouter", type: ArgumentType.STRING, defaultValue: "" })
   .addOption({ name: "destinationChainSelector", type: ArgumentType.BIGINT, defaultValue: 0n })
@@ -369,6 +383,8 @@ export const tasks = [
   example04Task,
   example05Task,
   example06Step1Task,
+  example06SetPoolFinalityTask,
+  example06CheckFinalityGatesTask,
   example06Step2Task,
   example07Step1Task,
   example07Step2Task,

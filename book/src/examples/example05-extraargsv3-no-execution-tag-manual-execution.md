@@ -17,10 +17,10 @@ Task: `example05` (implementation: `tasks/Example05.ts`).
 > Use a local keystore account for task execution:
 >
 > ```bash
+> npx hardhat keystore set AMOY_PRIVATE_KEY
 > npx hardhat keystore set SEPOLIA_PRIVATE_KEY
-> npx hardhat keystore set FUJI_PRIVATE_KEY
+> npx hardhat keystore set AMOY_RPC_URL
 > npx hardhat keystore set SEPOLIA_RPC_URL
-> npx hardhat keystore set FUJI_RPC_URL
 > ```
 >
 

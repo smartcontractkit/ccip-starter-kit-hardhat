@@ -3,8 +3,8 @@ import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 /*
  * Deploy BasicMessageReceiverWithCCVs (Sepolia):
  *   npx hardhat ignition deploy ignition/modules/BasicMessageReceiverWithCCVs.ts --network sepolia --parameters ignition/paramsEthSepolia.json
- * Deploy (Fuji):
- *   npx hardhat ignition deploy ignition/modules/BasicMessageReceiverWithCCVs.ts --network fuji --parameters ignition/paramsFuji.json
+ * Deploy (Amoy):
+ *   npx hardhat ignition deploy ignition/modules/BasicMessageReceiverWithCCVs.ts --network amoy --parameters ignition/paramsAmoy.json
  */
 
 export default buildModule("BasicMessageReceiverWithCCVsModule", (m) => {

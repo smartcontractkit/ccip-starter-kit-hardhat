@@ -1,6 +1,6 @@
 # Example 04: Programmable Token Transfer (Default Finality + Sender Contract)
 
-This example sends a programmable token transfer from Avalanche Fuji to Ethereum Sepolia using a deployed `BasicMessageSender` contract:
+This example sends a programmable token transfer from Ethereum Sepolia to Polygon Amoy using a deployed `BasicMessageSender` contract:
 
 - Data payload: `"Hello, World"`
 - Tokens: `CCIP-BnM`
@@ -19,9 +19,9 @@ Tasks and modules used:
 
 ## What You Will Do
 
-1. Deploy `BasicMessageSender` on the source chain (Fuji) using Ignition.
-2. Ensure destination `BasicMessageReceiver` exists on Sepolia (deploy via Ignition if needed; see below).
-3. Mint 1 `CCIP-BnM` on Fuji using the `faucet` task.
+1. Deploy `BasicMessageSender` on the source chain (Sepolia) using Ignition.
+2. Ensure destination `BasicMessageReceiver` exists on Amoy (deploy via Ignition if needed; see below).
+3. Mint 1 `CCIP-BnM` on Sepolia using the `faucet` task.
 4. Run the `example04` task: it quotes the fee, funds the sender contract with that amount (when paying in native), then sends data + token.
 
 ## Before You Start
@@ -31,16 +31,16 @@ Tasks and modules used:
 > Use a local keystore account for task execution:
 >
 > ```bash
+> npx hardhat keystore set AMOY_PRIVATE_KEY
 > npx hardhat keystore set SEPOLIA_PRIVATE_KEY
-> npx hardhat keystore set FUJI_PRIVATE_KEY
+> npx hardhat keystore set AMOY_RPC_URL
 > npx hardhat keystore set SEPOLIA_RPC_URL
-> npx hardhat keystore set FUJI_RPC_URL
 > ```
 >
 
 > **If you do not have a receiver deployed yet**
 >
-> Deploy `BasicMessageReceiver` on Sepolia with Ignition:
+> Deploy `BasicMessageReceiver` on Amoy with Ignition:
 >
 > ```bash
 > npx hardhat ignition deploy ignition/modules/BasicMessageReceiver.ts --network <NETWORK_NAME> --parameters <PARAMETERS_FILE>
@@ -50,7 +50,7 @@ Tasks and modules used:
 >
 > Save the deployed receiver address for use as `--receiver` in Step 4.
 
-## Step 1: Deploy `BasicMessageSender` on Fuji
+## Step 1: Deploy `BasicMessageSender` on Sepolia
 
 Deploy the sender on the source chain using Hardhat Ignition. The params file must include `routerAddress` and `linkAddress` for the BasicMessageSender module (see `ignition/modules/BasicMessageSender.ts`).
 
@@ -58,23 +58,25 @@ Deploy the sender on the source chain using Hardhat Ignition. The params file mu
 npx hardhat ignition deploy ignition/modules/BasicMessageSender.ts --network <NETWORK_NAME> --parameters <PARAMETERS_FILE>
 ```
 
-`--parameters` is the path to the chain's Ignition parameters JSON (e.g. `ignition/paramsFuji.json`); it supplies router, LINK address, and other values to the module.
+`--parameters` is the path to the chain's Ignition parameters JSON (e.g. `ignition/paramsEthSepolia.json`); it supplies router, LINK address, and other values to the module.
 
 Save the deployed sender address from the deployment output for use as `--basic-message-sender` in Step 4.
 
-## Step 2: Get 1 CCIP-BnM Token on Fuji
+## Step 2: Get 1 CCIP-BnM Token on Sepolia
+
+Use the registered Sepolia token from [Example 01](example01-token-transfer-faster-than-finality.md):
 
 ```bash
-npx hardhat faucet --network <NETWORK_NAME> --ccip-bnm <CCIP_BNM_TOKEN_ADDRESS>
+npx hardhat faucet --network <NETWORK_NAME> --ccip-bnm <CCIP_BNM_SOURCE_TOKEN_ADDRESS>
 ```
 
 ## Step 3: Fund the Sender Contract (if paying in native)
 
-The `example04` task funds the sender contract with the quoted fee when `--fee-token-address` is the zero address. Ensure your EOA has enough native token on Fuji to cover that fee (the task transfers it to the sender contract before calling `send`).
+The `example04` task funds the sender contract with the quoted fee when `--fee-token-address` is the zero address. Ensure your EOA has enough native token on Sepolia to cover that fee (the task transfers it to the sender contract before calling `send`).
 
 ## Step 4: Send Hello World + CCIP-BnM Through Sender Contract
 
-Run the `example04` task from the source chain (Fuji). Use default finality by setting `--block-confirmations 0`. Pass the deployed sender as `--basic-message-sender` and the receiver as `--receiver`.
+Run the `example04` task from the source chain (Sepolia). Use default finality by setting `--block-confirmations 0`. Pass the deployed sender as `--basic-message-sender` and the receiver as `--receiver`.
 
 ```bash
 npx hardhat example04 --network <NETWORK_NAME> \
@@ -83,9 +85,9 @@ npx hardhat example04 --network <NETWORK_NAME> \
   --destination-chain-selector <DESTINATION_CHAIN_SELECTOR> \
   --receiver <DEPLOYED_BASIC_MESSAGE_RECEIVER_ADDRESS> \
   --message-text "Hello, World" \
-  --token-to-send <CCIP_BNM_FUJI_ADDRESS> \
+  --token-to-send <CCIP_BNM_SOURCE_TOKEN_ADDRESS> \
   --amount <AMOUNT> \
-  --gas-limit <GAS_LIMIT> \ 
+  --gas-limit <GAS_LIMIT> \
   --block-confirmations 0 \
   --fee-token-address 0x0000000000000000000000000000000000000000
 ```  
@@ -106,7 +108,7 @@ The `example04` task logs the CCIP message ID and a link to monitor.
 
 **Monitor message status:** https://ccip.chain.link
 
-**Optional: read receiver state on Sepolia** using the Hardhat tasks:
+**Optional: read receiver state on Amoy** using the Hardhat tasks:
 
 ```bash
 npx hardhat basic-message-receiver-latest-message --network <NETWORK_NAME> --basic-message-receiver <DEPLOYED_BASIC_MESSAGE_RECEIVER_ADDRESS>

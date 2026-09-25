@@ -1,6 +1,6 @@
 # Example 08: CCT Burn and Mint With AdvancedPoolHooks
 
-This example covers BurnMint CCT on Fuji → Sepolia with `AdvancedPoolHooks` attached to the pool.
+This example covers BurnMint CCT on Sepolia → Amoy with `AdvancedPoolHooks` attached to the pool.
 
 ## Token Pool Hooks Development
 
@@ -48,13 +48,13 @@ Modules and tasks used:
 > Use a local keystore account for task execution:
 >
 > ```bash
+> npx hardhat keystore set AMOY_PRIVATE_KEY
 > npx hardhat keystore set SEPOLIA_PRIVATE_KEY
-> npx hardhat keystore set FUJI_PRIVATE_KEY
+> npx hardhat keystore set AMOY_RPC_URL
 > npx hardhat keystore set SEPOLIA_RPC_URL
-> npx hardhat keystore set FUJI_RPC_URL
 > ```
 >
-> Ensure `ignition/paramsFuji.json` and `ignition/paramsEthSepolia.json` contain the correct `routerAddress`, `armProxy`, `registryModuleOwnerCustom`, `tokenAdminRegistry`, and `thresholdAmountForAdditionalCCVs` for each chain.
+> Ensure `ignition/paramsEthSepolia.json` and `ignition/paramsAmoy.json` contain the correct `routerAddress`, `armProxy`, `registryModuleOwnerCustom`, `tokenAdminRegistry`, and `thresholdAmountForAdditionalCCVs` for each chain.
 
 ## Deployment Defaults
 
@@ -64,21 +64,21 @@ The BurnMintTokenPoolAdvancedPoolHook Ignition module deploys:
 - **Hook:** AdvancedPoolHooks with allowlist seeded with deployer EOA, `thresholdAmountForAdditionalCCVs` from params, policy engine disabled, pool authorized as caller.
 - **Pool:** BurnMintTokenPool with the hook attached.
 
-## Step 1: Deploy Token + Hook + Pool on Fuji
+## Step 1: Deploy Token + Hook + Pool on Sepolia
 
 ```bash
 npx hardhat ignition deploy ignition/modules/BurnMintTokenPoolAdvancedPoolHook.ts --network <NETWORK_NAME> --parameters <PARAMETERS_FILE>
 ```
 
-`--parameters` is the path to the chain's Ignition parameters JSON (e.g. `ignition/paramsFuji.json` or `ignition/paramsEthSepolia.json`); it supplies router, arm proxy, token admin registry, `thresholdAmountForAdditionalCCVs`, and other addresses to the module.
+`--parameters` is the path to the chain's Ignition parameters JSON (e.g. `ignition/paramsEthSepolia.json` or `ignition/paramsAmoy.json`); it supplies router, arm proxy, token admin registry, `thresholdAmountForAdditionalCCVs`, and other addresses to the module.
 
 Save from the deployment output:
 
-- `<FUJI_TOKEN_ADDRESS>`
-- `<FUJI_ADVANCED_POOL_HOOK_ADDRESS>`
-- `<FUJI_POOL_ADDRESS>`
+- `<SEPOLIA_TOKEN_ADDRESS>`
+- `<SEPOLIA_ADVANCED_POOL_HOOK_ADDRESS>`
+- `<SEPOLIA_POOL_ADDRESS>`
 
-## Step 2: Deploy Token + Hook + Pool on Sepolia
+## Step 2: Deploy Token + Hook + Pool on Amoy
 
 ```bash
 npx hardhat ignition deploy ignition/modules/BurnMintTokenPoolAdvancedPoolHook.ts --network <NETWORK_NAME> --parameters <PARAMETERS_FILE>
@@ -88,38 +88,38 @@ Use the parameters file for the chain you are deploying to.
 
 Save from the deployment output:
 
-- `<SEPOLIA_TOKEN_ADDRESS>`
-- `<SEPOLIA_ADVANCED_POOL_HOOK_ADDRESS>`
-- `<SEPOLIA_POOL_ADDRESS>`
+- `<AMOY_TOKEN_ADDRESS>`
+- `<AMOY_ADVANCED_POOL_HOOK_ADDRESS>`
+- `<AMOY_POOL_ADDRESS>`
 
-## Step 3: Configure Fuji Pool With Sepolia Remote
-
-```bash
-npx hardhat example08-step1 --network <NETWORK_NAME> \
-  --local-pool <FUJI_POOL_ADDRESS> \
-  --remote-chain-selector <SEPOLIA_CHAIN_SELECTOR> \
-  --remote-token <SEPOLIA_TOKEN_ADDRESS> \
-  --remote-pool <SEPOLIA_POOL_ADDRESS>
-```
-
-## Step 4: Configure Sepolia Pool With Fuji Remote
+## Step 3: Configure Sepolia Pool With Amoy Remote
 
 ```bash
 npx hardhat example08-step1 --network <NETWORK_NAME> \
   --local-pool <SEPOLIA_POOL_ADDRESS> \
-  --remote-chain-selector <FUJI_CHAIN_SELECTOR> \
-  --remote-token <FUJI_TOKEN_ADDRESS> \
-  --remote-pool <FUJI_POOL_ADDRESS>
+  --remote-chain-selector <AMOY_CHAIN_SELECTOR> \
+  --remote-token <AMOY_TOKEN_ADDRESS> \
+  --remote-pool <AMOY_POOL_ADDRESS>
+```
+
+## Step 4: Configure Amoy Pool With Sepolia Remote
+
+```bash
+npx hardhat example08-step1 --network <NETWORK_NAME> \
+  --local-pool <AMOY_POOL_ADDRESS> \
+  --remote-chain-selector <SEPOLIA_CHAIN_SELECTOR> \
+  --remote-token <SEPOLIA_TOKEN_ADDRESS> \
+  --remote-pool <SEPOLIA_POOL_ADDRESS>
 ```
 
 ## Step 5: Send Transfer (ExtraArgsV3 + Default Finality)
 
 ```bash
 npx hardhat example08-step2 --network <NETWORK_NAME> \
-  --source-router <FUJI_ROUTER> \
-  --destination-chain-selector <SEPOLIA_CHAIN_SELECTOR> \
-  --receiver <RECEIVER_ON_SEPOLIA> \
-  --token-to-send <FUJI_TOKEN_ADDRESS> \
+  --source-router <SEPOLIA_ROUTER> \
+  --destination-chain-selector <DESTINATION_CHAIN_SELECTOR> \
+  --receiver <RECEIVER_ON_AMOY> \
+  --token-to-send <SEPOLIA_TOKEN_ADDRESS> \
   --amount <AMOUNT> \
   --gas-limit 0 \
   --block-confirmations 0 \

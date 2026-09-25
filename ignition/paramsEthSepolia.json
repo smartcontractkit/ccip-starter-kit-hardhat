@@ -1,6 +1,7 @@
 {
     "$global": {
         "routerAddress": "<ROUTER_ADDRESS>",
+        "linkAddress": "<LINK_TOKEN_ADDRESS>",
         "armProxy": "<ARM_PROXY_ADDRESS>",
         "registryModuleOwnerCustom": "<REGISTRY_MODULE_OWNER_CUSTOM_ADDRESS>",
         "tokenAdminRegistry": "<TOKEN_ADMIN_REGISTRY_ADDRESS>",

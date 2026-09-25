@@ -2,7 +2,7 @@
 
 This example sends one token transfer message using `ExtraArgsV3` with Faster Than Finality (`blockConfirmations > 0`).
 
-Task: `example01` (implementation: `tasks/example01.ts`).
+Task: `example01` (implementation: `tasks/Example01.ts`).
 
 ## What You Will Do
 
@@ -18,9 +18,9 @@ Task: `example01` (implementation: `tasks/example01.ts`).
 >
 > ```bash
 > npx hardhat keystore set SEPOLIA_PRIVATE_KEY
-> npx hardhat keystore set FUJI_PRIVATE_KEY
 > npx hardhat keystore set SEPOLIA_RPC_URL
-> npx hardhat keystore set FUJI_RPC_URL
+> npx hardhat keystore set AMOY_PRIVATE_KEY
+> npx hardhat keystore set AMOY_RPC_URL
 > ```
 >
 
@@ -47,6 +47,18 @@ Why this matters:
 - Your requested finality in `ExtraArgsV3` must be **allowed** by the executor and destination policy (`FinalityCodec`); mismatches can revert.
 - If your requested mode is stricter than needed, behavior follows CCIP / pool rules (see chain-specific docs).
 
+Check the source pool, executor, and CCV finality settings before sending:
+
+```bash
+npx hardhat example06-check-finality-gates --network <NETWORK_NAME> \
+  --source-router <SOURCE_ROUTER> \
+  --destination-chain-selector <DESTINATION_CHAIN_SELECTOR> \
+  --token-to-send <CCIP_BNM_SOURCE_TOKEN_ADDRESS> \
+  --block-confirmations <BLOCK_CONFIRMATIONS_GT_ZERO>
+```
+
+A quote alone does not prove `ccipSend` will succeed with a non-`IPoolV2` pool.
+
 ## Step 3: Send Token With Faster Than Finality
 
 Run the `example01` task with the required and optional arguments:
@@ -67,7 +79,7 @@ Parameter notes:
 
 - `--amount`: token amount in wei (e.g. `1000000000000000000` for 1 token with 18 decimals).
 - `--gas-limit`: set to `0` for token-only transfer to an EOA receiver; use e.g. `200000` for contract receivers.
-- `--block-confirmations`: must be `> 0` in this Faster Than Finality example; use at least the executor minimum from Step 2.
+- `--block-confirmations`: must be `> 0` and meet the source pool and executor minimums from Step 2.
 - `--fee-token-address`: LINK token address on the source chain to pay CCIP fees in LINK, or `0x0000000000000000000000000000000000000000` to pay in native coin.
 
 Defaults (can be omitted): `--gas-limit 200000`, `--block-confirmations 1`, `--fee-token-address 0x0000000000000000000000000000000000000000`.
