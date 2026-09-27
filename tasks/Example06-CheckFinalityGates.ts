@@ -98,7 +98,7 @@ export default async function checkFinality(
     }
   }
 
-  const receiver = encodeAbiParameters([{ type: "address" }], ["0x0000000000000000000000000000000000000B0B"]);
+  const receiver = encodeAbiParameters([{ type: "address" }], ["0x0000000000000000000000000000000000000b0b"]);
   const quote = async (depth: number): Promise<bigint> => {
     const message = {
       receiver,
