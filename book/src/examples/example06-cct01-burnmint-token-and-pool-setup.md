@@ -4,8 +4,8 @@ This example covers the full BurnMint CCT flow on Sepolia → Amoy:
 
 1. Deploy [`CrossChainToken`](https://github.com/smartcontractkit/chainlink-ccip/blob/develop/chains/evm/contracts/tokens/CrossChainToken.sol) + BurnMint pool on both chains (Hardhat Ignition).
 2. Configure pools to trust each other (`example06-step1`).
-3. Enable FTF on both pools and check the source lane gates.
-4. Send at default finality or Faster Than Finality (`example06-step2`).
+3. Enable Fast Transfers (FTF) on both pools and check the source lane gates.
+4. Send at default finality or Fast Transfers (`example06-step2`).
 5. Verify BurnMint behavior (burn on source, mint on destination) with helper tasks.
 
 Modules and tasks used:
@@ -85,7 +85,7 @@ npx hardhat example06-step1 --network <NETWORK_NAME> \
   --remote-pool <SEPOLIA_POOL_ADDRESS>
 ```
 
-## Step 5: Enable Faster Than Finality on Both Pools
+## Step 5: Enable Fast Transfers on Both Pools {#step-5-enable-faster-than-finality-on-both-pools}
 
 New pools allow full finality only (`0x00000000`). FTF is a pool setting; configure both pools:
 

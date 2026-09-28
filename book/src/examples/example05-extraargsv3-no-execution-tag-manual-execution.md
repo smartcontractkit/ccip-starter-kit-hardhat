@@ -6,7 +6,7 @@ Task: `example05` (implementation: `tasks/Example05.ts`).
 
 ## What You Will Do
 
-1. Ensure a compatible destination receiver exists (default finality or Faster Than Finality based on your `blockConfirmations`).
+1. Ensure a compatible destination receiver exists (default finality or Fast Transfers (FTF) based on your `blockConfirmations`).
 2. Send a CCIP data message with `ExtraArgsV3` no-execution-tag using the `example05` task.
 3. Observe pending execution in CCIP Explorer and execute manually.
 
@@ -38,7 +38,7 @@ Task: `example05` (implementation: `tasks/Example05.ts`).
 > npx hardhat ignition deploy ignition/modules/BasicMessageReceiverWithCCVs.ts --network <NETWORK_NAME> --parameters <PARAMETERS_FILE>
 > ```
 >
-> If you use Faster Than Finality (`blockConfirmations > 0`), configure min block depth for your source chain:
+> If you use Fast Transfers (`blockConfirmations > 0`), configure min block depth for your source chain:
 >
 > ```bash
 > npx hardhat set-basic-message-receiver-with-ccvs-min-block-depth --network <NETWORK_NAME> \
@@ -47,9 +47,9 @@ Task: `example05` (implementation: `tasks/Example05.ts`).
 >   --min-block-depth <MIN_BLOCK_DEPTH>
 > ```
 >
-> Use `<MIN_BLOCK_DEPTH> > 0` for Faster Than Finality.
+> Use `<MIN_BLOCK_DEPTH> > 0` for Fast Transfers.
 >
-> Use this for Faster Than Finality (`blockConfirmations > 0`). Save this as `<BASIC_MESSAGE_RECEIVER_WITH_CCVS_ADDRESS>`.
+> Use this for Fast Transfers (`blockConfirmations > 0`). Save this as `<BASIC_MESSAGE_RECEIVER_WITH_CCVS_ADDRESS>`.
 >
 > `--parameters` is the path to the chain's Ignition parameters JSON; it supplies router and other addresses to the module.
 
@@ -73,7 +73,7 @@ struct GenericExtraArgsV3 {
 (On-chain this struct lives in `ExtraArgsCodec` from `@chainlink/contracts-ccip`.)
 
 - `gasLimit`: gas allocated for callback execution on destination. If `0` and message data is empty, no callback executes.
-- `requestedFinalityConfig`: `bytes4` finality mode + parameters per `FinalityCodec` (not a bare `uint16`). All-zero means wait for default/lane finality. For block-depth style faster-than-finality, encode with `FinalityCodec._encodeBlockDepth(uint16)` (see CCIP / `FinalityCodec` NatSpec). **Example05** and `EncodeExtraArgsOffchain.encodeV3` / `encodeV3Basic` take a `blockConfirmations` argument only as a convenience and set this field to `FinalityCodec._encodeBlockDepth(blockConfirmations)`.
+- `requestedFinalityConfig`: `bytes4` finality mode + parameters per `FinalityCodec` (not a bare `uint16`). All-zero means wait for default/lane finality. For block-depth style Fast Transfers, encode with `FinalityCodec._encodeBlockDepth(uint16)` (see CCIP / `FinalityCodec` NatSpec). **Example05** and `EncodeExtraArgsOffchain.encodeV3` / `encodeV3Basic` take a `blockConfirmations` argument only as a convenience and set this field to `FinalityCodec._encodeBlockDepth(blockConfirmations)`.
 - `ccvs`: list of cross-chain verifier addresses. Empty means default verifiers.
 - `ccvArgs`: optional arguments for each CCV. Must match `ccvs` length.
 - `executor`: executor address on source chain. `address(0)` uses default executor.
@@ -107,7 +107,7 @@ Parameter notes:
 
 - `--gas-limit` must be `> 0` because the receiver callback needs gas (e.g. `200000`).
 - `--block-confirmations` can be `0` (default finality) or `> 0`.
-- If `<BLOCK_CONFIRMATIONS> > 0`, destination receiver must accept Faster Than Finality (`minBlockDepth > 0`) for this source chain.
+- If `<BLOCK_CONFIRMATIONS> > 0`, destination receiver must accept Fast Transfers (`minBlockDepth > 0`) for this source chain.
 - If `<BLOCK_CONFIRMATIONS> = 0`, a default-finality receiver is sufficient.
 - `--fee-token-address`: LINK token address on the source chain to pay fees in LINK, or `0x0000000000000000000000000000000000000000` to pay in native coin.
 - This example sets executor to `NO_EXECUTION_ADDRESS`, so execution is not automatic; the message remains in a pending/manual execution state.

@@ -1,6 +1,6 @@
-# Example 01: Token Transfer + Faster Than Finality
+# Example 01: Token Transfer + Fast Transfers (FTF) {#example-01-token-transfer--faster-than-finality}
 
-This example sends one token transfer message using `ExtraArgsV3` with Faster Than Finality (`blockConfirmations > 0`).
+This example sends one token transfer message using `ExtraArgsV3` with Fast Transfers (`blockConfirmations > 0`).
 
 Task: `example01` (implementation: `tasks/Example01.ts`).
 
@@ -34,7 +34,7 @@ npx hardhat faucet --network <NETWORK_NAME> --ccip-bnm <CCIP_BNM_TOKEN_ADDRESS>
 
 ## Step 2: (Optional) Check Executor Allowed Finality
 
-Before picking a block depth for Faster Than Finality, you can read the executor’s allowed finality (`FinalityCodec` `bytes4`) with:
+Before picking a block depth for Fast Transfers, you can read the executor’s allowed finality (`FinalityCodec` `bytes4`) with:
 
 ```bash
 npx hardhat executor-allowed-finality-config --network <NETWORK_NAME> --executor <EXECUTOR_ADDRESS>
@@ -59,7 +59,7 @@ npx hardhat example06-check-finality-gates --network <NETWORK_NAME> \
 
 A quote alone does not prove `ccipSend` will succeed with a non-`IPoolV2` pool.
 
-## Step 3: Send Token With Faster Than Finality
+## Step 3: Send Token With Fast Transfers {#step-3-send-token-with-faster-than-finality}
 
 Run the `example01` task with the required and optional arguments:
 
