@@ -1,12 +1,29 @@
-node_modules
-.env
-.env.enc
-coverage
-coverage.json
+# Node modules
+node_modules/
 
-# Hardhat files
-cache
+# Compilation output
+/dist
+
+# pnpm deploy output
+/bundle
+
+# Hardhat Build Artifacts
 /artifacts
 
-# Hardhat Ignition default folder for deployments against a local node
-ignition/deployments/chain-31337
+# Hardhat compilation (v2) support directory
+/cache
+
+# Typechain output
+/types
+
+# Hardhat coverage reports
+/coverage
+
+# Environment file
+.env
+
+# Ignition deployments
+ignition/deployments
+
+# mdbook build output
+book/book
