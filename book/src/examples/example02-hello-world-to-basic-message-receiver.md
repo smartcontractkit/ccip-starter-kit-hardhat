@@ -23,10 +23,10 @@ Tasks and modules used:
 > Use a local keystore account for task execution:
 >
 > ```bash
+> npx hardhat keystore set AMOY_PRIVATE_KEY
 > npx hardhat keystore set SEPOLIA_PRIVATE_KEY
-> npx hardhat keystore set FUJI_PRIVATE_KEY
+> npx hardhat keystore set AMOY_RPC_URL
 > npx hardhat keystore set SEPOLIA_RPC_URL
-> npx hardhat keystore set FUJI_RPC_URL
 > ```
 >
 
@@ -98,7 +98,7 @@ Deploy the receiver on the **destination** chain using Hardhat Ignition.
 npx hardhat ignition deploy ignition/modules/BasicMessageReceiverWithCCVs.ts --network <NETWORK_NAME> --parameters <PARAMETERS_FILE>
 ```
 
-`--parameters` must be the path to the chain's Ignition parameters JSON (e.g. `ignition/paramsFuji.json` or `ignition/paramsEthSepolia.json`). That file supplies router and other addresses to the module.
+`--parameters` must be the path to the chain's Ignition parameters JSON (e.g. `ignition/paramsEthSepolia.json` or `ignition/paramsAmoy.json`). That file supplies router and other addresses to the module.
 
 Save the deployed address as `<BASIC_MESSAGE_RECEIVER_WITH_CCVS_ADDRESS>`.
 

@@ -12,9 +12,9 @@ The goal is not to re-teach CCIP fundamentals. It is to provide runnable example
 >
 > ```bash
 > npx hardhat keystore set SEPOLIA_PRIVATE_KEY
-> npx hardhat keystore set FUJI_PRIVATE_KEY
+> npx hardhat keystore set AMOY_PRIVATE_KEY
 > npx hardhat keystore set SEPOLIA_RPC_URL
-> npx hardhat keystore set FUJI_RPC_URL
+> npx hardhat keystore set AMOY_RPC_URL
 > ```
 >
 > The values from your local keystore are used at runtime (e.g. by `hardhat.config.ts` for network accounts and RPC URLs).
@@ -22,7 +22,7 @@ The goal is not to re-teach CCIP fundamentals. It is to provide runnable example
 > **2. Ignition parameters** — Update the JSON parameter files used by Hardhat Ignition for deployment:
 >
 > - **Ethereum Sepolia:** `ignition/paramsEthSepolia.json`
-> - **Avalanche Fuji:** `ignition/paramsFuji.json`
+> - **Polygon Amoy:** `ignition/paramsAmoy.json`
 >
 > These files supply `$global` values (such as `routerAddress`, `armProxy`, `registryModuleOwnerCustom`, `tokenAdminRegistry`, and for some modules `thresholdAmountForAdditionalCCVs`) to the Ignition modules. 
 >
@@ -41,3 +41,6 @@ The goal is not to re-teach CCIP fundamentals. It is to provide runnable example
 ## Chain Configuration
 
 Always pull the latest values from the [CCIP Directory](https://docs.chain.link/ccip/directory/) before running examples.
+
+Examples 01–08 use Sepolia → Amoy. Examples 01, 03, and 04 use faucet-issued CCIP-BnM;
+Examples 06–08 deploy custom tokens. Verify the lane's `OnRamp 2.0.0` before sending.

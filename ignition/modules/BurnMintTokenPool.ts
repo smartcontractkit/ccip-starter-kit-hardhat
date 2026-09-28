@@ -3,8 +3,8 @@ import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 /*
  * Deploy (Sepolia):
  *   npx hardhat ignition deploy ignition/modules/BurnMintTokenPool.ts --network sepolia --parameters ignition/paramsEthSepolia.json
- * Deploy (Fuji):
- *   npx hardhat ignition deploy ignition/modules/BurnMintTokenPool.ts --network fuji --parameters ignition/paramsFuji.json
+ * Deploy (Amoy):
+ *   npx hardhat ignition deploy ignition/modules/BurnMintTokenPool.ts --network amoy --parameters ignition/paramsAmoy.json
  */
 
 const TOKEN_NAME = "TestToken";

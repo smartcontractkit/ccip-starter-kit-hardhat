@@ -50,6 +50,12 @@ export default defineConfig({
       url: configVariable("SEPOLIA_RPC_URL"),
       accounts: [configVariable("SEPOLIA_PRIVATE_KEY")],
     },
+    amoy: {
+      type: "http",
+      chainType: "l1",
+      url: configVariable("AMOY_RPC_URL"),
+      accounts: [configVariable("AMOY_PRIVATE_KEY")],
+    },
     fuji: {
       type: "http",
       chainType: "l1",

@@ -131,13 +131,14 @@ export default async function example06Step2Action(
     hash = await walletClient.writeContract({ ...ccipSendParams, value: fee });
   } else {
     console.log("[INFO] Sending message, paying CCIP fee in LINK");
-    await walletClient.writeContract({
+    const feeApproveHash = await walletClient.writeContract({
       address: feeTokenAddress,
       abi: erc20Artifact.abi,
       functionName: "approve",
       args: [sourceRouter, fee],
       account: walletClient.account,
     });
+    await publicClient.waitForTransactionReceipt({ hash: feeApproveHash });
     hash = await walletClient.writeContract(ccipSendParams);
   }
 
