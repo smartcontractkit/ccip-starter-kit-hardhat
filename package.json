@@ -29,6 +29,9 @@
     "@nomicfoundation/ignition-core": {
       "lodash-es": "4.18.1"
     },
-    "ws": "^8.21.0"
+    "ws": "^8.21.0",
+    "@openzeppelin/contracts@4.7.3": "4.9.6",
+    "@openzeppelin/contracts-upgradeable@4.7.3": "4.9.6",
+    "@openzeppelin/contracts-4.7.3": "npm:@openzeppelin/contracts@4.9.6"
   }
 }
