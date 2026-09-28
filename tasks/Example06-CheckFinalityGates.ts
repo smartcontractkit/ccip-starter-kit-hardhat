@@ -59,7 +59,7 @@ export default async function checkFinality(
 
   const config = await publicClient.readContract({
     address: onRamp, abi: onRampArtifact.abi, functionName: "getDestChainConfig", args: [selector],
-  }) as { defaultExecutor: `0x${string}`; laneMandatedCCVs: `0x${string}`[]; defaultCCVs: `0x${string}`[] };
+  }) as { defaultExecutor: `0x${string}`; laneMandatedCCVs: readonly `0x${string}`[]; defaultCCVs: readonly `0x${string}`[] };
   const pool = await publicClient.readContract({
     address: onRamp, abi: onRampArtifact.abi, functionName: "getPoolBySourceToken", args: [selector, token],
   }) as `0x${string}`;
