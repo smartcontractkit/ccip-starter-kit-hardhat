@@ -2,11 +2,16 @@
   "name": "hardhat-ccip-sk",
   "version": "1.0.0",
   "type": "module",
+  "scripts": {
+    "test:fork": "hardhat test nodejs --build-profile production test-fork/*.fork.test.ts"
+  },
   "devDependencies": {
     "@chainlink/local": "^0.3.1",
+    "@nomicfoundation/hardhat-ethers": "4.0.5",
     "@nomicfoundation/hardhat-ignition": "^3.0.8",
     "@nomicfoundation/hardhat-toolbox-viem": "^5.0.2",
     "@types/node": "^22.19.13",
+    "ethers": "^6.17.0",
     "forge-std": "github:foundry-rs/forge-std#v1.9.4",
     "hardhat": "^3.1.10",
     "typescript": "~5.8.0",

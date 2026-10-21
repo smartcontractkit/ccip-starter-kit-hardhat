@@ -28,6 +28,7 @@ mdbook serve book --open
 - **`ignition/`** — Hardhat Ignition modules and parameter files for deploying receivers, senders, and token pools. Fill in `ignition/paramsEthSepolia.json` and `ignition/paramsAmoy.json` with chain addresses before deploying.
 - **`contracts/`** — Solidity contracts used by the examples.
 - **`test/`** — Node.js tests that run the example tasks against the [Chainlink Local](https://github.com/smartcontractkit/chainlink-local) V3 simulator.
+- **`test-fork/`** — Fork tests for the CCT examples (Examples 06–08) on Ethereum Sepolia → Polygon Amoy.
 - **`book/src/`** — Step-by-step tutorial chapters (mdbook source).
 - **`sdk-examples/`** — Minimal CCIP SDK demos (`ccip-send`, `ccip-track`).
 
@@ -61,3 +62,24 @@ npx hardhat test nodejs
 ```
 
 Chainlink Local is single-chain and has no token pools, CCV verifiers, executors or manual execution. It does enforce the CCIP 2.0 finality rules, one token per message, and receiver CCV config validation.
+
+## Fork Tests
+
+Chainlink Local's no-fork mode has no token pools or TokenAdminRegistry, so the CCT examples (Examples 06–08) are tested in `test-fork/` instead. They run the real Ignition modules and tasks against forks of Ethereum Sepolia and Polygon Amoy, then route each message to the destination OffRamp with the Chainlink Local fork helper. They are not part of `npx hardhat test nodejs`.
+
+Requirements:
+
+- Archive-capable RPC URLs for both chains (a free-tier Alchemy or Infura endpoint works; public non-archive endpoints fail with "historical state is not available"). Provide them as environment variables or in the Hardhat keystore:
+
+  ```bash
+  npx hardhat keystore set ETHEREUM_SEPOLIA_RPC_URL
+  npx hardhat keystore set POLYGON_AMOY_RPC_URL
+  ```
+
+- The `production` build profile: the token pools exceed the 24 KB contract size limit without the optimizer. The `test:fork` script sets it.
+
+```bash
+npm run test:fork
+```
+
+Both forks are pinned to a block (`forking.blockNumber` in `hardhat.config.ts`) so a fresh clone runs the same chain state. Override the pins for a run with `ETHEREUM_SEPOLIA_FORK_BLOCK` and `POLYGON_AMOY_FORK_BLOCK`, for example to check whether the live lane has drifted. Pinned state never sees testnet upgrades, so green tests only prove the examples against that snapshot.
