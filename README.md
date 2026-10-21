@@ -8,10 +8,10 @@ Disclaimer: Please note, this repo contains community examples only  — these a
 
 Reference starter kit for learning and testing **CCIP v2** with Hardhat 3: tasks, Ignition deployments, Solidity contracts, and SDK examples.
 
-Examples 01–08 use Ethereum Sepolia → Polygon Amoy as their primary CCIP 2.0 lane.
+Examples 01–10 use Ethereum Sepolia → Polygon Amoy as their primary CCIP 2.0 lane.
 [Example 01](book/src/examples/example01-token-transfer-faster-than-finality.md), Example 03, and
 Example 04 use faucet-issued CCIP-BnM.
-[Examples 06–08](book/src/examples/example06-cct01-burnmint-token-and-pool-setup.md) teach custom
+[Examples 06–10](book/src/examples/example06-cct01-burnmint-token-and-pool-setup.md) teach custom
 token and pool deployment. The legacy chapters retain their older-lane demonstrations.
 
 ## Start Here
@@ -28,7 +28,7 @@ mdbook serve book --open
 - **`ignition/`** — Hardhat Ignition modules and parameter files for deploying receivers, senders, and token pools. Fill in `ignition/paramsEthSepolia.json` and `ignition/paramsAmoy.json` with chain addresses before deploying.
 - **`contracts/`** — Solidity contracts used by the examples.
 - **`test/`** — Node.js tests that run the example tasks against the [Chainlink Local](https://github.com/smartcontractkit/chainlink-local) V3 simulator.
-- **`test-fork/`** — Fork tests for the CCT examples (Examples 06–08) on Ethereum Sepolia → Polygon Amoy.
+- **`test-fork/`** — Fork tests for the CCT examples (Examples 06–10) on Ethereum Sepolia → Polygon Amoy.
 - **`book/src/`** — Step-by-step tutorial chapters (mdbook source).
 - **`sdk-examples/`** — Minimal CCIP SDK demos (`ccip-send`, `ccip-track`).
 
@@ -65,7 +65,7 @@ Chainlink Local is single-chain and has no token pools, CCV verifiers, executors
 
 ## Fork Tests
 
-Chainlink Local's no-fork mode has no token pools or TokenAdminRegistry, so the CCT examples (Examples 06–08) are tested in `test-fork/` instead. They run the real Ignition modules and tasks against forks of Ethereum Sepolia and Polygon Amoy, then route each message to the destination OffRamp with the Chainlink Local fork helper. They are not part of `npx hardhat test nodejs`.
+Chainlink Local's no-fork mode has no token pools or TokenAdminRegistry, so the CCT examples (Examples 06–10) are tested in `test-fork/` instead. They run the real Ignition modules and tasks against forks of Ethereum Sepolia and Polygon Amoy, then route each message to the destination OffRamp with the Chainlink Local fork helper. They are not part of `npx hardhat test nodejs`.
 
 Requirements:
 

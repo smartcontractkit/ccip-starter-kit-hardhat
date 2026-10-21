@@ -193,6 +193,33 @@ const example08Step3Task = task("example08-step3", "Example08 (CCT 03): Update A
   .setAction(() => import("./Example08-Step3.js"))
   .build();
 
+const example09Step1Task = task("example09-step1", "Example09 (CCT 04): Set pool-based CCV requirements on AdvancedPoolHooks.")
+  .addOption({ name: "advancedPoolHook", type: ArgumentType.STRING, description: "AdvancedPoolHooks contract address", defaultValue: "" })
+  .addOption({ name: "remoteChainSelector", type: ArgumentType.BIGINT, description: "Remote chain selector (uint64)", defaultValue: 0n })
+  .addOption({ name: "outboundCcvs", type: ArgumentType.STRING, description: "Comma-separated base outbound CCV addresses", defaultValue: "" })
+  .addOption({ name: "thresholdOutboundCcvs", type: ArgumentType.STRING, description: "Comma-separated threshold outbound CCV addresses", defaultValue: "" })
+  .addOption({ name: "inboundCcvs", type: ArgumentType.STRING, description: "Comma-separated base inbound CCV addresses", defaultValue: "" })
+  .addOption({ name: "thresholdInboundCcvs", type: ArgumentType.STRING, description: "Comma-separated threshold inbound CCV addresses", defaultValue: "" })
+  .setAction(() => import("./Example09-Step1.js"))
+  .build();
+
+const example09Step2Task = task("example09-step2", "Example09 (CCT 04): Set the threshold amount for additional CCVs.")
+  .addOption({ name: "advancedPoolHook", type: ArgumentType.STRING, description: "AdvancedPoolHooks contract address", defaultValue: "" })
+  .addOption({ name: "thresholdAmount", type: ArgumentType.BIGINT, description: "Threshold amount in token wei", defaultValue: 0n })
+  .setAction(() => import("./Example09-Step2.js"))
+  .build();
+
+const example10Step1Task = task("example10-step1", "Example10 (CCT 05): Attach a policy engine to AdvancedPoolHooks.")
+  .addOption({ name: "advancedPoolHook", type: ArgumentType.STRING, description: "AdvancedPoolHooks contract address", defaultValue: "" })
+  .addOption({ name: "policyEngine", type: ArgumentType.STRING, description: "Policy engine contract address", defaultValue: "" })
+  .setAction(() => import("./Example10-Step1.js"))
+  .build();
+
+const example10Step2Task = task("example10-step2", "Example10 (CCT 05): Detach the policy engine from AdvancedPoolHooks.")
+  .addOption({ name: "advancedPoolHook", type: ArgumentType.STRING, description: "AdvancedPoolHooks contract address", defaultValue: "" })
+  .setAction(() => import("./Example10-Step2.js"))
+  .build();
+
 const getAllowListTask = task(
   "get-allow-list",
   "Read AdvancedPoolHooks.getAllowList() (address[])."
@@ -392,6 +419,10 @@ export const tasks = [
   example08Step1Task,
   example08Step2Task,
   example08Step3Task,
+  example09Step1Task,
+  example09Step2Task,
+  example10Step1Task,
+  example10Step2Task,
   legacy01Task,
   legacy02Task,
 ];

@@ -10,14 +10,14 @@ production**. Keep the disclaimer headers on example contracts and tasks.
 
 ## Layout
 
-- `tasks/`: CCIP 2.0 example tasks (`Example01`–`Example08`) and `Legacy01`–`Legacy02`, plus helpers in `tasks/helpers/`.
+- `tasks/`: CCIP 2.0 example tasks (`Example01`–`Example10`) and `Legacy01`–`Legacy02`, plus helpers in `tasks/helpers/`.
   Task definitions are in `tasks/hardhat.tasks.ts`. Core learning path.
 - `scripts/CallEncodeExtraArgsOffchain.ts`: ExtraArgs V1/V2/V3 encoding helper used by the tasks.
-- `contracts/`: `BasicMessageSender`, `BasicMessageReceiver`, `BasicMessageReceiverWithCCVs`, `utils/Withdraw`,
-  `utils/EncodeExtraArgsOffchain`.
+- `contracts/`: `BasicMessageSender`, `BasicMessageReceiver`, `BasicMessageReceiverWithCCVs`, `ExamplePolicyEngine`,
+  `utils/Withdraw`, `utils/EncodeExtraArgsOffchain`; `mocks/CountingCCV` is a fork-test double, not an example.
 - `ignition/`: Ignition modules and per-chain parameter files.
 - `test/`: Node.js tests on the Chainlink Local V3 no-fork simulator (see below).
-- `test-fork/`: fork tests for Examples 06–08 (Sepolia -> Amoy), kept outside `test/` because Hardhat's Node runner takes
+- `test-fork/`: fork tests for Examples 06–10 (Sepolia -> Amoy), kept outside `test/` because Hardhat's Node runner takes
   every file under `test/`, and they need RPC URLs.
 - `book/src/`: mdBook chapters, one per example. Build output (`book/book`) is gitignored.
 - `sdk-examples/`: TypeScript CCIP SDK demos (Node >= 24), separate from the Hardhat project.
@@ -59,7 +59,7 @@ Tasks that talk to a live network need keystore values: `npx hardhat keystore se
 - Local mode is single-chain with no token pools, no CCV verifiers (so no quorum check), and no executor or manual
   execution. It does enforce the CCIP 2.0 finality rules, one token per message, and receiver CCV config validation.
   Do not assert behavior Local does not model; note the limitation in the test instead.
-- Examples 06–08 (CCT token/pool setup) are covered by fork tests in `test-fork/` (Sepolia -> Amoy). They run the real
+- Examples 06–10 (CCT token/pool setup) are covered by fork tests in `test-fork/` (Sepolia -> Amoy). They run the real
   Ignition modules and tasks against pinned forks (networks `sepoliaFork` and `amoyFork` in `hardhat.config.ts`) and route
   each message with `@chainlink/local/scripts/CCIPLocalSimulatorFork.js`. They need `ETHEREUM_SEPOLIA_RPC_URL` and
   `POLYGON_AMOY_RPC_URL` (environment or keystore), archive-capable, and the `production` build profile (the pools exceed
