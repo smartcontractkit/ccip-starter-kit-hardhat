@@ -18,7 +18,11 @@ export default defineConfig({
       "@chainlink/contracts-ccip/contracts/interfaces/ITokenAdminRegistry.sol",
       "@chainlink/contracts-ccip/contracts/pools/LockReleaseTokenPool.sol",
       "@chainlink/contracts-ccip/contracts/pools/ERC20LockBox.sol",
-      "@chainlink/contracts-ccip/contracts/executor/Executor.sol"
+      "@chainlink/contracts-ccip/contracts/executor/Executor.sol",
+      "@chainlink/local/src/ccip/CCIPLocalSimulator.sol",
+      "@chainlink/local/src/ccip/CCIPLocalRouter.sol",
+      "@chainlink/local/src/ccip/BurnMintERC677Helper.sol",
+      "@chainlink/local/src/shared/LinkToken.sol"
     ],
     profiles: {
       default: {

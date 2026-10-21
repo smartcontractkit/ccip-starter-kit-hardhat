@@ -27,6 +27,7 @@ mdbook serve book --open
 - **`tasks/`** — Hardhat tasks for CCIP examples (e.g. `example01`, `example02`, `faucet`) and helpers (e.g. `erc20-balance-of`, `get-allow-list`). Task definitions are in `tasks/hardhat.tasks.ts`.
 - **`ignition/`** — Hardhat Ignition modules and parameter files for deploying receivers, senders, and token pools. Fill in `ignition/paramsEthSepolia.json` and `ignition/paramsAmoy.json` with chain addresses before deploying.
 - **`contracts/`** — Solidity contracts used by the examples.
+- **`test/`** — Node.js tests that run the example tasks against the [Chainlink Local](https://github.com/smartcontractkit/chainlink-local) V3 simulator.
 - **`book/src/`** — Step-by-step tutorial chapters (mdbook source).
 - **`sdk-examples/`** — Minimal CCIP SDK demos (`ccip-send`, `ccip-track`).
 
@@ -50,3 +51,13 @@ List all tasks:
 ```bash
 npx hardhat --help
 ```
+
+## Tests
+
+The tests in `test/` run the real example tasks (`tasks/Example01.ts` ... `Example05.ts`) and the example contracts against the Chainlink Local V3 no-fork simulator, so no RPC URLs or keys are needed:
+
+```bash
+npx hardhat test nodejs
+```
+
+Chainlink Local is single-chain and has no token pools, CCV verifiers, executors or manual execution. It does enforce the CCIP 2.0 finality rules, one token per message, and receiver CCV config validation.
