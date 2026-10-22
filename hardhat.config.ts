@@ -1,10 +1,12 @@
+import hardhatEthersPlugin from "@nomicfoundation/hardhat-ethers";
 import hardhatToolboxViemPlugin from "@nomicfoundation/hardhat-toolbox-viem";
 import { configVariable, defineConfig } from "hardhat/config";
 
 import { tasks } from "./tasks/hardhat.tasks.js";
 
 export default defineConfig({
-  plugins: [hardhatToolboxViemPlugin],
+  // hardhat-ethers is only needed by the Chainlink Local fork helpers used in test/fork.
+  plugins: [hardhatToolboxViemPlugin, hardhatEthersPlugin],
   tasks,
   solidity: {
     npmFilesToBuild: [
@@ -63,6 +65,26 @@ export default defineConfig({
       chainType: "l1",
       url: configVariable("AMOY_RPC_URL"),
       accounts: [configVariable("AMOY_PRIVATE_KEY")],
+    },
+    // Forks of the live testnets, used by test/fork. The blocks are pinned so a fresh clone runs the same chain state;
+    // override them per run with ETHEREUM_SEPOLIA_FORK_BLOCK / POLYGON_AMOY_FORK_BLOCK (see AGENTS.md "Re-pinning").
+    sepoliaFork: {
+      type: "edr-simulated",
+      chainType: "generic",
+      chainId: 11155111,
+      forking: {
+        url: configVariable("ETHEREUM_SEPOLIA_RPC_URL"),
+        blockNumber: Number(process.env.ETHEREUM_SEPOLIA_FORK_BLOCK ?? 11_920_292),
+      },
+    },
+    amoyFork: {
+      type: "edr-simulated",
+      chainType: "generic",
+      chainId: 80002,
+      forking: {
+        url: configVariable("POLYGON_AMOY_RPC_URL"),
+        blockNumber: Number(process.env.POLYGON_AMOY_FORK_BLOCK ?? 50_243_111),
+      },
     },
     fuji: {
       type: "http",
